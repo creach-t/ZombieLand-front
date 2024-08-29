@@ -6,7 +6,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        greyZombie: '#B0B0B0',
+        redZombie: '#C90000',
+        greenZombie: '#62F974',
+        darkGreenZombie: '#2B7D64'
+      }
+    },
   },
   plugins: [],
 }
