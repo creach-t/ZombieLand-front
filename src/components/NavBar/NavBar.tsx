@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useWindowDimensions from './dimensions';
+import useWindowDimensions from './utils/dimensions';
 
 function NavBar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -15,7 +15,7 @@ function NavBar() {
     <nav className="bg-black fixed w-full z-20 top-0 start-0 border-none">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <span className="badgrunge self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="badgrunge self-center text-7xl font-semibold whitespace-nowrap dark:text-white">
             ZOMBIELAND
           </span>
         </a>
@@ -35,7 +35,7 @@ function NavBar() {
 
           <button
             type="button"
-            className="text-white bg-redZombie hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-dark-300 font-bold rounded-lg text-sm px-4 py-2 text-center"
+            className="text-white text-2xl bg-redZombie hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-dark-300 font-bold rounded-xl px-3 py-1 text-center"
           >
             Réservation
           </button>
@@ -43,7 +43,7 @@ function NavBar() {
             onClick={() => setIsNavOpen((prev) => !prev)}
             data-collapse-toggle="navbar-sticky"
             type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            className="inline-flex bg-black items-center p-2 w-10 h-10 justify-center text-sm text-redZombie rounded-lg md:hidden hover:bg-black focus:outline-none focus:ring-2 focus:ring-gray-200"
             aria-controls="navbar-sticky"
             aria-expanded="false"
           >
@@ -68,7 +68,7 @@ function NavBar() {
         <div
           className={
             isNavOpen
-              ? 'absolute right-0 top-16 bg-black w-1/2'
+              ? 'absolute right-0 top-20 bg-black w-1/2'
               : 'items-center justify-between w-full md:flex md:w-auto md:order-1 hidden'
           }
           id="navbar-sticky"
@@ -76,9 +76,8 @@ function NavBar() {
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-black">
             <li>
               <a
-                href="/"
-                className="block py-2 px-3 text-white hover:text-red-400 rounded md:bg-transparent md:p-0"
-                aria-current="page"
+                href="/attractions"
+                className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Les attractions
               </a>
@@ -86,23 +85,23 @@ function NavBar() {
             <li>
               <a
                 href="/"
-                className="block py-2 px-3 text-white hover:text-red-400 rounded md:bg-transparent md:p-0"
+                className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Infos Pratiques
               </a>
             </li>
             <li>
               <a
-                href="/"
-                className="block py-2 px-3 text-white hover:text-red-400 rounded md:bg-transparent md:p-0"
+                href="/plan"
+                className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Plan du Parc
               </a>
             </li>
             <li>
               <a
-                href="/"
-                className="block py-2 px-3 text-white hover:text-red-400 rounded md:bg-transparent md:p-0"
+                href="/contact"
+                className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Contact
               </a>
