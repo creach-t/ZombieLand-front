@@ -1,9 +1,11 @@
 import underconstruction from '../../assets/underconstruction.webp';
+import NavBar from '../NavBar/NavBar';
 
 function App() {
   return (
     <div>
-      <img src={underconstruction} alt="en-construction" />
+      <NavBar />
+      <img src={underconstruction} alt="underconstruction" />
     </div>
   );
 }
