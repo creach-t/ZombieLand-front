@@ -87,7 +87,7 @@ function NavBar() {
             </li>
             <li>
               <a
-                href="/"
+                href="/infos"
                 className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Infos Pratiques
