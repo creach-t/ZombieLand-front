@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function Footer() {
   return (
     <footer className="w-screen bg-black">
@@ -10,35 +12,41 @@ function Footer() {
           </p>
         </div>
         <div className="w-[150px] ">
-          <h3 className="text-2xl uppercase">
+          <h3 className="text-xl uppercase">
             Liens <span className="text-redZombie">utiles</span>
           </h3>
           <ul>
             <li>
-              <a className="text-white hover:text-redZombie" href="/leparc">
-                Le Parc
-              </a>
+              <Link
+                className="text-white hover:text-redZombie"
+                href="/infos-pratiques"
+              >
+                Infos pratiques
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 className="text-white hover:text-redZombie"
                 href="/attractions"
               >
                 Attractions
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 className="text-white hover:text-redZombie"
-                href="/reservations"
+                href="/reserver"
               >
                 Réservations
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="text-white hover:text-redZombie" href="/connection">
+              <Link
+                className="text-white hover:text-redZombie"
+                href="/se-connecter"
+              >
                 Se connecter
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -73,9 +81,9 @@ function Footer() {
                 <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
                 <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
               </svg>
-              <a className="text-white hover:text-redZombie" href="/contact">
+              <Link className="text-white hover:text-redZombie" href="/contact">
                 Formulaire de contact
-              </a>
+              </Link>
             </li>
             <li className="flex gap-2">
               <svg
@@ -88,7 +96,7 @@ function Footer() {
                 <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
               </svg>
               <a
-                className="text-white"
+                className="text-white hover:text-redZombie"
                 href="https://maps.app.goo.gl/yRq9KmqwEqojW5jS6"
               >
                 66 rue de l&apos;enfer <br /> 75000 Paris
@@ -108,6 +116,7 @@ function Footer() {
                 rel="noopener noreferrer"
               >
                 <svg
+                  className="hover:fill-white"
                   fill="#C90000"
                   width="30"
                   height="30"
@@ -125,6 +134,7 @@ function Footer() {
                 rel="noopener noreferrer"
               >
                 <svg
+                  className="hover:fill-white"
                   fill="#C90000"
                   width="30"
                   height="30"
@@ -144,6 +154,7 @@ function Footer() {
                 rel="noopener noreferrer"
               >
                 <svg
+                  className="hover:fill-white"
                   fill="#C90000"
                   width="30"
                   height="30"

@@ -66,6 +66,7 @@ html,
 */
 
 body {
+  background-color: #000000;
   margin: 0;
   /* 1 */
   line-height: inherit;
