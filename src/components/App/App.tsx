@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
+import Footer from '../Footer/Footer';
+
 import NavBar from '../NavBar/NavBar';
 import Home from '../pages/Home';
 import MyAccount from '../pages/MyAccount';
@@ -13,6 +15,7 @@ import Login from '../pages/Login';
 function App() {
   return (
     <div>
+      <img className="m-auto" src={underconstruction} alt="underconstruction" />
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,6 +28,7 @@ function App() {
         <Route path="/attractions" element={<Activities />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
