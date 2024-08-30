@@ -1,12 +1,11 @@
-import underconstruction from "../../assets/underconstruction.webp"
+import underconstruction from '../../assets/underconstruction.webp';
+
 function App() {
-
-
   return (
     <div>
-      <img  src={underconstruction} />
+      <img src={underconstruction} alt="en-construction" />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
