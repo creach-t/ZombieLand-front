@@ -4,7 +4,7 @@ import Footer from '../Footer/Footer';
 function App() {
   return (
     <div>
-      <img src={underconstruction} alt="underconstruction" />
+      <img className="m-auto" src={underconstruction} alt="underconstruction" />
       <Footer />
     </div>
   );
