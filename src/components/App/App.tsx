@@ -15,7 +15,6 @@ import Login from '../pages/Login';
 function App() {
   return (
     <div>
-      <img className="m-auto" src={underconstruction} alt="underconstruction" />
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
