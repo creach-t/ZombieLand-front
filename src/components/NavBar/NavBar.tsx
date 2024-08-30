@@ -38,7 +38,7 @@ function NavBar() {
           <a
             href="/reservation"
             type="button"
-            className="text-white text-2xl bg-redZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center"
+            className="text-white text-2xl bg-redZombie hover:bg-red-700 jus hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center"
           >
             Réservation
           </a>
@@ -87,7 +87,7 @@ function NavBar() {
             </li>
             <li>
               <a
-                href="/"
+                href="/infos"
                 className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Infos Pratiques
