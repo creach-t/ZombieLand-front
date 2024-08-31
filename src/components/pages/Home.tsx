@@ -25,14 +25,14 @@ function Home() {
               <Link
                 to="/reserver"
                 type="button"
-                className="text-white text-2xl bg-redZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center mr-8 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
+                className="text-white text-2xl bg-redZombie hover:bg-opacity-90 hover:text-white  focus:animate-ping font-bold rounded-xl px-3 py-1 text-center mr-8 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)] overflow-hidden"
               >
                 Réservation
               </Link>
               <Link
                 to="/infos-pratiques"
                 type="button"
-                className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
+                className="text-white text-2xl bg-darkGreenZombie hover:bg-opacity-90 hover:text-white  focus:animate-ping font-bold rounded-xl px-3 py-1 text-center [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
               >
                 En savoir plus
               </Link>
