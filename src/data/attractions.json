@@ -46,8 +46,8 @@
     "description_short": "Survivez à une ville envahie par des zombies affamés !",
     "duration": 60,
     "age_min": 18,
-    "x": 54,
-    "y": 82
+    "x": 52,
+    "y": 84
   },
   {
     "id": 6,
@@ -76,8 +76,8 @@
     "description_short": "Évitez les pièges dans le laboratoire infecté !",
     "duration": 25,
     "age_min": 15,
-    "x": 12.8,
-    "y": 92
+    "x": 14,
+    "y": 90
   },
   {
     "id": 9,

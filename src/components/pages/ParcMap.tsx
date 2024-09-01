@@ -31,7 +31,7 @@ function ParcMap() {
   };
 
   return (
-    <div className="relative mt-[104px] max-w-[1200px] mx-auto flex gap-4 flex-wrap justify-center mb-4">
+    <div className="relative mt-[104px] max-w-[1200px] mx-auto flex gap-4 flex-wrap justify-center mb-12">
       <h2 className="ml-4 w-full uppercase text-6xl text-white mb-8">
         Plan<span className="text-redZombie"> du parc</span>
       </h2>
@@ -78,7 +78,7 @@ function ParcMap() {
             <div
               className={`overflow-hidden transition-all duration-300 ease-in-out ${
                 hoveredAttraction && hoveredAttraction.id === attraction.id
-                  ? 'max-h-40 mt-2 opacity-100 delay-100' // Dérouler le contenu avec un délai
+                  ? 'max-h-60 mt-2 opacity-100 delay-100' // Dérouler le contenu avec un délai
                   : 'max-h-0 opacity-0' // Cacher le contenu par défaut
               }`}
               style={{
@@ -94,7 +94,7 @@ function ParcMap() {
                     {attraction.description_short}
                   </p>
                   <Link
-                    className="p-1 rounded bg-white text-redZombie htext-white hover:bg-red-400"
+                    className="mt-4 p-1 rounded bg-white text-redZombie hover:text-redZombie hover:bg-red-100"
                     to={`../attractions/${attraction.id}`}
                   >
                     En savoir plus
