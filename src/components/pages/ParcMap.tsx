@@ -1,43 +1,32 @@
-import { useState } from 'react';
-import map from '../../assets/img/desktop/Rectangle-9-_1_.webp';
+import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import map from '../../assets/img/desktop/zombieland_map.webp';
+import attractionsData from '../../data/attractions.json'; // Import direct du JSON
 
 interface Attraction {
   id: number;
   name: string;
-  description: string;
-  x: number; // Utilisation de number pour x
-  y: number; // Utilisation de number pour y
+  description_short: string;
+  x: number;
+  y: number;
 }
 
 function ParcMap() {
-  // [TODO] Récupérer les attractions avec axios
-  const attractions: Attraction[] = [
-    {
-      id: 1,
-      name: 'Zombie House',
-      description: "Visiter l'antre des zombies",
-      x: 21, // Utilisation de nombres
-      y: 14, // Utilisation de nombres
-    },
-    {
-      id: 2,
-      name: 'Haunted Mansion',
-      description: "Explorez l'inquiétante maison hantée",
-      x: 76.4, // Utilisation de nombres
-      y: 38, // Utilisation de nombres
-    },
-    // Ajoutez d'autres attractions ici
-  ];
-
+  const [attractions, setAttractions] = useState<Attraction[]>([]);
   const [hoveredAttraction, setHoveredAttraction] = useState<Attraction | null>(
     null
   );
 
-  const handleMouseEnter = (attraction: Attraction) => {
+  // Charger les attractions à partir du fichier JSON importé
+  useEffect(() => {
+    setAttractions(attractionsData); // Pas besoin de fetch, on utilise l'import direct
+  }, []);
+
+  const handleAttractionMouseEnter = (attraction: Attraction) => {
     setHoveredAttraction(attraction);
   };
 
-  const handleMouseLeave = () => {
+  const handleAttractionMouseLeave = () => {
     setHoveredAttraction(null);
   };
 
@@ -46,59 +35,76 @@ function ParcMap() {
       <h2 className="ml-4 w-full uppercase text-6xl text-white mb-8">
         Plan<span className="text-redZombie"> du parc</span>
       </h2>
-      <div className="relative w-[500px] h-[500px]">
-        {' '}
-        {/* Ajout d'une taille fixe */}
+      <div className="relative">
         {/* Image de la carte */}
         <img
-          className="w-full h-full"
+          className="w-[500px] h-[500px]"
           src={map}
           alt="Plan des attractions de ZombieLand"
         />
+
         {/* Points interactifs */}
         {attractions.map((attraction) => (
           <div
             key={attraction.id}
-            className="absolute"
-            style={{ left: `${attraction.x}%`, top: `${attraction.y}%` }}
-            onMouseEnter={() => handleMouseEnter(attraction)}
-            onMouseLeave={handleMouseLeave}
-          >
-            <button
-              type="button"
-              className="bg-redZombie tracking-widest px-1 py-0 text-lg font-medium text-center text-white"
-            >
-              {attraction.name}
-            </button>
-          </div>
-        ))}
-        {/* Infobulle centrée au milieu de l'image */}
-        {hoveredAttraction && (
-          <div
-            className="absolute bg-white text-black p-4 border border-gray-300 rounded shadow-lg"
+            className={`absolute divide-y divide-red-800 pt-0 text-center text-lg font-medium p-2 transition-all duration-300 ease-in-out rounded ${
+              hoveredAttraction && hoveredAttraction.id === attraction.id
+                ? 'bg-redZombie w-[200px]' // Taille étendue et couleur lorsqu'elle est survolée
+                : 'bg-red-800 inline-block w-[110px] h-[25px]' // Taille par défaut et couleur pour les non-survolés
+            }`}
             style={{
-              left: '50%', // Centré horizontalement
-              top: '50%', // Centré verticalement
-              transform: 'translate(-50%, -50%)', // Centrer au milieu de l'élément parent
+              left: `${attraction.x}%`,
+              top: `${attraction.y}%`,
+              transform: 'translate(-50%, 0)', // Centrer horizontalement mais ne pas déplacer verticalement
+              minWidth: '50px', // Taille minimale pour les points interactifs par défaut
+              minHeight: '27px', // Taille minimale pour les points interactifs par défaut
+              display: 'flex',
+              flexDirection: 'column', // Empile les enfants verticalement
+              alignItems: 'center', // Centre horizontalement le contenu
+              zIndex:
+                hoveredAttraction && hoveredAttraction.id === attraction.id
+                  ? 10
+                  : 1, // Set higher z-index on hover
             }}
+            onMouseEnter={() => handleAttractionMouseEnter(attraction)}
+            onMouseLeave={handleAttractionMouseLeave}
           >
-            <h3 className="text-xl text-redZombie uppercase">
-              {hoveredAttraction.name}
-            </h3>
-            <p>{hoveredAttraction.description}</p>
-          </div>
-        )}
-      </div>
-      <ul className="ml-4 max-w-max grid grid-cols-2 lg:grid-cols-1 gap-1">
-        {attractions.map((attraction) => (
-          <li key={attraction.id}>
-            <h3 className="text-xl text-redZombie uppercase">
+            {/* Nom de l'attraction */}
+            <div className="text-white whitespace-nowrap">
               {attraction.name}
-            </h3>
-            <p>{attraction.description}</p>
-          </li>
+            </div>
+
+            {/* Contenu déroulant pour la description */}
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                hoveredAttraction && hoveredAttraction.id === attraction.id
+                  ? 'max-h-40 mt-2 opacity-100 delay-100' // Dérouler le contenu avec un délai
+                  : 'max-h-0 opacity-0' // Cacher le contenu par défaut
+              }`}
+              style={{
+                width: '100%', // Prend toute la largeur de la div principale
+                textAlign: 'center', // Centre le texte de la description
+                transition: 'max-height 0.1s ease, opacity 0.1s ease 0.1s', // Animer l'opacité après l'expansion
+              }}
+            >
+              {/* Texte de description */}
+              {hoveredAttraction && hoveredAttraction.id === attraction.id && (
+                <div className="divide-y divide-red-800">
+                  <p className="text-white font-light pt-2">
+                    {attraction.description_short}
+                  </p>
+                  <Link
+                    className="p-1 rounded bg-white text-redZombie htext-white hover:bg-red-400"
+                    to={`../attractions/${attraction.id}`}
+                  >
+                    En savoir plus
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
