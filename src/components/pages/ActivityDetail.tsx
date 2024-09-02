@@ -1,26 +1,62 @@
-import { Link } from 'react-router-dom';
-import desktopImage from '../../assets/img/desktop/attraction-zombie-city-zombieland.webp';
-import mobileImage from '../../assets/img/mobile/attraction-zombie-city-mob-zombieland.webp';
-import { useState } from 'react';
-import attractionsData from '../../data/attractions.json';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import getImageName from '../../utils/imageAttractionsFormat';
 
 interface AttractionDetail {
   id: number;
   name: string;
   description: string;
   image: string;
-  category: string;
+  category_id: number;
 }
+interface CategoryDetail {
+  id: number;
+  name: string;
+}
+
 // dynamisation
 function ActivityDetail() {
-  const [attractionDetail, setAttractionDetail] = useState;
+  const [attractionDetail, setAttractionDetail] =
+    useState<AttractionDetail | null>(null);
+  const [categoryDetail, setCategoryDetail] = useState<CategoryDetail | null>(
+    null
+  );
+  const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/activities/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setAttractionDetail(data);
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la récupération des données:', error);
+      });
+  }, [id]);
+  useEffect(() => {
+    fetch(`http://localhost:3000/category/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setCategoryDetail(data);
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la récupération des données:', error);
+      });
+  }, [attractionDetail?.category_id]);
+  if (!attractionDetail || !categoryDetail) {
+    return <div>Chargement...</div>;
+  }
+
+  const desktopImage = `/src/assets/img/desktop/attractions/${getImageName(attractionDetail.name)}`;
+  const mobileImage = `/src/assets/img/mobile/attractions/${getImageName(attractionDetail.name)} `;
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-xl mx-auto ">
       <h1 className="self-start text-6xl">
-        NOM <span className="text-redZombie ali">ATTRACTIONS</span>
+        {attractionDetail.name}{' '}
+        <span className="text-redZombie ali">ATTRACTIONS</span>
       </h1>
       <button className="text-white text-2xl bg-red-700 font-bold rounded-xl px-3 py-1 self-start	">
-        Nigthmare terror
+        {categoryDetail.name}
       </button>
       <section className="flex flex-wrap mt-4 justify-center">
         <picture className="md:w-1/2">
@@ -29,14 +65,7 @@ function ActivityDetail() {
         </picture>
 
         <p className="md:w-1/2 self-center p-8 text-white text-2xl">
-          Bienvenue à Zombie City, l'ultime épreuve de survie urbaine. La ville
-          est en ruines, envahie par des hordes de zombies affamés. Votre
-          mission : échapper à ce cauchemar en trouvant des indices, en
-          décryptant des énigmes, et en évitant les pièges mortels qui se
-          cachent à chaque coin de rue. Dans ce labyrinthe de bâtiments
-          abandonnés, d’égouts obscurs, et de ruelles sinistres, le temps est
-          votre pire ennemi. Vous avez 60 minutes pour trouver la sortie… ou
-          devenir une proie de plus pour les morts-vivants.
+          {attractionDetail.description}
         </p>
         <Link
           to="/booking"
@@ -52,7 +81,7 @@ function ActivityDetail() {
           D’autres attractions qui pourraient vous plaire
         </h2>
 
-        <p className="text-white">Lien des autres atractions</p>
+        <p className="text-white">Lien des autres attractions</p>
       </section>
     </main>
   );
