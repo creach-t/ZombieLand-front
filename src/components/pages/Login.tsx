@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
+
 function Login() {
   return (
-    <div className="w-4/5 md:max-w-5xl m-auto">
+    <div className="w-4/5 md:max-w-5xl mt-40 m-auto">
       <h2 className="text-6xl uppercase text-center md:text-left mb-12">
         Log<em className="text-redZombie">in</em>
       </h2>
@@ -45,6 +47,12 @@ function Login() {
           Me connecter
         </button>
       </form>
+      <p className="text-center text-2xl mb-40">
+        Pas de compte ?{' '}
+        <Link className="text-redZombie" to="/inscription">
+          Créer un compte
+        </Link>{' '}
+      </p>
     </div>
   );
 }
