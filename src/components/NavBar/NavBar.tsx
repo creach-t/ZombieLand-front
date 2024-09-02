@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useWindowDimensions from './utils/dimensions';
 
@@ -12,15 +13,18 @@ function NavBar() {
   }, [width, isNavOpen]);
 
   return (
-    <nav className="bg-black fixed w-full z-20 top-0 start-0 border-none">
+    <nav className="bg-black fixed w-full z-20 top-0 start-0 border-b border-red-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <span className="badgrunge self-center text-7xl font-semibold whitespace-nowrap dark:text-white">
+        <Link
+          to="/"
+          className="flex items-center space-x-3 rtl:space-x-reverse"
+        >
+          <h1 className="badgrunge self-center text-7xl font-semibold whitespace-nowrap dark:text-white">
             ZOMBIELAND
-          </span>
-        </a>
+          </h1>
+        </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <a href="/login" aria-label="login">
+          <Link to="/se-connecter" aria-label="login">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -33,15 +37,16 @@ function NavBar() {
                 clipRule="evenodd"
               />
             </svg>
-          </a>
 
-          <a
-            href="/reservation"
+          </Link>
+
+          <Link
+            to="/reserver"
             type="button"
             className="text-white text-2xl bg-redZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center"
           >
             Réservation
-          </a>
+          </Link>
           <button
             onClick={() => setIsNavOpen((prev) => !prev)}
             data-collapse-toggle="navbar-sticky"
@@ -78,36 +83,36 @@ function NavBar() {
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-black">
             <li>
-              <a
-                href="/attractions"
+              <Link
+                to="/attractions"
                 className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Les attractions
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/infos"
+              <Link
+                to="/infos-pratiques"
                 className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Infos Pratiques
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/plan"
+              <Link
+                to="/plan-du-parc"
                 className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Plan du Parc
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

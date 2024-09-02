@@ -49,7 +49,7 @@ function ParcMap() {
             key={attraction.id}
             className={`absolute divide-y divide-red-800 pt-0 text-center text-lg font-medium p-2 transition-all duration-300 ease-in-out rounded ${
               hoveredAttraction && hoveredAttraction.id === attraction.id
-                ? 'bg-redZombie w-[200px]' // Taille étendue et couleur lorsqu'elle est survoléeµ
+                ? 'bg-redZombie w-[200px]' // Taille étendue et couleur lorsqu'elle est survolée
                 : 'bg-red-800 inline-block w-[110px] h-[25px]' // Taille par défaut et couleur pour les non-survolés
             }`}
             style={{

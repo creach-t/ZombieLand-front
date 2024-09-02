@@ -11,6 +11,7 @@ import Infos from '../pages/Infos';
 import Booking from '../pages/Booking';
 import Activities from '../pages/Activities';
 import Login from '../pages/Login';
+import Contact from '../pages/Contact';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/infos-pratiques" element={<Infos />} />
         <Route path="/reserver" element={<Booking />} />
         <Route path="/attractions" element={<Activities />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
