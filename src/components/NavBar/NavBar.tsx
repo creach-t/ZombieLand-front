@@ -37,6 +37,7 @@ function NavBar() {
                 clipRule="evenodd"
               />
             </svg>
+
           </Link>
 
           <Link
