@@ -1,8 +1,19 @@
 import { Link } from 'react-router-dom';
 import desktopImage from '../../assets/img/desktop/attraction-zombie-city-zombieland.webp';
 import mobileImage from '../../assets/img/mobile/attraction-zombie-city-mob-zombieland.webp';
+import { useState } from 'react';
+import attractionsData from '../../data/attractions.json';
 
+interface AttractionDetail {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  category: string;
+}
+// dynamisation
 function ActivityDetail() {
+  const [attractionDetail, setAttractionDetail] = useState;
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-xl mx-auto ">
       <h1 className="self-start text-6xl">
