@@ -12,6 +12,7 @@ import Booking from '../pages/Booking';
 import Activities from '../pages/Activities';
 import Login from '../pages/Login';
 import Contact from '../pages/Contact';
+import ActivityDetail from '../pages/ActivityDetail';
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route path="/attractions" element={<Activities />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/attractions/:id" element={<ActivityDetail />} />
+        <Route path="/booking" element={<Booking />} />
       </Routes>
       <Footer />
     </div>
