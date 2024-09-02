@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -13,7 +14,7 @@ interface Activity {
   capacity: number;
   x: number;
   y: number;
-  categories: Category[]; // Assurez-vous que chaque activité inclut ses catégories associées
+  categories: Category[];
 }
 
 interface Category {
@@ -25,6 +26,7 @@ function Activities() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   useEffect(() => {
     const loadActivities = async () => {
@@ -34,7 +36,7 @@ function Activities() {
         );
         setActivities(response.data);
       } catch (error) {
-        console.log('Erreur lors du chargement des activités:', error);
+        console.error('Erreur lors du chargement des activités:', error);
       }
     };
 
@@ -45,7 +47,7 @@ function Activities() {
         );
         setCategories(response.data);
       } catch (error) {
-        console.log('Erreur lors du chargement des catégories:', error);
+        console.error('Erreur lors du chargement des catégories:', error);
       }
     };
 
@@ -53,21 +55,27 @@ function Activities() {
     loadCategories();
   }, []);
 
-  const filteredActivities =
-    selectedCategory === null
-      ? activities
-      : activities.filter((activity) =>
-          activity.categories.some(
-            (category) => category.category_id === selectedCategory
-          )
-        );
+  // Filtrage combiné des activités par catégorie et par terme de recherche
+  const filteredActivities = activities.filter((activity) => {
+    const matchesCategory =
+      selectedCategory === null ||
+      activity.categories.some(
+        (category) => category.category_id === selectedCategory
+      );
+
+    const matchesSearchTerm = activity.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return matchesCategory && matchesSearchTerm;
+  });
 
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center px-20 pt-10">
       <h2 className="self-start text-6xl">
         LES <span className="text-redZombie">ATTRACTIONS</span>
       </h2>
-      <form className="inline-flex justify-center items-center py-14 gap-10 w-full max-sm:block">
+      <form className="inline-flex justify-center items-center py-14 gap-10 w-full max-sm:block relative">
         <label
           htmlFor="activity"
           className="cursor-pointer input input-bordered flex items-center gap-2 relative xl:w-[600px] lg:w-[500px] md:w-[400px] sm:w-[300px]"
@@ -78,7 +86,10 @@ function Activities() {
             id="activity"
             className="grow bg-white text-black p-3 pr-14 max-sm:mb-5 text-2xl rounded-xl"
             placeholder="Votre recherche..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -93,7 +104,7 @@ function Activities() {
           </svg>
         </label>
         <select
-          className="rounded-xl text-white text-3xl pl-5 pr-10 h-14 bg-redZombie focus:outline-none"
+          className="rounded-xl text-white text-3xl pl-5 pr-10 h-14 bg-redZombie focus:outline-none cursor-pointer"
           onChange={(e) => {
             const categoryId =
               e.currentTarget.value === ''
@@ -101,6 +112,7 @@ function Activities() {
                 : Number(e.currentTarget.value);
             setSelectedCategory(categoryId);
           }}
+          value={selectedCategory ?? ''}
         >
           <option value="">Catégories</option>
           {categories.map((currentCategory) => (
