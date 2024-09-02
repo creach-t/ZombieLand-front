@@ -29,7 +29,6 @@ module.exports = {
     },
   ],
   plugins: ['@typescript-eslint', 'react', 'react-refresh', 'prettier'],
-  ignorePatterns: ['postcss.config.js'], // Add this line
   rules: {
     'react-refresh/only-export-components': [
       'warn',
