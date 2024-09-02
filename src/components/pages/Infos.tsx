@@ -2,13 +2,12 @@ import euroImg from '../../assets/img/desktop/infos/Euro.svg';
 import clockImg from '../../assets/img/desktop/infos/Clock.svg';
 import skullImg from '../../assets/img/desktop/infos/Skull.svg';
 import gpsImg from '../../assets/img/desktop/infos/Gps.svg';
-import mapImg from '../../assets/img/desktop/infos/map.svg';
 
 function Infos() {
   return (
     <div className="mt-40 main-container">
       <section className="price-schedules-section flex flex-col px-10 md:px-24 max-w-7xl m-auto bg-black">
-        <h2 className="text-5xl text-center md:text-left uppercase mb-8">
+        <h2 className="text-6xl text-center md:text-left uppercase mb-8">
           Infos <em className="text-redZombie">Pratiques</em>
         </h2>
         <div className="flex mb-10">
