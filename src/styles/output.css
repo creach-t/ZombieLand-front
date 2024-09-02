@@ -66,6 +66,7 @@ html,
 */
 
 body {
+  background-color: #000000;
   margin: 0;
   /* 1 */
   line-height: inherit;
@@ -74,7 +75,6 @@ body {
 }
 
 #root {
-  height: 100vh;
   width: 100%;
 }
 
