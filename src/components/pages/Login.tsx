@@ -1,10 +1,10 @@
 function Login() {
   return (
-    <div className="w-4/5 m-auto">
-      <h2 className="text-7xl uppercase text-center mb-16">
+    <div className="w-4/5 md:max-w-5xl m-auto">
+      <h2 className="text-6xl uppercase text-center md:text-left mb-16">
         Log<em className="text-redZombie">in</em>
       </h2>
-      <form action="#">
+      <form action="#" className="md:flex md:flex-col">
         <div className="mb-6 flex flex-col">
           <label htmlFor="mail" className="text-3xl leading-loose">
             E-mail
@@ -35,7 +35,7 @@ function Login() {
             Mot de passe oublié ?
           </a>
         </div>
-        <p className="bg-redZombie rounded-xl p-2 mb-2 hidden">
+        <p className="bg-redZombie rounded-xl p-2 mb-2 invisible">
           Nom d'utilisateur ou mot de passe non reconnu
         </p>
         <button
