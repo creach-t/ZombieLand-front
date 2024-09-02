@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Escape Room",
+    "description_long": "Plongez dans l'antre des zombies où chaque minute compte. Trouvez des indices et résolvez des énigmes pour vous échapper avant que les zombies ne se réveillent. Une aventure immersive remplie de suspense et de frissons vous attend, mettant à l'épreuve votre esprit et votre courage. Oserez-vous tenter l'expérience ?",
+    "description_short": "Échappez-vous avant le réveil des zombies !",
+    "duration": 8,
+    "age_min": 13,
+    "x": 15,
+    "y": 40
+  },
+  {
+    "id": 2,
+    "name": "Haunted House",
+    "description_long": "Entrez dans la maison hantée la plus terrifiante que vous n'ayez jamais visitée. Chaque pièce réserve une surprise, chaque couloir cache une menace. Des spectres aux rires maléfiques aux esprits errants, affrontez vos plus grandes peurs dans un labyrinthe d'horreur. Survivrez-vous à cette aventure glaçante ?",
+    "description_short": "Explorez la maison hantée la plus terrifiante !",
+    "duration": 15,
+    "age_min": 16,
+    "x": 88,
+    "y": 38
+  },
+  {
+    "id": 3,
+    "name": "Bloody Escape",
+    "description_long": "Vous avez été piégé dans une maison où le sang coule à flots. Avec le temps qui s'égrène rapidement, trouvez la sortie avant que le cauchemar ne vous engloutisse. Relevez le défi dans une course contre la montre pleine de surprises terrifiantes et d'énigmes sanglantes à résoudre. Ferez-vous partie des rares à survivre ?",
+    "description_short": "Échappez-vous d'une maison remplie de terreur sanglante !",
+    "duration": 10,
+    "age_min": 14,
+    "x": 88,
+    "y": 19
+  },
+  {
+    "id": 4,
+    "name": "Horror Carnival",
+    "description_long": "Entrez dans le Carnaval de l'Horreur, un parc d'attractions où le rire se transforme en cri. Chaque manège vous plonge dans des frayeurs inimaginables, des clowns maléfiques aux illusions terrifiantes. Survivrez-vous aux attractions ou serez-vous la prochaine victime de ce carnaval diabolique ?",
+    "description_short": "Affrontez vos peurs au Carnaval de l'Horreur !",
+    "duration": 12,
+    "age_min": 15,
+    "x": 70,
+    "y": 29
+  },
+  {
+    "id": 5,
+    "name": "Zombie City",
+    "description_long": "Zombie City vous plonge dans une épreuve ultime de survie en pleine ville envahie par des hordes de zombies affamés. Trouvez des indices, déjouez les pièges et échappez-vous des ruelles sombres et des égouts avant qu'il ne soit trop tard. Une heure pour sauver votre vie ou devenir une proie de plus pour les morts-vivants.",
+    "description_short": "Survivez à une ville envahie par des zombies affamés !",
+    "duration": 60,
+    "age_min": 18,
+    "x": 52,
+    "y": 84
+  },
+  {
+    "id": 6,
+    "name": "Damned Path",
+    "description_long": "Le Chemin Maudit vous entraîne dans une aventure à travers une forêt sombre et inquiétante, où chaque pas peut être le dernier. Des créatures cauchemardesques rôdent dans l'ombre, prêtes à attaquer. Trouvez votre chemin ou devenez une légende terrifiante de plus de ce sentier maudit.",
+    "description_short": "Affrontez les dangers d'un sentier maudit !",
+    "duration": 20,
+    "age_min": 17,
+    "x": 12,
+    "y": 69
+  },
+  {
+    "id": 7,
+    "name": "Zombie Apocalypse",
+    "description_long": "Préparez-vous pour l'Apocalypse Zombie ! Vous devez naviguer à travers des terrains infestés de zombies tout en cherchant des provisions et des armes pour survivre. Une expérience de survie intense qui mettra vos nerfs à rude épreuve. Serez-vous prêt à tout pour rester en vie ?",
+    "description_short": "Survivez à l'Apocalypse Zombie !",
+    "duration": 30,
+    "age_min": 16,
+    "x": 88,
+    "y": 58
+  },
+  {
+    "id": 8,
+    "name": "Infected Lab",
+    "description_long": "Bienvenue dans le laboratoire infecté, un lieu sinistre où des expériences scientifiques ont mal tourné. Explorez les couloirs sombres et les salles abandonnées, mais faites attention : des créatures mutantes et des pièges mortels vous attendent à chaque coin. Trouvez l'antidote avant qu'il ne soit trop tard.",
+    "description_short": "Évitez les pièges dans le laboratoire infecté !",
+    "duration": 25,
+    "age_min": 15,
+    "x": 14,
+    "y": 90
+  },
+  {
+    "id": 9,
+    "name": "Zombie Forest",
+    "description_long": "Dans la Forêt des Zombies, les arbres ne sont pas les seuls à surveiller. Des morts-vivants se cachent derrière chaque tronc et attendent leur prochaine victime. Avec seulement une lampe torche, traversez cette forêt sombre et menaçante. Trouverez-vous la sortie ou finirez-vous comme eux ?",
+    "description_short": "Traversez une forêt sombre infestée de zombies !",
+    "duration": 35,
+    "age_min": 16,
+    "x": 48,
+    "y": 20
+  },
+  {
+    "id": 10,
+    "name": "Pandemic Panic",
+    "description_long": "Plongez dans un laboratoire clandestin en plein cœur d'une pandémie où un virus mortel transforme les gens en zombies affamés. Votre mission : trouver l'antidote caché parmi les énigmes complexes et échapper à l'infection imminente. Attention, chaque minute qui passe rapproche les zombies affamés. Seuls les esprits les plus vifs et les cœurs les plus courageux survivront à ce chaos. Serez-vous assez rapide pour trouver le remède et sauver le monde, ou succomberez-vous à la terreur virale ?",
+    "description_short": "Trouvez l'antidote et échappez aux zombies affamés !",
+    "duration": 45,
+    "age_min": 14,
+    "x": 88,
+    "y": 75
+  },
+  {
+    "id": 11,
+    "name": "Dead Zone",
+    "description_long": "Entrez dans la Dead Zone, une zone interdite où la mort et le danger sont omniprésents. Le terrain est jonché de pièges mortels, et les créatures qui rôdent sont toujours à l'affût. Trouvez votre chemin à travers cette terre désolée sans devenir une nouvelle victime. Seuls les plus braves survivront.",
+    "description_short": "Survivez dans la zone interdite de la Dead Zone.",
+    "duration": 40,
+    "age_min": 18,
+    "x": 57,
+    "y": 67
+  },
+  {
+    "id": 12,
+    "name": "Terror's Tower",
+    "description_long": "Montez la Tour de la Terreur, où chaque étage présente de nouveaux défis et des frayeurs encore plus grandes. Du sous-sol sombre aux hauteurs vertigineuses, chaque niveau vous confronte à vos pires cauchemars. Arriverez-vous au sommet ou succomberez-vous à la peur avant d'atteindre la fin ?",
+    "description_short": "Grimpez la Tour de la Terreur et défiez vos peurs !",
+    "duration": 50,
+    "age_min": 17,
+    "x": 50,
+    "y": 50
+  }
+]
