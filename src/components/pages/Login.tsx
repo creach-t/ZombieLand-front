@@ -1,7 +1,7 @@
 function Login() {
   return (
     <div className="w-4/5 md:max-w-5xl m-auto">
-      <h2 className="text-6xl uppercase text-center md:text-left mb-16">
+      <h2 className="text-6xl uppercase text-center md:text-left mb-12">
         Log<em className="text-redZombie">in</em>
       </h2>
       <form action="#" className="md:flex md:flex-col">
