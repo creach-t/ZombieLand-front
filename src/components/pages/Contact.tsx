@@ -81,7 +81,7 @@ function Contact() {
             />
             <label htmlFor="privacyPolicy-checkbox" className="text-3xl">
               En cochant cette case, j'accepte la Politique de confidentialité
-              du site{' '}
+              du site
             </label>
           </div>
           <button
