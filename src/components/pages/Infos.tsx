@@ -7,12 +7,12 @@ import mapImg from '../../assets/img/desktop/infos/map.svg';
 function Infos() {
   return (
     <div className="mt-40 main-container">
-      <section className="price-schedules-section flex flex-col px-24 max-w-7xl m-auto bg-black">
-        <h2 className="text-5xl uppercase mb-8">
+      <section className="price-schedules-section flex flex-col px-10 md:px-24 max-w-7xl m-auto bg-black">
+        <h2 className="text-5xl text-center md:text-left uppercase mb-8">
           Infos <em className="text-redZombie">Pratiques</em>
         </h2>
-        <div className="flex">
-          <img src={euroImg} className="mr-8 w-20" alt="icone euro" />
+        <div className="flex mb-10">
+          <img src={euroImg} className="mr-8 w-16 md:w-20" alt="icone euro" />
           <div className="flex flex-col justify-center">
             <h3 className="text-4xl text-redZombie">Tarifs</h3>
             <p className="text-3xl">
@@ -21,8 +21,8 @@ function Infos() {
             </p>
           </div>
         </div>
-        <div className="text-center m-8">
-          <em className="text-5xl text-redZombie">66,66€</em>
+        <div className="text-center mb-10">
+          <em className="text-7xl text-redZombie">66,66€</em>
         </div>
         <div>
           <div className="flex">
@@ -35,7 +35,7 @@ function Infos() {
               </p>
             </div>
           </div>
-          <div className="flex justify-center items-center ml-20">
+          <div className="flex justify-center items-center md:ml-20 mb-10">
             <ul className="mt-8">
               <li className="flex items-center mb-6">
                 <img src={skullImg} alt="icone crane" />
@@ -85,9 +85,9 @@ function Infos() {
           </div>
         </div>
       </section>
-      <section className="how-to-come bg-red-700 pb-10">
+      <section className="how-to-come bg-redZombie pb-10">
         <div className="section-container max-w-7xl m-auto">
-          <div className="section-title flex mx-24 pt-16 items-center">
+          <div className="section-title flex mx-10 md:mx-24 pt-16 items-center">
             <img src={gpsImg} className="mr-8 w-20" alt="GPS Icon" />
             <div className="">
               <h2 className="text-4xl text-black">Venir au parc</h2>
@@ -98,9 +98,14 @@ function Infos() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 mt-16 gap-6 text-3xl leading-loose items-center">
-            <img src={mapImg} alt="map of how to come to the parc" />
-            <div className="means-of-transportation flex flex-col">
+          <div className="md:grid md:grid-cols-2 mt-16 gap-6 text-3xl leading-loose items-center">
+            <iframe
+              title="map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2626.0482887118997!2d2.323566812376017!3d48.83821760200589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671c96b3d5b29%3A0x791b7d9ef14e006f!2sCimeti%C3%A8re%20du%20Montparnasse!5e0!3m2!1sfr!2sfr!4v1725263621045!5m2!1sfr!2sfr"
+              loading="lazy"
+              className="w-full h-96 md:h-full"
+            />
+            <div className="means-of-transportation flex flex-col mx-10 md:mx-0">
               <div className="adress flex">
                 <h3 className="text-black">Adresse :</h3>
                 <p className="ml-2">66 rue de l'Enfer, 75000 Paris, France</p>

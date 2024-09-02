@@ -72,6 +72,7 @@ body {
   /* 2 */
   font-family: 'League Gothic', sans-serif;
   background-color: #000;
+  overflow-x: hidden;
 }
 
 #root {
