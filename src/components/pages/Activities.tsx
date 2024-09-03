@@ -55,7 +55,6 @@ function Activities() {
     loadCategories();
   }, []);
 
-  // Filtrage combiné des activités par catégorie et par terme de recherche
   const filteredActivities = activities.filter((activity) => {
     const matchesCategory =
       selectedCategory === null ||
@@ -138,7 +137,7 @@ function Activities() {
               {currentActivity.name}
             </h3>
             <Link
-              to="/attractions"
+              to={`/attractions/${currentActivity.activity_id}`}
               type="button"
               className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
             >
