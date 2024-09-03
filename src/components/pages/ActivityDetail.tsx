@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import desktopImage from '../../assets/img/desktop/attraction-zombie-city-zombieland.webp';
 import mobileImage from '../../assets/img/mobile/attraction-zombie-city-mob-zombieland.webp';
-import { useState } from 'react';
-import attractionsData from '../../data/attractions.json';
 
 interface AttractionDetail {
   id: number;
@@ -13,13 +12,18 @@ interface AttractionDetail {
 }
 // dynamisation
 function ActivityDetail() {
-  const [attractionDetail, setAttractionDetail] = useState;
+  const [attractionDetail, setAttractionDetail] =
+    useState<AttractionDetail> || null(null);
+
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-xl mx-auto ">
       <h1 className="self-start text-6xl">
         NOM <span className="text-redZombie ali">ATTRACTIONS</span>
       </h1>
-      <button className="text-white text-2xl bg-red-700 font-bold rounded-xl px-3 py-1 self-start	">
+      <button
+        type="submit"
+        className="text-white text-2xl bg-red-700 font-bold rounded-xl px-3 py-1 self-start	"
+      >
         Nigthmare terror
       </button>
       <section className="flex flex-wrap mt-4 justify-center">

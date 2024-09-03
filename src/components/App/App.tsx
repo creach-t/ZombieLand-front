@@ -13,6 +13,7 @@ import Activities from '../pages/Activities';
 import Login from '../pages/Login';
 import Contact from '../pages/Contact';
 import ActivityDetail from '../pages/ActivityDetail';
+import MyBookings from '../pages/MyBookings';
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/attractions/:id" element={<ActivityDetail />} />
-        <Route path="/booking" element={<Booking />} />
+        <Route path="/mes-reservations" element={<MyBookings />} />
       </Routes>
       <Footer />
     </div>
