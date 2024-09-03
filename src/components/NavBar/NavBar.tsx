@@ -14,16 +14,16 @@ function NavBar() {
 
   return (
     <nav className="bg-black fixed w-full z-20 top-0 start-0 border-b border-red-700">
-      <div className="max-w-screen-2xl flex items-center justify-around mx-auto p-4">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <h1 className="badgrunge self-center text-7xl lg:text-7xl md:text-6xl sm:text-7xl font-semibold whitespace-nowrap dark:text-white">
+          <h1 className="badgrunge self-center text-7xl font-semibold whitespace-nowrap dark:text-white">
             ZOMBIELAND
           </h1>
         </Link>
-        <div className="flex items-center md:order-2 ">
+        <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <Link to="/se-connecter" aria-label="login">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -37,6 +37,7 @@ function NavBar() {
                 clipRule="evenodd"
               />
             </svg>
+
           </Link>
 
           <Link
@@ -80,10 +81,10 @@ function NavBar() {
           }
           id="navbar-sticky"
         >
-          <ul className="flex flex-col lg:gap-10 md:gap-3 p-4 md:p-0 mt-4 font-medium rounded-lg rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-black">
+          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-black">
             <li>
               <Link
-                to="/attractions#top"
+                to="/attractions"
                 className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Les attractions

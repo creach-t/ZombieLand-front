@@ -53,6 +53,9 @@ function Login() {
           Créer un compte
         </Link>{' '}
       </p>
+      <div className="m-40">
+        <h1>Login</h1>
+      </div>
     </div>
   );
 }
