@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 interface User {
@@ -39,6 +39,10 @@ function MyAccount() {
         );
         setUser(response.data);
       } catch (error) {
+        console.error(
+          'Erreur lors de la récupération des infos utilisateur:',
+          error
+        );
         setMessage({
           type: 'error',
           content: 'Impossible de récupérer les informations utilisateur.',
@@ -71,6 +75,7 @@ function MyAccount() {
         content: 'Vos informations ont été mises à jour avec succès.',
       });
     } catch (error) {
+      console.error('Erreur lors de la mise à jour des informations:', error);
       setMessage({
         type: 'error',
         content:
@@ -99,6 +104,7 @@ function MyAccount() {
       });
       navigate('/login');
     } catch (error) {
+      console.error('Erreur lors du chargement des activités:', error);
       setMessage({
         type: 'error',
         content:
