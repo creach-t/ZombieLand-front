@@ -70,10 +70,10 @@ function Activities() {
   });
 
   return (
-    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center px-20 pt-10">
-      <h2 className="self-start text-6xl">
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-xl mx-auto">
+      <h1 className="self-start text-6xl text-white">
         LES <span className="text-redZombie">ATTRACTIONS</span>
-      </h2>
+      </h1>
       <form className="inline-flex justify-center items-center py-14 gap-10 w-full max-sm:block relative">
         <label
           htmlFor="activity"
@@ -133,7 +133,7 @@ function Activities() {
             }}
             className="w-[400px] md:w-[200px] lg:w-[400px] h-[400px] md:h-[350px] lg:h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center"
           >
-            <h3 className="badgrunge text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
+            <h3 className="badgrunge text-white text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
               {currentActivity.name}
             </h3>
             <Link
