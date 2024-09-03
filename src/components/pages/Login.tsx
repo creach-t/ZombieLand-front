@@ -25,8 +25,8 @@ function Login() {
           </label>
           <input
             type="text"
-            id="mail"
-            name="mail"
+            id="password"
+            name="password"
             placeholder="Entrez votre mot de passe"
             className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
           />
@@ -38,7 +38,7 @@ function Login() {
           </a>
         </div>
         <p className="bg-redZombie rounded-xl p-2 mb-2 invisible">
-          Nom d'utilisateur ou mot de passe non reconnu
+          Nom d&apos;utilisateur ou mot de passe non reconnu
         </p>
         <button
           type="submit"
