@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 interface User {
   user_id: number;
@@ -17,6 +17,7 @@ function MyAccount() {
     content: string;
   } | null>(null);
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -27,7 +28,6 @@ function MyAccount() {
     }
 
     const fetchUser = async () => {
-      const id = localStorage.getItem('user_id');
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/account/${id}`,
@@ -47,7 +47,7 @@ function MyAccount() {
     };
 
     fetchUser();
-  }, [navigate]);
+  }, [id, navigate]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,7 +55,7 @@ function MyAccount() {
 
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/account/${user?.user_id}/update`,
+        `${import.meta.env.VITE_API_URL}/account/${id}/update`,
         {
           /* données utilisateur mises à jour */
         },
