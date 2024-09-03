@@ -13,7 +13,8 @@ interface AttractionDetail {
 // dynamisation
 function ActivityDetail() {
   const [attractionDetail, setAttractionDetail] =
-    useState<AttractionDetail>(null);
+    useState<AttractionDetail> || null(null);
+
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-xl mx-auto ">
       <h1 className="self-start text-6xl">
