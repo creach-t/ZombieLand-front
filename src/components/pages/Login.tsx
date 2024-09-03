@@ -49,10 +49,10 @@ function Login() {
         </button>
       </form>
       <p className="text-center text-2xl mb-40">
-        Pas de compte ?{' '}
+        Pas de compte ?
         <Link className="text-redZombie" to="/inscription">
           Créer un compte
-        </Link>{' '}
+        </Link>
       </p>
       <div className="m-40">
         <h1>Login</h1>
