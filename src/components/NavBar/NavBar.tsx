@@ -83,7 +83,7 @@ function NavBar() {
           <ul className="flex flex-col lg:gap-10 md:gap-3 p-4 md:p-0 mt-4 font-medium rounded-lg rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-black">
             <li>
               <Link
-                to="/attractions#top"
+                to="/attractions"
                 className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded md:bg-transparent md:p-0"
               >
                 Les attractions
