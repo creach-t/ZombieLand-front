@@ -55,7 +55,6 @@ function Activities() {
     loadCategories();
   }, []);
 
-  // Filtrage combiné des activités par catégorie et par terme de recherche
   const filteredActivities = activities.filter((activity) => {
     const matchesCategory =
       selectedCategory === null ||

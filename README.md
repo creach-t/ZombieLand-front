@@ -5,7 +5,7 @@ Welcome to the ZombieLand frontend project, a post-apocalyptic themed amusement 
 ## **Technologies Used**
 
 - **React.js**: A JavaScript library for building user interfaces. Used to create dynamic and interactive components for the website.
-  
+
 - **React Router**: A standard library for routing in React. It enables navigation among different views of various components in a React application, changing the browser URL, and keeping the UI in sync with the URL.
 
 - **Tailwind CSS**: A utility-first CSS framework for rapidly building custom designs. It provides low-level utility classes that let you build completely custom designs without leaving your HTML.
