@@ -4,16 +4,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 
-interface User {
-  user_id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  role: string;
-}
-
 function MyAccount() {
-  const [user, setUser] = useState<User | null>(null);
+  const { user, setUser } = useContext(UserContext);
   const [message, setMessage] = useState<{
     type: 'success' | 'error';
     content: string;
@@ -45,6 +37,7 @@ function MyAccount() {
             },
           }
         );
+
         setUser(response.data);
         setFirstName(response.data.first_name);
         setLastName(response.data.last_name);

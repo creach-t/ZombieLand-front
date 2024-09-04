@@ -34,6 +34,7 @@ function Login() {
       localStorage.setItem('token', token);
 
       const decodedUser = jwtDecode(token);
+
       setUser(decodedUser);
 
       navigate(`/`);
