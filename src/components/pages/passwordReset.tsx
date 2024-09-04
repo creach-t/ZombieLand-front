@@ -16,7 +16,7 @@ function PasswordReset() {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/send-reset-email`,
+        `${import.meta.env.VITE_API_URL}/account/send-reset-email`,
         { email },
         {
           headers: {
@@ -28,10 +28,10 @@ function PasswordReset() {
       if (response.status === 200) {
         navigate('/login');
       } else {
-        setError('Erreur lors de l\'envoi de l\'email.');
+        setError('Erreur lors de l\'envoi de l\'email. 1');
       }
     } catch (error) {
-      setError('Erreur lors de l\'envoi de l\'email.');
+      setError('Erreur lors de l\'envoi de l\'email. 2');
     }
   };
 

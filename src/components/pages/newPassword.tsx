@@ -17,7 +17,7 @@ function NewPassword() {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/reset-password`,
+        `${import.meta.env.VITE_API_URL}/account/reset-password`,
         { password },
         {
           headers: {
