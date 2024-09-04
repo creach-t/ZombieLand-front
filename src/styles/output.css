@@ -245,10 +245,7 @@ textarea {
   padding: 0;
   /* 3 */
 }
-input{
-  color: black;
- 
-}
+
 /*
 Remove the inheritance of text transform in Edge and Firefox.
 */
@@ -610,7 +607,6 @@ a:hover {
 
 body {
   font-family: "League Gothic", sans-serif;
-  color: #fff;
   margin: 0;
   display: flex;
   place-items: center;
