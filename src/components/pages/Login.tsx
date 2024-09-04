@@ -39,11 +39,11 @@ function Login() {
   };
 
   return (
-    <div className="w-4/5 md:max-w-5xl mt-40 m-auto">
-      <h2 className="text-6xl uppercase text-center md:text-left mb-12">
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <h1 className="self-center md:self-start text-6xl">
         Log<em className="text-redZombie">in</em>
-      </h2>
-      <form onSubmit={handleSubmit} className="md:flex md:flex-col">
+      </h1>
+      <form onSubmit={handleSubmit} className="md:flex md:flex-col py-14 w-4/5">
         <div className="mb-6 flex flex-col">
           <label htmlFor="mail" className="text-3xl leading-loose">
             E-mail
@@ -57,7 +57,7 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="mb-10 flex flex-col">
+        <div className="mb-10 flex flex-col ">
           <label htmlFor="password" className="text-3xl leading-loose">
             Mot de passe
           </label>
@@ -81,7 +81,7 @@ function Login() {
         )}
         <button
           type="submit"
-          className="w-full mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center"
+          className=" mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl w-full"
         >
           Me connecter
         </button>
@@ -92,7 +92,7 @@ function Login() {
           Créer un compte
         </Link>
       </p>
-    </div>
+    </main>
   );
 }
 

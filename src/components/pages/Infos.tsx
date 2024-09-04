@@ -2,19 +2,18 @@ import euroImg from '../../assets/img/desktop/infos/Euro.svg';
 import clockImg from '../../assets/img/desktop/infos/Clock.svg';
 import skullImg from '../../assets/img/desktop/infos/Skull.svg';
 import gpsImg from '../../assets/img/desktop/infos/Gps.svg';
-import mapImg from '../../assets/img/desktop/infos/map.svg';
 
 function Infos() {
   return (
-    <div className="mt-40 main-container">
-      <section className="price-schedules-section flex flex-col px-10 md:px-24 max-w-7xl m-auto bg-black">
-        <h2 className="text-5xl text-center md:text-left uppercase mb-8">
-          Infos <em className="text-redZombie">Pratiques</em>
-        </h2>
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <h1 className="self-center md:self-start text-6xl">
+        Infos <em className="text-redZombie">Pratiques</em>
+      </h1>
+      <section className="price-schedules-section flex flex-col px-10 md:px-24 max-w-7xl m-auto bg-black py-14">
         <div className="flex mb-10">
           <img src={euroImg} className="mr-8 w-16 md:w-20" alt="icone euro" />
           <div className="flex flex-col justify-center">
-            <h3 className="text-4xl text-redZombie">Tarifs</h3>
+            <h2 className="text-4xl text-redZombie">Tarifs</h2>
             <p className="text-3xl">
               Prêt à braver les ténèbres et affronter vos peurs ? Découvrez
               notre tarif unique... à vos risques et périls !
@@ -28,7 +27,7 @@ function Infos() {
           <div className="flex">
             <img src={clockImg} className="mr-8 w-20" alt="icone horloge" />
             <div className="flex flex-col">
-              <h3 className="text-4xl text-redZombie">Horaires d'ouverture</h3>
+              <h2 className="text-4xl text-redZombie">Horaires d'ouverture</h2>
               <p className="text-3xl">
                 Préparez-vous à plonger dans l'horreur... mais assurez-vous de
                 ne pas arriver trop tard, les zombies n'attendent personne !
@@ -85,7 +84,7 @@ function Infos() {
           </div>
         </div>
       </section>
-      <section className="how-to-come bg-redZombie pb-10">
+      <section className="how-to-come bg-redZombie pb-10 w-screen">
         <div className="section-container max-w-7xl m-auto">
           <div className="section-title flex mx-10 md:mx-24 pt-16 items-center">
             <img src={gpsImg} className="mr-8 w-20" alt="GPS Icon" />
@@ -161,7 +160,7 @@ function Infos() {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
 

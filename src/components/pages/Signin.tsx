@@ -32,11 +32,15 @@ function Signin() {
     }
   };
   return (
-    <div className="w-4/5 md:max-w-5xl mt-40 m-auto">
-      <h2 className="text-6xl uppercase text-center md:text-left mb-12">
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <h1 className="self-center md:self-start text-6xl">
         Sign<em className="text-redZombie">In</em>
-      </h2>
-      <form onSubmit={handleSubmit} action="#" className="md:flex md:flex-col">
+      </h1>
+      <form
+        onSubmit={handleSubmit}
+        action="#"
+        className="md:flex md:flex-col w-4/5 py-14"
+      >
         <div className="mb-6 flex flex-col">
           <label htmlFor="mail" className="text-3xl leading-loose">
             Prénom
@@ -98,12 +102,12 @@ function Signin() {
         </p>
         <button
           type="submit"
-          className="w-full mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center"
+          className="w-full mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl self-center"
         >
           M&apos;inscrire
         </button>
       </form>
-    </div>
+    </main>
   );
 }
 

@@ -2,18 +2,17 @@ import contactImg from '../../assets/img/desktop/Zombie-contact.webp';
 
 function Contact() {
   return (
-    <div className="main-container mt-40">
-      <div className="px-20">
-        <h2 className="text-6xl text-center md:text-left uppercase mb-6">
-          Nous <em className="text-redZombie">contacter</em>
-        </h2>
-        <p className="text-3xl hidden md:block">
-          Vous avez des questions, des remarques ou souhaitez simplement crier à
-          l'aide ? Nous sommes là pour vous écouter... avant que les zombies ne
-          le fassent !{' '}
-        </p>
-      </div>
-      <div className="md:grid md:grid-cols-2 md:items-center md:px-20">
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <h1 className="self-center md:self-start text-6xl">
+        Nous <em className="text-redZombie">contacter</em>
+      </h1>
+      <p className="text-3xl self-start  hidden md:block">
+        Vous avez des questions, des remarques ou souhaitez simplement crier à
+        l'aide ? Nous sommes là pour vous écouter... avant que les zombies ne le
+        fassent !{' '}
+      </p>
+
+      <div className="md:grid md:grid-cols-2 md:items-center ">
         <img
           src={contactImg}
           alt="zombie au téléphone"
@@ -92,7 +91,7 @@ function Contact() {
           </button>
         </form>
       </div>
-    </div>
+    </main>
   );
 }
 
