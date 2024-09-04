@@ -20,7 +20,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/login/login`,
+        `${import.meta.env.VITE_API_URL}/login`,
         {
           email,
           password,
@@ -75,7 +75,9 @@ function Login() {
             Mot de passe oublié ?
           </a>
         </div>
-        {error && <p className="bg-redZombie rounded-xl p-2 mb-2">{error}</p>}
+        {error && (
+          <p className="bg-redZombie text-2xl rounded-xl p-2 mb-2">{error}</p>
+        )}
         <button
           type="submit"
           className="w-full mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center"
