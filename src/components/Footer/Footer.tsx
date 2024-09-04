@@ -16,7 +16,7 @@ function Footer() {
     <footer className="w-screen bg-black text-white">
       <div className="flex flex-wrap gap-2 justify-around p-4 pb-0">
         <div className="w-[150px] ">
-          <h3 className="badgrunge text-3xl">ZombieLand</h3>
+          <h2 className="badgrunge text-3xl">ZombieLand</h2>
           <p className="">
             A seulement quelques minutes de Paris, ZombieLand est un parc de
             zombies immersif où l&apos;horreur devient réalité !

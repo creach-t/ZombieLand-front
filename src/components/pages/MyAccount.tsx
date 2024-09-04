@@ -114,10 +114,10 @@ function MyAccount() {
   };
 
   return (
-    <div className="w-3/4 mt-32 m-auto">
-      <h2 className="text-6xl text-center md:text-left mb-12">
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <h1 className="text-6xl text-center md:text-left mb-12">
         MON <em className="text-redZombie">COMPTE</em>
-      </h2>
+      </h1>
       <Link
         to="/mes-reservations"
         className="md:ml-40 sm:ml-0 text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
@@ -197,7 +197,7 @@ function MyAccount() {
           </button>
         </div>
       </form>
-    </div>
+    </main>
   );
 }
 

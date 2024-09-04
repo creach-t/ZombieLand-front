@@ -81,12 +81,12 @@ function Home() {
 
   return (
     <>
-      <section className="mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home.webp')] bg-cover bg-center bg-no-repeat">
+      <section className=" mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home.webp')] bg-cover bg-center bg-no-repeat">
         <div className="bg-black bg-opacity-10 h-full w-full max-[600px]:px-8 px-16 flex items-center">
           <div className="px-14 py-5 bg-black bg-opacity-40 max-w-[550px] min-h-[400px] flex flex-col justify-around [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
-            <h2 className="text-6xl [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
-              ZOMBIELAND
-            </h2>
+            <h1 className="text-6xl text-white [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)] uppercase">
+              Bienvenue à Zombieland
+            </h1>
             <p className="text-3xl [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
               Vous pensez pouvoir échapper à l'apocalypse ? Venez mettre vos
               nerfs à l'épreuve et découvrez si vous avez ce qu'il faut pour
@@ -130,9 +130,9 @@ function Home() {
           <img className="max-h-[350px]" src={zombieFace} alt="heads zombie" />
         </div>
         <div>
-          <h4 className="text-7xl mb-5">
+          <h2 className="text-7xl mb-5">
             Plongez dans l'<span className="text-redZombie">Apocalypse</span>
-          </h4>
+          </h2>
           <p className="max-w-[500px] text-2xl">
             Bienvenue chez ZombieLand, le premier parc de zombies immersif où
             l'horreur devient réalité ! Plongez dans un univers
@@ -148,32 +148,32 @@ function Home() {
         </div>
       </section>
       <section className="bg-redZombie min-h-[550px] text-center px-10 py-5">
-        <h4 className="text-7xl mb-5">
+        <h2 className="text-7xl mb-5">
           Infos <span className="text-black">Pratiques</span>
-        </h4>
+        </h2>
         <div className="flex flex-wrap justify-around items-center py-6">
           <Link to="/reserver">
             <div className="bg-black flex flex-col justify-center items-center gap-5 py-10 px-5 rounded-xl">
               <img className="w-[250px]" src={tickets} alt="tickets" />
-              <h5 className="text-white text-6xl badgrunge">BILLETTERIE</h5>
+              <h3 className="text-white text-6xl badgrunge">BILLETTERIE</h3>
             </div>
           </Link>
           <Link to="/infos-pratiques">
             <div className="bg-black flex flex-col justify-center items-center gap-5 py-10 px-5 rounded-xl">
               <img className="w-[250px]" src={compass} alt="compass" />
-              <h5 className="text-white text-6xl badgrunge">HORAIRES</h5>
+              <h3 className="text-white text-6xl badgrunge">HORAIRES</h3>
             </div>
           </Link>
           <Link to="/attractions">
             <div className="bg-black flex flex-col justify-center items-center gap-5 py-10 px-5 rounded-xl">
               <img className="w-[250px]" src={skull} alt="skull" />
-              <h5 className="text-white text-6xl badgrunge">ATTRACTIONS</h5>
+              <h3 className="text-white text-6xl badgrunge">ATTRACTIONS</h3>
             </div>
           </Link>
           <Link to="/plan-du-parc">
             <div className="bg-black flex flex-col justify-center items-center gap-5 py-10 px-5 rounded-xl">
               <img className="w-[250px]" src={plan} alt="plan" />
-              <h5 className="text-white text-6xl badgrunge">PLAN DU PARC</h5>
+              <h3 className="text-white text-6xl badgrunge">PLAN DU PARC</h3>
             </div>
           </Link>
         </div>
