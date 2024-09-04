@@ -1,20 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 import useWindowDimensions from './utils/dimensions';
-
-interface User {
-  userId: string;
-  email: string;
-  firstname: string;
-  lastname: string;
-  iat: number;
-  exp: number;
-}
 
 function NavBar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useContext(UserContext);
   const { width } = useWindowDimensions();
 
   useEffect(() => {
@@ -22,19 +13,6 @@ function NavBar() {
       setIsNavOpen(false);
     }
   }, [width, isNavOpen]);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      try {
-        const decodedToken = jwtDecode<User>(token);
-
-        setUser(decodedToken);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }, []);
 
   return (
     <nav className="bg-black fixed w-full z-20 top-0 start-0 border-b border-red-700">
