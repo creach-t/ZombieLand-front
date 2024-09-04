@@ -92,7 +92,7 @@ function ActivityDetail() {
         </p>
 
         <Link
-          to="/booking"
+          to="/reserver"
           type="button"
           className="text-white text-2xl text-center font-bold rounded-xl w-5/6 py-1 self-center mt-4 bg-transparent border-2 border-white"
         >
