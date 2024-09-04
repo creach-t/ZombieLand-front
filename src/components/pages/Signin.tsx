@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../api/api';
+import { useNavigate } from 'react-router-dom';
 
 function Signin() {
   const [firstName, setFirstName] = useState('');
@@ -7,24 +8,25 @@ function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await api.post('/signin', {
+      await api.post('/signin', {
         first_name: firstName,
         last_name: lastName,
         email,
         password,
       });
 
-      console.log('User created successfully:', response.data);
-
       setFirstName('');
       setLastName('');
       setEmail('');
       setPassword('');
       setErrorMessage('');
+
+      navigate('/se-connecter');
     } catch (error: unknown) {
       if (error instanceof Error) {
         setErrorMessage('il y a eu un souci pendant la création du compte');

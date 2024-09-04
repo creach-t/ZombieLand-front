@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import React, { useState, useContext } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -37,7 +38,8 @@ function Login() {
 
       setUser(decodedUser);
 
-      navigate(`/`);
+      navigate('/');
+
     } catch (error) {
       console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
       setError("Nom d'utilisateur ou mot de passe non reconnu");
