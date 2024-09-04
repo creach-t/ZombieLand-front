@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import map from '../../assets/img/desktop/zombieland_map.webp';
 import attractionsData from '../../data/attractions.json'; // Import direct du JSON
 
@@ -31,11 +31,11 @@ function ParcMap() {
   };
 
   return (
-    <div className="relative mt-[104px] max-w-[1200px] mx-auto flex gap-4 flex-wrap justify-center mb-12">
-      <h2 className="ml-4 w-full uppercase text-6xl text-white mb-8">
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <h1 className="self-center md:self-start text-6xl">
         Plan<span className="text-redZombie"> du parc</span>
-      </h2>
-      <div className="relative">
+      </h1>
+      <div className="relative ">
         {/* Image de la carte */}
         <img
           className="w-[500px] h-[500px]"
@@ -105,7 +105,7 @@ function ParcMap() {
           </div>
         ))}
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -1,5 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Routes, Route } from 'react-router-dom';
+import { UserProvider } from '../../context/UserContext';
 import Footer from '../Footer/Footer';
 
 import NavBar from '../NavBar/NavBar';
@@ -19,22 +20,24 @@ import MyBookings from '../pages/MyBookings';
 function App() {
   return (
     <div>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/mon-compte/:id" element={<MyAccount />} />
-        <Route path="/inscription" element={<Signin />} />
-        <Route path="/se-connecter" element={<Login />} />
-        <Route path="/plan-du-parc" element={<ParcMap />} />
-        <Route path="/infos-pratiques" element={<Infos />} />
-        <Route path="/reserver" element={<Booking />} />
-        <Route path="/attractions" element={<Activities />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path="/attractions/:id" element={<ActivityDetail />} />
-        <Route path="/mes-reservations" element={<MyBookings />} />
-      </Routes>
-      <Footer />
+      <UserProvider>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/mon-compte/:id" element={<MyAccount />} />
+          <Route path="/inscription" element={<Signin />} />
+          <Route path="/se-connecter" element={<Login />} />
+          <Route path="/plan-du-parc" element={<ParcMap />} />
+          <Route path="/infos-pratiques" element={<Infos />} />
+          <Route path="/reserver" element={<Booking />} />
+          <Route path="/attractions" element={<Activities />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/attractions/:id" element={<ActivityDetail />} />
+          <Route path="/mes-reservations" element={<MyBookings />} />
+        </Routes>
+        <Footer />
+      </UserProvider>
     </div>
   );
 }
