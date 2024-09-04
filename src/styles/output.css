@@ -135,6 +135,9 @@ a {
   text-decoration: inherit;
 }
 
+a:visited{
+  color: white;
+}
 /*
 Add the correct font weight in Edge and Safari.
 */
