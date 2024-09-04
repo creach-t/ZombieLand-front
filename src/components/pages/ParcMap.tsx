@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import map from '../../assets/img/desktop/zombieland_map.webp';
 import attractionsData from '../../data/attractions.json'; // Import direct du JSON
 

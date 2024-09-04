@@ -1,3 +1,4 @@
+import React from 'react';
 import euroImg from '../../assets/img/desktop/infos/Euro.svg';
 import clockImg from '../../assets/img/desktop/infos/Clock.svg';
 import skullImg from '../../assets/img/desktop/infos/Skull.svg';

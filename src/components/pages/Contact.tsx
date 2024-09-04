@@ -1,3 +1,4 @@
+import React from 'react';
 import contactImg from '../../assets/img/desktop/Zombie-contact.webp';
 
 function Contact() {
