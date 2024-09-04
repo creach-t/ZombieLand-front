@@ -1,7 +1,7 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
 
 function Login() {
-  
   return (
     <div className="w-4/5 md:max-w-5xl mt-40 m-auto">
       <h2 className="text-6xl uppercase text-center md:text-left mb-12">
