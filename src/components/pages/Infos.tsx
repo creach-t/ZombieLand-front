@@ -98,7 +98,10 @@ function Infos() {
               </p>
             </div>
           </div>
-          <div className="md:grid md:grid-cols-2 mt-16 gap-6 text-3xl leading-loose items-center">
+          <div
+            id="venirAuParc"
+            className="md:grid md:grid-cols-2 mt-16 gap-6 text-3xl leading-loose items-center"
+          >
             <iframe
               title="map"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2626.0482887118997!2d2.323566812376017!3d48.83821760200589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671c96b3d5b29%3A0x791b7d9ef14e006f!2sCimeti%C3%A8re%20du%20Montparnasse!5e0!3m2!1sfr!2sfr!4v1725263621045!5m2!1sfr!2sfr"

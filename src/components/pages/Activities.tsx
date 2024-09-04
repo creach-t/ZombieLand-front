@@ -1,5 +1,5 @@
+/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-console */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
