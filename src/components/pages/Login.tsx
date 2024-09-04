@@ -36,10 +36,9 @@ function Login() {
       const decodedUser = jwtDecode(token);
       setUser(decodedUser);
 
-      // Redirection vers la home page en attendant la page de profil
-      navigate('/');
-      console.log('User logged in successfully:', response.data);
-    } catch (err) {
+      navigate(`/mon-compte/${userId}`);
+    } catch (error) {
+      console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
       setError("Nom d'utilisateur ou mot de passe non reconnu");
     }
   };
@@ -75,12 +74,12 @@ function Login() {
             className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <a
-            href="#"
+          <Link
+            to="#"
             className="text-redZombie text-2xl text-right underline cursor-pointer"
           >
             Mot de passe oublié ?
-          </a>
+          </Link>
         </div>
         {error && (
           <p className="bg-redZombie text-2xl rounded-xl p-2 mb-2">{error}</p>

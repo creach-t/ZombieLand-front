@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
 import Footer from '../Footer/Footer';

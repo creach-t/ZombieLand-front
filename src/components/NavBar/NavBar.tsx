@@ -44,7 +44,7 @@ function NavBar() {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="hover:fill-red-700 size-10 fill-redZombie"
+                    className="hover:fill-green-300 size-10 fill-greenZombie"
                   >
                     <path
                       fillRule="evenodd"
