@@ -89,12 +89,12 @@ function ParcMap() {
             >
               {/* Texte de description */}
               {hoveredAttraction && hoveredAttraction.id === attraction.id && (
-                <div className="divide-y divide-red-800">
+                <div className="divide-y divide-red-800 text-black">
                   <p className="text-white font-light pt-2">
                     {attraction.description_short}
                   </p>
                   <Link
-                    className="mt-4 p-1 rounded bg-white text-redZombie hover:text-redZombie hover:bg-red-100"
+                    className="mt-4 p-1 rounded bg-white  visited:text-redZombie  hover:text-redZombie hover:bg-red-100"
                     to={`../attractions/${attraction.id}`}
                   >
                     En savoir plus
