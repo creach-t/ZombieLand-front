@@ -21,7 +21,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/mon-compte" element={<MyAccount />} />
+        <Route path="/mon-compte/:id" element={<MyAccount />} />
         <Route path="/inscription" element={<Signin />} />
         <Route path="/se-connecter" element={<Login />} />
         <Route path="/plan-du-parc" element={<ParcMap />} />
