@@ -25,8 +25,8 @@ function Signin() {
       setEmail('');
       setPassword('');
       setErrorMessage('');
-    } catch (error: any) {
-      if (error.response && error.response.data) {
+    } catch (error: unknown) {
+      if (error instanceof Error) {
         setErrorMessage('il y a eu un souci pendant la création du compte');
       }
     }
@@ -38,7 +38,7 @@ function Signin() {
       </h2>
       <form onSubmit={handleSubmit} action="#" className="md:flex md:flex-col">
         <div className="mb-6 flex flex-col">
-          <label htmlFor="mail" className="text-3xl leading-loose">
+          <label htmlFor="first_name" className="text-3xl leading-loose">
             Prénom
           </label>
           <input
@@ -52,7 +52,7 @@ function Signin() {
           />
         </div>
         <div className="mb-6 flex flex-col">
-          <label htmlFor="mail" className="text-3xl leading-loose">
+          <label htmlFor="last_name" className="text-3xl leading-loose">
             Nom
           </label>
           <input
@@ -70,7 +70,7 @@ function Signin() {
             E-mail
           </label>
           <input
-            type="text"
+            type="email"
             id="mail"
             name="mail"
             placeholder="Entrez votre E-mail"
@@ -80,11 +80,11 @@ function Signin() {
           />
         </div>
         <div className="mb-10 flex flex-col">
-          <label htmlFor="mail" className="text-3xl leading-loose">
+          <label htmlFor="password" className="text-3xl leading-loose">
             Mot de passe
           </label>
           <input
-            type="text"
+            type="password"
             id="password"
             name="password"
             placeholder="Entrez votre mot de passe"
@@ -93,9 +93,11 @@ function Signin() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <p className="bg-redZombie rounded-xl p-2 mb-2 invisible">
-          Nom d&apos;utilisateur ou mot de passe non reconnu
-        </p>
+        {errorMessage && (
+          <p className="bg-redZombie rounded-xl p-2 mb-2 text-white">
+            {errorMessage}
+          </p>
+        )}
         <button
           type="submit"
           className="w-full mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center"

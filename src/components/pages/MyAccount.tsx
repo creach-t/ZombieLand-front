@@ -1,11 +1,12 @@
+/* eslint-disable react/react-in-jsx-scope */
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 interface User {
   user_id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   role: string;
 }
@@ -16,6 +17,12 @@ function MyAccount() {
     type: 'success' | 'error';
     content: string;
   } | null>(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -38,6 +45,9 @@ function MyAccount() {
           }
         );
         setUser(response.data);
+        setFirstName(response.data.first_name);
+        setLastName(response.data.last_name);
+        setEmail(response.data.email);
       } catch (error) {
         console.error(
           'Erreur lors de la récupération des infos utilisateur:',
@@ -57,18 +67,45 @@ function MyAccount() {
     e.preventDefault();
     const token = localStorage.getItem('token');
 
+    const updateData: {
+      first_name?: string;
+      last_name?: string;
+      email?: string;
+      password?: string;
+    } = {
+      first_name: firstName !== user?.first_name ? firstName : undefined,
+      last_name: lastName !== user?.last_name ? lastName : undefined,
+      email: email !== user?.email ? email : undefined,
+    };
+
     try {
+      if (oldPassword) {
+        await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
+          email,
+          password: oldPassword,
+        });
+
+        if (newPassword && newPassword === confirmPassword) {
+          updateData.password = newPassword;
+        } else {
+          setMessage({
+            type: 'error',
+            content: 'Les nouveaux mots de passe ne correspondent pas.',
+          });
+          return;
+        }
+      }
+
       const response = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/account/${id}/update`,
-        {
-          /* données utilisateur mises à jour */
-        },
+        `${import.meta.env.VITE_API_URL}/account/${user?.user_id}/update`,
+        updateData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
       setUser(response.data);
       setMessage({
         type: 'success',
@@ -104,13 +141,18 @@ function MyAccount() {
       });
       navigate('/login');
     } catch (error) {
-      console.error('Erreur lors du chargement des activités:', error);
+      console.error('Erreur lors de la suppression du compte:', error);
       setMessage({
         type: 'error',
         content:
           "Une erreur s'est produite lors de la suppression de votre compte.",
       });
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/se-connecter');
   };
 
   return (
@@ -125,11 +167,12 @@ function MyAccount() {
         Mes <em className="text-redZombie">Réservations</em>
       </Link>
 
-      {/* Display success or error messages */}
       {message && (
         <p
           className={
-            message.type === 'success' ? 'text-green-600' : 'text-red-600'
+            message.type === 'success'
+              ? 'text-green-600 mt-4'
+              : 'text-red-600 mt-4'
           }
         >
           {message.content}
@@ -149,7 +192,8 @@ function MyAccount() {
                 name="lastName"
                 placeholder="Entrez votre Nom"
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
-                defaultValue={user?.lastName || ''}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
             <div className="mb-6 flex flex-col">
@@ -162,7 +206,8 @@ function MyAccount() {
                 name="firstName"
                 placeholder="Entrez votre Prénom"
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
-                defaultValue={user?.firstName || ''}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
             <div className="mb-6 flex flex-col">
@@ -175,7 +220,56 @@ function MyAccount() {
                 name="email"
                 placeholder="Entrez votre E-mail"
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
-                defaultValue={user?.email || ''}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="w-1/2">
+            <h4 className="text-center text-2xl">Changer de mot de passe</h4>
+            <div className="mb-6 flex flex-col">
+              <label htmlFor="oldPassword" className="text-3xl leading-loose">
+                Ancien mot de passe
+              </label>
+              <input
+                type="password"
+                id="oldPassword"
+                name="oldPassword"
+                placeholder="Entrez votre ancien mot de passe"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+            </div>
+            <div className="mb-6 flex flex-col">
+              <label htmlFor="newPassword" className="text-3xl leading-loose">
+                Nouveau mot de passe
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                placeholder="Entrez votre nouveau mot de passe"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+            </div>
+            <div className="mb-6 flex flex-col">
+              <label
+                htmlFor="confirmPassword"
+                className="text-3xl leading-loose"
+              >
+                Confirmez mot de passe
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirmez mot de passe"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
           </div>
@@ -194,6 +288,13 @@ function MyAccount() {
             className="min-w-max bg-redZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
           >
             Supprimer mon compte
+          </button>
+          <button
+            onClick={handleLogout}
+            type="button"
+            className="min-w-max bg-darkGreenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
+          >
+            Se déconnecter
           </button>
         </div>
       </form>
