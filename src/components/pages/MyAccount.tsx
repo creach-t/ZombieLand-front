@@ -157,12 +157,12 @@ function MyAccount() {
 
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-      <h1 className="text-6xl text-center md:text-left mb-12">
+      <h1 className="self-center md:self-start text-6xl">
         MON <em className="text-redZombie">COMPTE</em>
       </h1>
       <Link
         to="/mes-reservations"
-        className="md:ml-40 sm:ml-0 text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
+        className="self-center md:self-start text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
       >
         Mes <em className="text-redZombie">Réservations</em>
       </Link>
@@ -179,8 +179,11 @@ function MyAccount() {
         </p>
       )}
 
-      <form onSubmit={handleSubmit} className="md:flex md:flex-col mt-10">
-        <div className="w-3/4 flex justify-between items-center m-auto gap-8">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full md:flex md:flex-col mt-10"
+      >
+        <div className="w-full flex flex-col md:flex-row justify-between items-center m-auto gap-8 text-white">
           <div className="w-1/2 mt-8">
             <div className="mb-6 flex flex-col">
               <label htmlFor="lastName" className="text-3xl leading-loose">
@@ -226,7 +229,7 @@ function MyAccount() {
             </div>
           </div>
           <div className="w-1/2">
-            <h4 className="text-center text-2xl">Changer de mot de passe</h4>
+            <h4 className="text-center text-2xl ">Changer de mot de passe</h4>
             <div className="mb-6 flex flex-col">
               <label htmlFor="oldPassword" className="text-3xl leading-loose">
                 Ancien mot de passe
@@ -275,7 +278,7 @@ function MyAccount() {
           </div>
         </div>
 
-        <div className="my-6 m-auto flex gap-10">
+        <div className="my-6 m-auto flex gap-10 flex-col md:flex-row">
           <button
             type="submit"
             className="min-w-max bg-greenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
