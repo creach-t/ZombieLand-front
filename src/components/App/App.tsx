@@ -14,6 +14,7 @@ import Login from '../pages/Login';
 import Contact from '../pages/Contact';
 import ActivityDetail from '../pages/ActivityDetail';
 import MyBookings from '../pages/MyBookings';
+import PasswordReset from '../pages/passwordReset';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/reserver" element={<Booking />} />
         <Route path="/attractions" element={<Activities />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/password-reset" element={<PasswordReset />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/attractions/:id" element={<ActivityDetail />} />
         <Route path="/mes-reservations" element={<MyBookings />} />
