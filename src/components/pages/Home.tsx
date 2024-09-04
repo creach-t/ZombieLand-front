@@ -1,4 +1,8 @@
+/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/no-unescaped-entities */
+
+import { useEffect, useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import zombieFace from '../../assets/img/desktop/zombie-apocalypse-zombieland.webp';
 import tickets from '../../assets/img/desktop/achat-tickets-parc-zombieland.webp';
