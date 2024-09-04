@@ -1,7 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 
 interface User {
   user_id: number;
@@ -12,7 +13,8 @@ interface User {
 }
 
 function MyAccount() {
-  const [user, setUser] = useState<User | null>(null);
+  const { setUser } = useContext(UserContext);
+  const [thisUser, setThisUser] = useState<User | null>(null);
   const [message, setMessage] = useState<{
     type: 'success' | 'error';
     content: string;
@@ -44,7 +46,7 @@ function MyAccount() {
             },
           }
         );
-        setUser(response.data);
+        setThisUser(response.data);
         setFirstName(response.data.first_name);
         setLastName(response.data.last_name);
         setEmail(response.data.email);
@@ -73,9 +75,9 @@ function MyAccount() {
       email?: string;
       password?: string;
     } = {
-      first_name: firstName !== user?.first_name ? firstName : undefined,
-      last_name: lastName !== user?.last_name ? lastName : undefined,
-      email: email !== user?.email ? email : undefined,
+      first_name: firstName !== thisUser?.first_name ? firstName : undefined,
+      last_name: lastName !== thisUser?.last_name ? lastName : undefined,
+      email: email !== thisUser?.email ? email : undefined,
     };
 
     try {
@@ -97,7 +99,7 @@ function MyAccount() {
       }
 
       const response = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/account/${user?.user_id}/update`,
+        `${import.meta.env.VITE_API_URL}/account/${thisUser?.user_id}/update`,
         updateData,
         {
           headers: {
@@ -126,7 +128,7 @@ function MyAccount() {
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/account/${user?.user_id}/delete`,
+        `${import.meta.env.VITE_API_URL}/account/${thisUser?.user_id}/delete`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -139,7 +141,7 @@ function MyAccount() {
         type: 'success',
         content: 'Votre compte a été supprimé avec succès.',
       });
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       console.error('Erreur lors de la suppression du compte:', error);
       setMessage({
@@ -152,6 +154,7 @@ function MyAccount() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    setUser(null);
     navigate('/se-connecter');
   };
 
@@ -162,9 +165,9 @@ function MyAccount() {
       </h1>
       <Link
         to="/mes-reservations"
-        className="md:ml-40 sm:ml-0 text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
+        className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
       >
-        Mes <em className="text-redZombie">Réservations</em>
+        Mes <em className="text-redZombie ">Réservations</em>
       </Link>
 
       {message && (
@@ -179,7 +182,7 @@ function MyAccount() {
         </p>
       )}
 
-      <form onSubmit={handleSubmit} className="md:flex md:flex-col mt-10">
+      <form onSubmit={handleSubmit} className="w-3/4 md:flex md:flex-col mt-10">
         <div className="w-3/4 flex justify-between items-center m-auto gap-8">
           <div className="w-1/2 mt-8">
             <div className="mb-6 flex flex-col">
