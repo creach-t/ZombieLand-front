@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -36,7 +36,7 @@ function Login() {
       const decodedUser = jwtDecode(token);
       setUser(decodedUser);
 
-      navigate(`/mon-compte/${userId}`);
+      navigate(`/`);
     } catch (error) {
       console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
       setError("Nom d'utilisateur ou mot de passe non reconnu");

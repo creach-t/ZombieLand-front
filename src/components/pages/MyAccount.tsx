@@ -1,7 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 
 interface User {
   user_id: number;
@@ -152,6 +153,7 @@ function MyAccount() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    setUser(null);
     navigate('/se-connecter');
   };
 
