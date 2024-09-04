@@ -1,12 +1,84 @@
+/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/no-unescaped-entities */
+
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 import zombieFace from '../../assets/img/desktop/zombie-apocalypse-zombieland.webp';
 import tickets from '../../assets/img/desktop/achat-tickets-parc-zombieland.webp';
 import compass from '../../assets/img/desktop/horaires-tickets-parc-zombieland.webp';
 import skull from '../../assets/img/desktop/plan-parc-zombieland-_1_.webp';
 import plan from '../../assets/img/desktop/plan-parc-zombieland.webp';
+import ActivityCard from '../ActivityCard/ActivityCard';
+
+interface Activity {
+  activity_id: number;
+  name: string;
+}
+
+// Slider configuration
+const sliderSettings = {
+  dots: true,
+  infinite: true,
+  speed: 2000,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+  autoplay: true,
+  autoplaySpeed: 4000,
+  pauseOnHover: true,
+  responsive: [
+    {
+      breakpoint: 1350,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 500,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+      },
+    },
+  ],
+};
 
 function Home() {
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadActivities = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/activities`
+        );
+        setActivities(response.data);
+      } catch (error) {
+        console.error('Erreur lors du chargement des activités:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadActivities();
+  }, []);
+
   return (
     <>
       <section className="mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home.webp')] bg-cover bg-center bg-no-repeat">
@@ -26,6 +98,7 @@ function Home() {
                 to="/reserver"
                 type="button"
                 className="text-white text-2xl bg-redZombie hover:bg-opacity-90 hover:text-white  focus:animate-ping font-bold rounded-xl px-3 py-1 text-center mr-8 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)] overflow-hidden"
+                aria-label="Make a reservation"
               >
                 Réservation
               </Link>
@@ -33,6 +106,7 @@ function Home() {
                 to="/infos-pratiques"
                 type="button"
                 className="text-white text-2xl bg-darkGreenZombie hover:bg-opacity-90 hover:text-white  focus:animate-ping font-bold rounded-xl px-3 py-1 text-center [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
+                aria-label="Learn more about practical information"
               >
                 En savoir plus
               </Link>
@@ -40,43 +114,16 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="bg-black min-h-[550px] py-10 flex justify-center items-center gap-14 flex-wrap">
-        <div className="w-[400px] h-[400px] bg-[url('/src/assets/img/desktop/attractions/bg-attraction-haunted-house-zombieland.webp')] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center">
-          <h3 className="badgrunge text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
-            HAUNTED <br /> HOUSE
-          </h3>
-          <Link
-            to="/attractions"
-            type="button"
-            className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
-          >
-            En savoir plus
-          </Link>
-        </div>
-        <div className="w-[400px] h-[400px] bg-[url('/src/assets/img/desktop/attractions/bg-attraction-zombie-city-zombieland.webp')] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center">
-          <h3 className="badgrunge text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
-            ZOMBIE <br /> CITY
-          </h3>
-          <Link
-            to="/attractions"
-            type="button"
-            className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
-          >
-            En savoir plus
-          </Link>
-        </div>
-        <div className="w-[400px] h-[400px] bg-[url('/src/assets/img/desktop/attractions/bg-attraction-escape-room-zombieland.webp')] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center">
-          <h3 className="badgrunge text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
-            ESCAPE <br /> ROOM
-          </h3>
-          <Link
-            to="/attractions"
-            type="button"
-            className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
-          >
-            En savoir plus
-          </Link>
-        </div>
+      <section className="bg-black min-h-[550px] py-10 flex justify-around items-center">
+        {loading ? (
+          <p>Chargement...</p>
+        ) : (
+          <Slider className="custom-slick-slider" {...sliderSettings}>
+            {activities.map((activity) => (
+              <ActivityCard key={activity.activity_id} activity={activity} />
+            ))}
+          </Slider>
+        )}
       </section>
       <section className="bg-black p-10 flex flex-wrap justify-center items-center gap-20">
         <div>
@@ -130,6 +177,11 @@ function Home() {
             </div>
           </Link>
         </div>
+        <style>
+          {
+            '.custom-slick-slider { width: 95%; } .slick-slide > div {display: grid; place-items: center; .slick-prev { left: 40px} .slick-next {right: 20px} }'
+          }
+        </style>
       </section>
     </>
   );
