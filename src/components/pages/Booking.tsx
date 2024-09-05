@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useContext, useEffect, useRef, useState } from 'react';
-import { UserContext } from '../../context/UserContext';
+import { useEffect, useRef, useState } from 'react';
+import { useUser } from '../../context/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ticketImg from '../../assets/img/desktop/Rectangle-8.webp';
 import axios from 'axios';
@@ -12,7 +12,7 @@ function Booking() {
   );
   const [visitDate, setVisitDate] = useState(location.state?.visitDate || '');
   const [totalPrice, setTotalPrice] = useState(0);
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 

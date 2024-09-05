@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/react-in-jsx-scope */
 import contactImg from '../../assets/img/desktop/Zombie-contact.webp';
 
 function Contact() {
@@ -10,7 +11,7 @@ function Contact() {
       <p className="text-3xl self-start  hidden md:block">
         Vous avez des questions, des remarques ou souhaitez simplement crier à
         l'aide ? Nous sommes là pour vous écouter... avant que les zombies ne le
-        fassent !{' '}
+        fassent !
       </p>
 
       <div className="md:grid md:grid-cols-2 md:items-center ">

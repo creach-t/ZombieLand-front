@@ -1,15 +1,15 @@
 /* eslint-disable react/react-in-jsx-scope */
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { UserContext } from '../../context/UserContext';
+import { useUser } from '../../context/UserContext';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
 
