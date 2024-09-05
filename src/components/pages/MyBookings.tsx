@@ -17,7 +17,7 @@ function MyBookings() {
         Mes <em className="text-redZombie ">Informations</em>
       </Link>
       <div className="w-3/4 mx-auto">
-        <div className="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
+        <div className="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
           <table className="w-full text-left table-auto min-w-max">
             <thead>
               <tr>

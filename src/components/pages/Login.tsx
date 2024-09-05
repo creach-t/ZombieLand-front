@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React, { useState, useContext } from 'react';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { UserContext } from '../../context/UserContext';
@@ -12,6 +12,7 @@ function Login() {
   const [error, setError] = useState('');
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,8 +39,17 @@ function Login() {
 
       setUser(decodedUser);
 
-      navigate('/');
+      const redirectTo = location.state?.from || '/';
+      const numberOfVisitors = location.state?.numberOfVisitors || 0;
+      const visitDate = location.state?.visitDate || '';
 
+      if (redirectTo === '/reserver') {
+        navigate('/reserver', {
+          state: { numberOfVisitors, visitDate },
+        });
+      } else {
+        navigate(redirectTo);
+      }
     } catch (error) {
       console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
       setError("Nom d'utilisateur ou mot de passe non reconnu");
