@@ -1,8 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import { useUser } from '../../context/UserContext';
 
 interface User {
   user_id: number;
@@ -13,7 +13,7 @@ interface User {
 }
 
 function MyAccount() {
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUser();
   const [thisUser, setThisUser] = useState<User | null>(null);
   const [message, setMessage] = useState<{
     type: 'success' | 'error';

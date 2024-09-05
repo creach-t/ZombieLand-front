@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../context/UserContext';
+import { useEffect, useState } from 'react';
+import { useUser } from '../../context/UserContext';
 import axios from 'axios';
 
 interface Booking {
@@ -14,7 +14,7 @@ interface Booking {
 }
 
 function MyBookings() {
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 4;
@@ -27,7 +27,7 @@ function MyBookings() {
           `${import.meta.env.VITE_API_URL}/booking`
         );
         const filteredBookings = response.data.filter(
-          (booking: Booking) => booking.client_id === user.user_id
+          (booking: Booking) => booking.client_id === Number(user?.user_id)
         );
         setBookings(filteredBookings);
       } catch (error) {
@@ -36,7 +36,7 @@ function MyBookings() {
     };
 
     loadUserBookings();
-  }, [user.user_id]);
+  }, [user?.user_id]);
 
   const indexOfLastBooking = currentPage * bookingsPerPage;
   const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
@@ -65,7 +65,7 @@ function MyBookings() {
         MON <em className="text-redZombie">COMPTE</em>
       </h1>
       <Link
-        to={`/mon-compte/${user.user_id}`}
+        to={`/mon-compte/${user?.user_id}`}
         className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
       >
         Mes <em className="text-redZombie ">Informations</em>

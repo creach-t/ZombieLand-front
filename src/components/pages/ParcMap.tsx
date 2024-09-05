@@ -1,5 +1,6 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import map from '../../assets/img/desktop/zombieland_map.webp';
 
 interface Attraction {
