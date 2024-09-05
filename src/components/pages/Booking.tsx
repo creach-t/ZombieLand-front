@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useContext, useState } from 'react';
-import { UserContext } from '../../context/UserContext';
+import { useEffect, useRef, useState } from 'react';
+import { useUser } from '../../context/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ticketImg from '../../assets/img/desktop/Rectangle-8.webp';
 import axios from 'axios';
@@ -12,21 +12,26 @@ function Booking() {
   );
   const [visitDate, setVisitDate] = useState(location.state?.visitDate || '');
   const [totalPrice, setTotalPrice] = useState(0);
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  const refInputTickets = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (refInputTickets.current !== null) {
+      refInputTickets.current.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    const price = 6666;
+    setTotalPrice((price * numberOfVisitors) / 100);
+  }, [numberOfVisitors]);
+
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = Number(event.target.value);
-    const price = 6666;
-
     setNumberOfVisitors(inputValue);
-
-    if (inputValue < 0) {
-      setTotalPrice(0);
-    } else {
-      setTotalPrice((price * inputValue) / 100);
-    }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,7 +51,7 @@ function Booking() {
       }); */
       //axios create booking in database
       try {
-        await axios.post('/booking', {
+        await axios.post(`${import.meta.env.VITE_API_URL}/booking`, {
           date: visitDate,
           status: 'pending',
           nb_tickets: numberOfVisitors,
@@ -69,12 +74,12 @@ function Booking() {
       <h1 className="self-center md:self-start text-6xl">
         Réser<span className="text-redZombie">vation</span>
       </h1>
+      {errorMessage && (
+        <p className="bg-redZombie rounded-xl p-2 mb-2 text-white">
+          {errorMessage}
+        </p>
+      )}
       <section className="flex flex-wrap mt-4 justify-center w-full">
-        {errorMessage && (
-          <p className="bg-redZombie rounded-xl p-2 mb-2 text-white">
-            {errorMessage}
-          </p>
-        )}
         <div className="md:w-1/2 flex items-center justify-start">
           <img src={ticketImg} className="" alt="ticket pour zombieLand" />
         </div>
@@ -88,6 +93,7 @@ function Booking() {
                 Nombre de visiteurs
               </label>
               <input
+                ref={refInputTickets}
                 type="number"
                 id="numberOfVisitors"
                 name="numberOfVisitors"

@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/react-in-jsx-scope */
 import euroImg from '../../assets/img/desktop/infos/Euro.svg';
 import clockImg from '../../assets/img/desktop/infos/Clock.svg';
 import skullImg from '../../assets/img/desktop/infos/Skull.svg';

@@ -1,16 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
-import React, { useState, useContext } from 'react';
-
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { UserContext } from '../../context/UserContext';
+import { useUser } from '../../context/UserContext';
+import { User } from '../../context/UserContext';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -35,9 +35,7 @@ function Login() {
       const token = response.data.token;
       localStorage.setItem('token', token);
 
-      const decodedUser = jwtDecode(token);
-
-      console.log(decodedUser);
+      const decodedUser = jwtDecode<User>(token);
 
       setUser(decodedUser);
 
@@ -93,7 +91,11 @@ function Login() {
             to="/password-reset"
             className="text-redZombie text-2xl text-right underline cursor-pointer"
           >
+<<<<<<< HEAD
               Mot de passe oublié ?
+=======
+            Mot de passe oublié ?
+>>>>>>> 1607d4d0d3214f42fea7a5b1daf687e4cb0aae54
           </Link>
         </div>
         {error && (
