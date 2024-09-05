@@ -135,7 +135,7 @@ a {
   text-decoration: inherit;
 }
 
-a:visited{
+a:visited {
   color: white;
 }
 
@@ -245,8 +245,8 @@ textarea {
   padding: 0;
   /* 3 */
 }
-input{
-  color: black
+input {
+  color: white;
 }
 /*
 Remove the inheritance of text transform in Edge and Firefox.
@@ -608,7 +608,7 @@ a:hover {
 }
 
 body {
-  font-family: "League Gothic", sans-serif;
+  font-family: 'League Gothic', sans-serif;
   margin: 0;
   display: flex;
   place-items: center;
@@ -621,7 +621,7 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
   text-transform: uppercase;
-  color: white
+  color: white;
 }
 
 button {

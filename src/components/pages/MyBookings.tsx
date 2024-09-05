@@ -11,7 +11,7 @@ function MyBookings() {
         MON <em className="text-redZombie">COMPTE</em>
       </h1>
       <Link
-        to={`/mon-compte/${user.userId}`}
+        to={`/mon-compte/${user.user_id}`}
         className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
       >
         Mes <em className="text-redZombie ">Informations</em>
