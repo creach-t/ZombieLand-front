@@ -24,23 +24,29 @@ function MyBookings() {
   /* const formatter = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }); */
 
   useEffect(() => {
-    const loadBookings = async () => {
+    const loadUserBookings = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/booking`
         );
-        setBookings(response.data);
+        const filteredBookings = response.data.filter(
+          (booking: Booking) => booking.client_id === user.user_id
+        );
+        setBookings(filteredBookings);
       } catch (error) {
         console.error('Erreur lors du chargement des réservations:', error);
       }
     };
 
-    loadBookings();
-  }, []);
+    loadUserBookings();
+  }, [user.user_id]);
 
   const indexOfLastBooking = currentPage * bookingsPerPage;
   const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
-  bookings.slice(indexOfFirstBooking, indexOfLastBooking);
+  const currentBookings = bookings.slice(
+    indexOfFirstBooking,
+    indexOfLastBooking
+  );
 
   const totalPages = Math.ceil(bookings.length / bookingsPerPage);
 
@@ -98,7 +104,7 @@ function MyBookings() {
               </tr>
             </thead>
             <tbody>
-              {bookings.map((booking) => (
+              {currentBookings.map((booking) => (
                 <tr
                   key={booking.booking_id}
                   className="hover:bg-slate-50 border-b border-slate-200"
