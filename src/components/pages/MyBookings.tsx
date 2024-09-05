@@ -70,9 +70,9 @@ function MyBookings() {
       >
         Mes <em className="text-redZombie ">Informations</em>
       </Link>
-      <div className="w-3/4 mx-auto">
-        <div className="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-          <table className="w-full text-left table-auto min-w-max">
+      <div className="w-3/4 mx-auto py-1">
+        <div className="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-white shadow-sm rounded-lg bg-clip-border">
+          <table className="w-full text-left table-auto min-w-max rounded-xl">
             <thead>
               <tr>
                 <th className="p-3 border-b border-slate-200 bg-slate-50">
