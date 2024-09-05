@@ -1,9 +1,8 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../context/UserContext';
 import axios from 'axios';
-
-/* eslint-disable react/react-in-jsx-scope */
 
 interface Booking {
   booking_id: number;
@@ -11,17 +10,15 @@ interface Booking {
   date: string;
   status: string;
   nb_tickets: string;
-  created_at: Date;
+  created_at: string;
 }
 
 function MyBookings() {
   const { user } = useContext(UserContext);
-  console.log(user);
-
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 4;
-  /* const formatter = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }); */
+  const formatter = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' });
 
   useEffect(() => {
     const loadUserBookings = async () => {
@@ -95,11 +92,13 @@ function MyBookings() {
                 </th>
                 <th className="p-3 border-b border-slate-200 bg-slate-50">
                   <p className="text-sm font-semibold leading-none text-slate-800">
-                    Date
+                    Date de visite
                   </p>
                 </th>
-                <th className="p-3 transition-colors cursor-pointer border-y border-slate-200 bg-slate-50 hover:bg-slate-100">
-                  <p className="flex items-center justify-between gap-2 font-sans text-sm  font-normal leading-none text-slate-500"></p>
+                <th className="p-3 border-b border-slate-200 bg-slate-50">
+                  <p className="text-sm font-semibold leading-none text-slate-800">
+                    Réservé le
+                  </p>
                 </th>
               </tr>
             </thead>
@@ -123,25 +122,14 @@ function MyBookings() {
                     <p className="text-sm text-slate-500">{booking.status}</p>
                   </td>
                   <td className="p-3 ">
-                    <p className="text-sm text-slate-500">{booking.date}</p>
+                    <p className="text-sm text-slate-500">
+                      {formatter.format(new Date(booking.date))}
+                    </p>
                   </td>
-                  <td className="p-3 border-b border-slate-200">
-                    <button
-                      className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-slate-900 transition-all hover:bg-slate-900/20 bg-white disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                      type="button"
-                    >
-                      <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          aria-hidden="true"
-                          className="w-4 h-4"
-                        >
-                          <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"></path>
-                        </svg>
-                      </span>
-                    </button>
+                  <td className="p-3 ">
+                    <p className="text-sm text-slate-500">
+                      {formatter.format(new Date(booking.created_at))}
+                    </p>
                   </td>
                 </tr>
               ))}
