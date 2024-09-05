@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ticketImg from '../../assets/img/desktop/Rectangle-8.webp';
+import axios from 'axios';
 
 function Booking() {
   const location = useLocation();
@@ -12,6 +13,7 @@ function Booking() {
   const [visitDate, setVisitDate] = useState(location.state?.visitDate || '');
   const [totalPrice, setTotalPrice] = useState(0);
   const { user } = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -27,8 +29,8 @@ function Booking() {
     }
   }
 
-  function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     if (!user) {
       navigate('/se-connecter', {
@@ -39,11 +41,28 @@ function Booking() {
         },
       });
     } else {
-      navigate('/paiement-stripe', {
+      /* navigate('/paiement-stripe', {
         state: { totalPrice, numberOfVisitors, visitDate },
-      });
+      }); */
+      //axios create booking in database
+      try {
+        await axios.post('/booking', {
+          date: visitDate,
+          status: 'pending',
+          nb_tickets: numberOfVisitors,
+          client_id: user.user_id,
+        });
+
+        navigate('/se-connecter');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setErrorMessage(
+            'il y a eu un souci pendant la création de votre réservation'
+          );
+        }
+      }
     }
-  }
+  };
 
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
@@ -51,6 +70,11 @@ function Booking() {
         Réser<span className="text-redZombie">vation</span>
       </h1>
       <section className="flex flex-wrap mt-4 justify-center w-full">
+        {errorMessage && (
+          <p className="bg-redZombie rounded-xl p-2 mb-2 text-white">
+            {errorMessage}
+          </p>
+        )}
         <div className="md:w-1/2 flex items-center justify-start">
           <img src={ticketImg} className="" alt="ticket pour zombieLand" />
         </div>
