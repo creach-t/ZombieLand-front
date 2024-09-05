@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useUser } from '../../context/UserContext';
+import { User } from '../../context/UserContext';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -34,9 +35,7 @@ function Login() {
       const token = response.data.token;
       localStorage.setItem('token', token);
 
-      const decodedUser = jwtDecode(token);
-
-      console.log(decodedUser);
+      const decodedUser = jwtDecode<User>(token);
 
       setUser(decodedUser);
 
@@ -89,17 +88,10 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Link
-<<<<<<< HEAD
             to="/password-reset"
             className="text-redZombie text-2xl text-right underline cursor-pointer"
           >
-              Mot de passe oublié ?
-=======
-            to="#"
-            className="text-redZombie text-2xl text-right underline cursor-pointer"
-          >
             Mot de passe oublié ?
->>>>>>> dev
           </Link>
         </div>
         {error && (
