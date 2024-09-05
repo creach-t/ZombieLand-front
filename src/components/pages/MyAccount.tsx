@@ -1,21 +1,30 @@
+/* eslint-disable react/react-in-jsx-scope */
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 
 interface User {
   user_id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   role: string;
 }
 
 function MyAccount() {
-  const [user, setUser] = useState<User | null>(null);
+  const { setUser } = useContext(UserContext);
+  const [thisUser, setThisUser] = useState<User | null>(null);
   const [message, setMessage] = useState<{
     type: 'success' | 'error';
     content: string;
   } | null>(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -23,7 +32,7 @@ function MyAccount() {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      navigate('/login');
+      navigate('/se-connecter');
       return;
     }
 
@@ -37,7 +46,11 @@ function MyAccount() {
             },
           }
         );
-        setUser(response.data);
+
+        setThisUser(response.data);
+        setFirstName(response.data.first_name);
+        setLastName(response.data.last_name);
+        setEmail(response.data.email);
       } catch (error) {
         console.error(
           'Erreur lors de la récupération des infos utilisateur:',
@@ -57,19 +70,46 @@ function MyAccount() {
     e.preventDefault();
     const token = localStorage.getItem('token');
 
+    const updateData: {
+      first_name?: string;
+      last_name?: string;
+      email?: string;
+      password?: string;
+    } = {
+      first_name: firstName !== thisUser?.first_name ? firstName : undefined,
+      last_name: lastName !== thisUser?.last_name ? lastName : undefined,
+      email: email !== thisUser?.email ? email : undefined,
+    };
+
     try {
+      if (oldPassword) {
+        await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
+          email,
+          password: oldPassword,
+        });
+
+        if (newPassword && newPassword === confirmPassword) {
+          updateData.password = newPassword;
+        } else {
+          setMessage({
+            type: 'error',
+            content: 'Les nouveaux mots de passe ne correspondent pas.',
+          });
+          return;
+        }
+      }
+
       const response = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/account/${id}/update`,
-        {
-          /* données utilisateur mises à jour */
-        },
+        `${import.meta.env.VITE_API_URL}/account/${thisUser?.user_id}/update`,
+        updateData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      setUser(response.data);
+
+      setThisUser(response.data);
       setMessage({
         type: 'success',
         content: 'Vos informations ont été mises à jour avec succès.',
@@ -89,7 +129,7 @@ function MyAccount() {
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/account/${user?.user_id}/delete`,
+        `${import.meta.env.VITE_API_URL}/account/${thisUser?.user_id}/delete`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -102,9 +142,9 @@ function MyAccount() {
         type: 'success',
         content: 'Votre compte a été supprimé avec succès.',
       });
-      navigate('/login');
+      navigate('/');
     } catch (error) {
-      console.error('Erreur lors du chargement des activités:', error);
+      console.error('Erreur lors de la suppression du compte:', error);
       setMessage({
         type: 'error',
         content:
@@ -113,30 +153,37 @@ function MyAccount() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+    navigate('/se-connecter');
+  };
+
   return (
-    <div className="w-3/4 mt-32 m-auto">
-      <h2 className="text-6xl text-center md:text-left mb-12">
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <h1 className="self-center md:self-start text-6xl">
         MON <em className="text-redZombie">COMPTE</em>
-      </h2>
+      </h1>
       <Link
         to="/mes-reservations"
-        className="md:ml-40 sm:ml-0 text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
+        className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
       >
-        Mes <em className="text-redZombie">Réservations</em>
+        Mes <em className="text-redZombie ">Réservations</em>
       </Link>
 
-      {/* Display success or error messages */}
       {message && (
         <p
           className={
-            message.type === 'success' ? 'text-green-600' : 'text-red-600'
+            message.type === 'success'
+              ? 'text-green-600 mt-4'
+              : 'text-red-600 mt-4'
           }
         >
           {message.content}
         </p>
       )}
 
-      <form onSubmit={handleSubmit} className="md:flex md:flex-col mt-10">
+      <form onSubmit={handleSubmit} className="w-3/4 md:flex md:flex-col mt-10">
         <div className="w-3/4 flex justify-between items-center m-auto gap-8">
           <div className="w-1/2 mt-8">
             <div className="mb-6 flex flex-col">
@@ -149,7 +196,8 @@ function MyAccount() {
                 name="lastName"
                 placeholder="Entrez votre Nom"
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
-                defaultValue={user?.lastName || ''}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
             <div className="mb-6 flex flex-col">
@@ -162,7 +210,8 @@ function MyAccount() {
                 name="firstName"
                 placeholder="Entrez votre Prénom"
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
-                defaultValue={user?.firstName || ''}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
             <div className="mb-6 flex flex-col">
@@ -175,13 +224,62 @@ function MyAccount() {
                 name="email"
                 placeholder="Entrez votre E-mail"
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
-                defaultValue={user?.email || ''}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="w-1/2">
+            <h4 className="text-center text-2xl ">Changer de mot de passe</h4>
+            <div className="mb-6 flex flex-col">
+              <label htmlFor="oldPassword" className="text-3xl leading-loose">
+                Ancien mot de passe
+              </label>
+              <input
+                type="password"
+                id="oldPassword"
+                name="oldPassword"
+                placeholder="Entrez votre ancien mot de passe"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+            </div>
+            <div className="mb-6 flex flex-col">
+              <label htmlFor="newPassword" className="text-3xl leading-loose">
+                Nouveau mot de passe
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                placeholder="Entrez votre nouveau mot de passe"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+            </div>
+            <div className="mb-6 flex flex-col">
+              <label
+                htmlFor="confirmPassword"
+                className="text-3xl leading-loose"
+              >
+                Confirmez mot de passe
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirmez mot de passe"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
           </div>
         </div>
 
-        <div className="my-6 m-auto flex gap-10">
+        <div className="my-6 m-auto flex gap-10 flex-col md:flex-row">
           <button
             type="submit"
             className="min-w-max bg-greenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
@@ -195,9 +293,16 @@ function MyAccount() {
           >
             Supprimer mon compte
           </button>
+          <button
+            onClick={handleLogout}
+            type="button"
+            className="min-w-max bg-darkGreenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
+          >
+            Se déconnecter
+          </button>
         </div>
       </form>
-    </div>
+    </main>
   );
 }
 

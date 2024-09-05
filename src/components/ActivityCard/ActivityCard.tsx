@@ -17,9 +17,9 @@ function ActivityCard({ activity }: ActivityCardProps) {
         backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(activity.name)})`,
       }}
     >
-      <h3 className="badgrunge text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
+      <h2 className="badgrunge text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
         {activity.name.toUpperCase()}
-      </h3>
+      </h2>
       <Link
         to={`/attractions/${activity.activity_id}`}
         type="button"

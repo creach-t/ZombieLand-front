@@ -1,6 +1,7 @@
-import { useState, useContext } from 'react';
+/* eslint-disable react/react-in-jsx-scope */
+import React, { useState, useContext } from 'react';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { UserContext } from '../../context/UserContext';
@@ -11,6 +12,7 @@ function Login() {
   const [error, setError] = useState('');
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,22 +36,34 @@ function Login() {
       localStorage.setItem('token', token);
 
       const decodedUser = jwtDecode(token);
+
+      console.log(decodedUser);
+
       setUser(decodedUser);
 
-      // Redirection vers la home page en attendant la page de profil
-      navigate('/');
-      console.log('User logged in successfully:', response.data);
-    } catch (err) {
+      const redirectTo = location.state?.from || '/';
+      const numberOfVisitors = location.state?.numberOfVisitors || 0;
+      const visitDate = location.state?.visitDate || '';
+
+      if (redirectTo === '/reserver') {
+        navigate('/reserver', {
+          state: { numberOfVisitors, visitDate },
+        });
+      } else {
+        navigate(redirectTo);
+      }
+    } catch (error) {
+      console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
       setError("Nom d'utilisateur ou mot de passe non reconnu");
     }
   };
 
   return (
-    <div className="w-4/5 md:max-w-5xl mt-40 m-auto">
-      <h2 className="text-6xl uppercase text-center md:text-left mb-12">
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <h1 className="self-center md:self-start text-6xl">
         Log<em className="text-redZombie">in</em>
-      </h2>
-      <form onSubmit={handleSubmit} className="md:flex md:flex-col">
+      </h1>
+      <form onSubmit={handleSubmit} className="md:flex md:flex-col py-14 w-4/5">
         <div className="mb-6 flex flex-col">
           <label htmlFor="mail" className="text-3xl leading-loose">
             E-mail
@@ -63,7 +77,7 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="mb-10 flex flex-col">
+        <div className="mb-10 flex flex-col ">
           <label htmlFor="password" className="text-3xl leading-loose">
             Mot de passe
           </label>
@@ -76,10 +90,17 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Link
+<<<<<<< HEAD
             to="/password-reset"
             className="text-redZombie text-2xl text-right underline cursor-pointer"
           >
               Mot de passe oublié ?
+=======
+            to="#"
+            className="text-redZombie text-2xl text-right underline cursor-pointer"
+          >
+            Mot de passe oublié ?
+>>>>>>> dev
           </Link>
         </div>
         {error && (
@@ -87,7 +108,7 @@ function Login() {
         )}
         <button
           type="submit"
-          className="w-full mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center"
+          className=" mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl w-full"
         >
           Me connecter
         </button>
@@ -98,7 +119,7 @@ function Login() {
           Créer un compte
         </Link>
       </p>
-    </div>
+    </main>
   );
 }
 
