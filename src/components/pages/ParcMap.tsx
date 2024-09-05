@@ -112,7 +112,7 @@ function ParcMap() {
                       {attraction.description_short}
                     </p>
                     <Link
-                      className="mt-4 p-1 rounded bg-white text-redZombie hover:text-redZombie hover:bg-red-100"
+                      className="mt-4 p-1 rounded bg-white visited:text-redZombie text-redZombie hover:text-redZombie hover:bg-red-100"
                       to={`../attractions/${attraction.activity_id}`}
                     >
                       En savoir plus
