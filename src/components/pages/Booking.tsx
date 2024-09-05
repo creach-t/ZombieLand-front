@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ticketImg from '../../assets/img/desktop/Rectangle-8.webp';
@@ -14,8 +14,8 @@ function Booking() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const inputValue = Number(event.target.value);
+  // Handle price calculation
+  function handlePriceChange(inputValue: number) {
     const price = 6666;
 
     setNumberOfVisitors(inputValue);
@@ -26,6 +26,12 @@ function Booking() {
       setTotalPrice((price * inputValue) / 100);
     }
   }
+
+  // Trigger price calculation on mount or when numberOfVisitors changes
+  useEffect(() => {
+    // Call handlePriceChange with the current value of numberOfVisitors
+    handlePriceChange(numberOfVisitors);
+  }, [numberOfVisitors]);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -71,7 +77,7 @@ function Booking() {
                 min={0}
                 max={100}
                 value={numberOfVisitors}
-                onChange={handlePriceChange}
+                onChange={(e) => handlePriceChange(Number(e.target.value))}
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
               />
             </div>
