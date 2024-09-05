@@ -1,10 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useUser } from '../../context/UserContext';
 import { User } from '../../context/UserContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -13,6 +15,19 @@ function Login() {
   const { setUser } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.showToast) {
+      toast.success('Compte créé avec succès', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-greenZombie text-black text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
+    }
+  }, [location.state]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,10 +60,10 @@ function Login() {
 
       if (redirectTo === '/reserver') {
         navigate('/reserver', {
-          state: { numberOfVisitors, visitDate },
+          state: { numberOfVisitors, visitDate, showToast: true },
         });
       } else {
-        navigate(redirectTo);
+        navigate(redirectTo, { state: { showToast: true } });
       }
     } catch (error) {
       console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
@@ -61,6 +76,7 @@ function Login() {
       <h1 className="self-center md:self-start text-6xl">
         Log<em className="text-redZombie">in</em>
       </h1>
+      <ToastContainer />
       <form onSubmit={handleSubmit} className="md:flex md:flex-col py-14 w-4/5">
         <div className="mb-6 flex flex-col">
           <label htmlFor="mail" className="text-3xl leading-loose">

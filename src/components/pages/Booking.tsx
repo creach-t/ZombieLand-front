@@ -4,6 +4,8 @@ import { useUser } from '../../context/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ticketImg from '../../assets/img/desktop/Rectangle-8.webp';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Booking() {
   const location = useLocation();
@@ -28,6 +30,19 @@ function Booking() {
     const price = 6666;
     setTotalPrice((price * numberOfVisitors) / 100);
   }, [numberOfVisitors]);
+
+  useEffect(() => {
+    if (location.state?.showToast) {
+      toast.success('Vous êtes connecté', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-greenZombie text-black text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
+    }
+  }, [location.state]);
 
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = Number(event.target.value);
@@ -71,6 +86,7 @@ function Booking() {
 
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <ToastContainer />
       <h1 className="self-center md:self-start text-6xl">
         Réser<span className="text-redZombie">vation</span>
       </h1>
