@@ -15,19 +15,27 @@ function NewPassword() {
       return;
     }
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+  
+    if (!token) {
+      setError('Token non valide ou expiré.');
+      return;
+    }
+  
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/account/reset-password`,
-        { password },
+        { password, token },
         {
           headers: {
             'Content-Type': 'application/json',
           },
         }
       );
-
+  
       if (response.status === 200) {
-        navigate('/login');
+        navigate('/se-connecter');
       } else {
         setError('Erreur lors de la réinitialisation du mot de passe.');
       }

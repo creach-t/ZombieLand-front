@@ -90,17 +90,10 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Link
-<<<<<<< HEAD
             to="/password-reset"
             className="text-redZombie text-2xl text-right underline cursor-pointer"
           >
               Mot de passe oublié ?
-=======
-            to="#"
-            className="text-redZombie text-2xl text-right underline cursor-pointer"
-          >
-            Mot de passe oublié ?
->>>>>>> dev
           </Link>
         </div>
         {error && (
