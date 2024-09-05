@@ -245,7 +245,9 @@ textarea {
   padding: 0;
   /* 3 */
 }
-
+input{
+  color: black
+}
 /*
 Remove the inheritance of text transform in Edge and Firefox.
 */
@@ -618,6 +620,7 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
   text-transform: uppercase;
+  color: white
 }
 
 button {

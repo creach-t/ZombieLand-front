@@ -32,11 +32,11 @@ function NavBar() {
               <>
                 {width > 768 && (
                   <p className="text-white text-xl">
-                    Bonjour {user.firstname} !
+                    Bonjour {user.first_name} !
                   </p>
                 )}
                 <Link
-                  to={`/mon-compte/${user.userId}`}
+                  to={`/mon-compte/${user.user_id}`}
                   aria-label="account"
                   className="text-white text-2xl hover:text-red-500"
                 >

@@ -3,10 +3,10 @@ import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { jwtDecode } from 'jwt-decode';
 
 interface User {
-  userId: string;
+  user_id: string;
   email: string;
-  firstname: string;
-  lastname: string;
+  first_name: string;
+  last_name: string;
   iat: number;
   exp: number;
 }

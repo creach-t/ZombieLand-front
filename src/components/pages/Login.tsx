@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -36,6 +36,7 @@ function Login() {
       localStorage.setItem('token', token);
 
       const decodedUser = jwtDecode(token);
+
       setUser(decodedUser);
 
       const redirectTo = location.state?.from || '/';
