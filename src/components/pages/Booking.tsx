@@ -24,17 +24,14 @@ function Booking() {
     }
   }, []);
 
+  useEffect(() => {
+    const price = 6666;
+    setTotalPrice((price * numberOfVisitors) / 100);
+  }, [numberOfVisitors]);
+
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = Number(event.target.value);
-    const price = 6666;
-
     setNumberOfVisitors(inputValue);
-
-    if (inputValue < 0) {
-      setTotalPrice(0);
-    } else {
-      setTotalPrice((price * inputValue) / 100);
-    }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
