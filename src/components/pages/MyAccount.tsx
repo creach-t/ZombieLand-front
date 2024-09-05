@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import { jwtDecode } from 'jwt-decode';
 
 interface User {
   user_id: number;
@@ -30,10 +31,15 @@ function MyAccount() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode<User>(token as string);
 
     if (!token) {
       navigate('/se-connecter');
       return;
+    }
+
+    if (decodedToken.user_id !== Number(id)) {
+      navigate('/404');
     }
 
     const fetchUser = async () => {
