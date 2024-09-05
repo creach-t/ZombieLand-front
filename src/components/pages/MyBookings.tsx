@@ -8,17 +8,20 @@ import axios from 'axios';
 interface Booking {
   booking_id: number;
   client_id: number;
-  date: Date;
+  date: string;
   status: string;
   nb_tickets: string;
+  created_at: Date;
 }
 
 function MyBookings() {
   const { user } = useContext(UserContext);
+  console.log(user);
+
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 4;
-  const formatter = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' });
+  /* const formatter = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }); */
 
   useEffect(() => {
     const loadBookings = async () => {
@@ -37,10 +40,7 @@ function MyBookings() {
 
   const indexOfLastBooking = currentPage * bookingsPerPage;
   const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
-  const currentBookings = bookings.slice(
-    indexOfFirstBooking,
-    indexOfLastBooking
-  );
+  bookings.slice(indexOfFirstBooking, indexOfLastBooking);
 
   const totalPages = Math.ceil(bookings.length / bookingsPerPage);
 
@@ -117,9 +117,7 @@ function MyBookings() {
                     <p className="text-sm text-slate-500">{booking.status}</p>
                   </td>
                   <td className="p-3 ">
-                    <p className="text-sm text-slate-500">
-                      {formatter.format(booking.date)}
-                    </p>
+                    <p className="text-sm text-slate-500">{booking.date}</p>
                   </td>
                   <td className="p-3 border-b border-slate-200">
                     <button

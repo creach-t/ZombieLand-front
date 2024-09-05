@@ -53,7 +53,7 @@ function Booking() {
           client_id: user.user_id,
         });
 
-        navigate('/se-connecter');
+        navigate('/mes-reservations');
       } catch (error: unknown) {
         if (error instanceof Error) {
           setErrorMessage(

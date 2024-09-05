@@ -32,7 +32,7 @@ function MyAccount() {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      navigate('/login');
+      navigate('/se-connecter');
       return;
     }
 
@@ -109,7 +109,7 @@ function MyAccount() {
         }
       );
 
-      setUser(response.data);
+      setThisUser(response.data);
       setMessage({
         type: 'success',
         content: 'Vos informations ont été mises à jour avec succès.',
