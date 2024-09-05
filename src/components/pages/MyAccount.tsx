@@ -46,6 +46,7 @@ function MyAccount() {
             },
           }
         );
+
         setThisUser(response.data);
         setFirstName(response.data.first_name);
         setLastName(response.data.last_name);
@@ -160,7 +161,7 @@ function MyAccount() {
 
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-      <h1 className="text-6xl text-center md:text-left mb-12">
+      <h1 className="self-center md:self-start text-6xl">
         MON <em className="text-redZombie">COMPTE</em>
       </h1>
       <Link
@@ -229,7 +230,7 @@ function MyAccount() {
             </div>
           </div>
           <div className="w-1/2">
-            <h4 className="text-center text-2xl">Changer de mot de passe</h4>
+            <h4 className="text-center text-2xl ">Changer de mot de passe</h4>
             <div className="mb-6 flex flex-col">
               <label htmlFor="oldPassword" className="text-3xl leading-loose">
                 Ancien mot de passe
@@ -278,7 +279,7 @@ function MyAccount() {
           </div>
         </div>
 
-        <div className="my-6 m-auto flex gap-10">
+        <div className="my-6 m-auto flex gap-10 flex-col md:flex-row">
           <button
             type="submit"
             className="min-w-max bg-greenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
