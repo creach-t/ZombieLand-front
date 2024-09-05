@@ -37,6 +37,8 @@ function Login() {
 
       const decodedUser = jwtDecode(token);
 
+      console.log(decodedUser);
+
       setUser(decodedUser);
 
       const redirectTo = location.state?.from || '/';
