@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../api/api';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,11 +7,58 @@ function Signin() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessages, setErrorMessages] = useState<{ [key: string]: boolean }>({});
+  const [flashClass, setFlashClass] = useState('text-sm text-gray-500');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Object.keys(errorMessages).length > 0) {
+      const interval = setInterval(() => {
+        setFlashClass((prevClass) =>
+          prevClass === 'text-sm text-gray-500' ? 'text-sm text-redZombie' : 'text-sm text-gray-500'
+        );
+      }, 500);
+
+      return () => clearInterval(interval);
+    }
+  }, [errorMessages]);
+
+  const validateForm = () => {
+    const errors: { [key: string]: boolean } = {};
+
+    if (!firstName) {
+      errors.firstName = true;
+    }
+    if (!lastName) {
+      errors.lastName = true;
+    }
+    if (!email) {
+      errors.email = true;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errors.email = true;
+    }
+    if (!password) {
+      errors.password = true;
+    } else if (
+      password.length < 6 ||
+      !/[0-9]/.test(password) ||
+      !/[A-Z]/.test(password) ||
+      !/[a-z]/.test(password)
+    ) {
+      errors.password = true;
+    }
+
+    return errors;
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrorMessages(formErrors);
+      return;
+    }
+
     try {
       await api.post('/signin', {
         first_name: firstName,
@@ -24,15 +71,16 @@ function Signin() {
       setLastName('');
       setEmail('');
       setPassword('');
-      setErrorMessage('');
+      setErrorMessages({});
 
       navigate('/se-connecter', { state: { showToast: true } });
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setErrorMessage('il y a eu un souci pendant la création du compte');
+        setErrorMessages({ general: true });
       }
     }
   };
+
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
       <h1 className="self-center md:self-start text-6xl">
@@ -45,7 +93,10 @@ function Signin() {
       >
         <div className="mb-6 flex flex-col">
           <label htmlFor="first_name" className="text-3xl leading-loose">
-            Prénom
+            Prénom{' '}
+            <span className={`${errorMessages.firstName ? flashClass : 'text-sm text-gray-500'}`}>
+              * champs requis
+            </span>
           </label>
           <input
             type="text"
@@ -59,7 +110,10 @@ function Signin() {
         </div>
         <div className="mb-6 flex flex-col">
           <label htmlFor="last_name" className="text-3xl leading-loose">
-            Nom
+            Nom{' '}
+            <span className={`${errorMessages.lastName ? flashClass : 'text-sm text-gray-500'}`}>
+              * champs requis
+            </span>
           </label>
           <input
             type="text"
@@ -73,7 +127,10 @@ function Signin() {
         </div>
         <div className="mb-6 flex flex-col">
           <label htmlFor="mail" className="text-3xl leading-loose">
-            E-mail
+            E-mail{' '}
+            <span className={`${errorMessages.email ? flashClass : 'text-sm text-gray-500'}`}>
+              * champs requis, doit correspondre au format adresse@provider.com
+            </span>
           </label>
           <input
             type="email"
@@ -87,7 +144,10 @@ function Signin() {
         </div>
         <div className="mb-10 flex flex-col">
           <label htmlFor="password" className="text-3xl leading-loose">
-            Mot de passe
+            Mot de passe{' '}
+            <span className={`${errorMessages.password ? flashClass : 'text-sm text-gray-500'}`}>
+              * doit contenir au minimum 6 caractères, dont 1 chiffre, 1 majuscule et 1 minuscule
+            </span>
           </label>
           <input
             type="password"
@@ -99,9 +159,9 @@ function Signin() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {errorMessage && (
+        {errorMessages.general && (
           <p className="bg-redZombie rounded-xl p-2 mb-2 text-white">
-            {errorMessage}
+            Il y a eu un souci pendant la création du compte
           </p>
         )}
         <button
