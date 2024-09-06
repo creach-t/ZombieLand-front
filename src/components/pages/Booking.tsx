@@ -227,6 +227,7 @@ function Booking() {
                 id="date"
                 name="date"
                 value={visitDate}
+                min={new Date().toISOString().split('T')[0]}
                 onChange={(e) => setVisitDate(e.target.value)}
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
               />
