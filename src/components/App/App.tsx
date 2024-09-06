@@ -18,6 +18,7 @@ import ActivityDetail from '../pages/ActivityDetail';
 import MyBookings from '../pages/MyBookings';
 import PasswordReset from '../pages/passwordReset';
 import NewPassword from '../pages/newPassword';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -39,6 +40,10 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/attractions/:id" element={<ActivityDetail />} />
           <Route path="/mes-reservations" element={<MyBookings />} />
+          <Route
+            path="/politique-de-confidentialite"
+            element={<PrivacyPolicy />}
+          />
         </Routes>
         <Footer />
       </UserProvider>
