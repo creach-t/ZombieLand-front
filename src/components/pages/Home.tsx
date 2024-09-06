@@ -2,11 +2,13 @@
 /* eslint-disable no-console */
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import zombieFace from '../../assets/img/desktop/zombie-apocalypse-zombieland.webp';
 import tickets from '../../assets/img/desktop/achat-tickets-parc-zombieland.webp';
@@ -61,6 +63,7 @@ const sliderSettings = {
 function Home() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const loadActivities = async () => {
@@ -79,9 +82,23 @@ function Home() {
     loadActivities();
   }, []);
 
+  useEffect(() => {
+    if (location.state?.showToast) {
+      toast.success('Vous êtes connecté', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-greenZombie text-black text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
+    }
+  }, [location.state]);
+
   return (
     <>
       <section className=" mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home.webp')] bg-cover bg-center bg-no-repeat">
+        <ToastContainer />
         <div className="bg-black bg-opacity-10 h-full w-full max-[600px]:px-8 px-16 flex items-center">
           <div className="px-14 py-5 bg-black bg-opacity-40 max-w-[550px] min-h-[400px] flex flex-col justify-around [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
             <h1 className="text-6xl text-white [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)] uppercase">

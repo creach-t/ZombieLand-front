@@ -1,34 +1,118 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useContext, useState } from 'react';
-import { UserContext } from '../../context/UserContext';
+import { useEffect, useRef, useState } from 'react';
+import { useUser } from '../../context/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ticketImg from '../../assets/img/desktop/Rectangle-8.webp';
+import axios from 'axios';
+import getStripe from '../../utils/getStripe';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Booking() {
   const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const status = searchParams.get('status');
   const [numberOfVisitors, setNumberOfVisitors] = useState(
     location.state?.numberOfVisitors || 0
   );
   const [visitDate, setVisitDate] = useState(location.state?.visitDate || '');
   const [totalPrice, setTotalPrice] = useState(0);
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
+
+  const refInputTickets = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const status = searchParams.get('status');
+    const bookingId = Number(searchParams.get('bookingId'));
+
+    if (status && bookingId) {
+      if (status === 'success') {
+        updateReservationStatus(bookingId, 'confirmed');
+      } else if (status === 'cancel') {
+        setMessage('Le paiement a été annulé.');
+      }
+    }
+  }, [location.search]);
+
+  const updateReservationStatus = async (
+    booking_id: number,
+    status: string
+  ) => {
+    try {
+      await axios.patch(
+        `${import.meta.env.VITE_API_URL}/booking/${booking_id}`,
+        {
+          status,
+        }
+      );
+      if (status === 'confirmed') {
+        navigate('/mes-reservations');
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(
+          'Il y a eu un souci pendant la mise à jour de votre réservation.'
+        );
+      }
+    }
+  };
+
+  useEffect(() => {
+    const price = 6666;
+    setTotalPrice((price * numberOfVisitors) / 100);
+  }, [numberOfVisitors]);
+
+  useEffect(() => {
+    if (location.state?.showToast) {
+      toast.success('Vous êtes connecté', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-greenZombie text-black text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
+    }
+  }, [location.state]);
 
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = Number(event.target.value);
-    const price = 6666;
-
     setNumberOfVisitors(inputValue);
+  }
 
-    if (inputValue < 0) {
-      setTotalPrice(0);
-    } else {
-      setTotalPrice((price * inputValue) / 100);
+  async function handleCheckout(bookingId: number) {
+    const stripe = await getStripe();
+    if (stripe) {
+      try {
+        const { error } = await stripe.redirectToCheckout({
+          lineItems: [
+            {
+              price: 'price_1PvhABAYcocwkm1zNWt849Uq',
+              quantity: numberOfVisitors,
+            },
+          ],
+          mode: 'payment',
+          successUrl: `${window.location.origin}/reserver?status=success&bookingId=${bookingId}`,
+          cancelUrl: `${window.location.origin}/reserver?status=cancel&bookingId=${bookingId}`,
+          customerEmail: user?.email,
+        });
+
+        if (error) {
+          console.warn(error.message);
+          setMessage('Le paiement a échoué. Veuillez réessayer.');
+        }
+      } catch (error) {
+        console.error('Erreur lors de la redirection Stripe:', error);
+        setMessage('Une erreur est survenue lors de la tentative de paiement.');
+      }
     }
   }
 
-  function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     if (!user) {
       navigate('/se-connecter', {
@@ -38,18 +122,47 @@ function Booking() {
           visitDate,
         },
       });
-    } else {
-      navigate('/paiement-stripe', {
-        state: { totalPrice, numberOfVisitors, visitDate },
-      });
+      return;
     }
-  }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/booking`,
+        {
+          date: visitDate,
+          status: 'pending',
+          nb_tickets: numberOfVisitors,
+          client_id: user.user_id,
+        }
+      );
+
+      const bookingId = response.data.booking_id;
+
+      handleCheckout(bookingId);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(
+          'Il y a eu un souci pendant la création de votre réservation.'
+        );
+      }
+    }
+  };
 
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <ToastContainer />
       <h1 className="self-center md:self-start text-6xl">
         Réser<span className="text-redZombie">vation</span>
       </h1>
+      {message && (
+        <p
+          className={`${
+            status === 'success' ? 'bg-darkGreenZombie' : 'bg-redZombie'
+          } rounded-xl p-2 mb-2 text-white`}
+        >
+          {message}
+        </p>
+      )}
       <section className="flex flex-wrap mt-4 justify-center w-full">
         <div className="md:w-1/2 flex items-center justify-start">
           <img src={ticketImg} className="" alt="ticket pour zombieLand" />
@@ -64,6 +177,7 @@ function Booking() {
                 Nombre de visiteurs
               </label>
               <input
+                ref={refInputTickets}
                 type="number"
                 id="numberOfVisitors"
                 name="numberOfVisitors"

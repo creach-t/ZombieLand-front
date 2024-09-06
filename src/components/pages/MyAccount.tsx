@@ -1,8 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import { useUser } from '../../context/UserContext';
+import { jwtDecode } from 'jwt-decode';
 
 interface User {
   user_id: number;
@@ -13,7 +14,7 @@ interface User {
 }
 
 function MyAccount() {
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUser();
   const [thisUser, setThisUser] = useState<User | null>(null);
   const [message, setMessage] = useState<{
     type: 'success' | 'error';
@@ -30,10 +31,15 @@ function MyAccount() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode<User>(token as string);
 
     if (!token) {
-      navigate('/login');
+      navigate('/se-connecter');
       return;
+    }
+
+    if (decodedToken.user_id !== Number(id)) {
+      navigate('/404');
     }
 
     const fetchUser = async () => {
@@ -109,7 +115,7 @@ function MyAccount() {
         }
       );
 
-      setUser(response.data);
+      setThisUser(response.data);
       setMessage({
         type: 'success',
         content: 'Vos informations ont été mises à jour avec succès.',

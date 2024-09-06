@@ -26,7 +26,7 @@ function Signin() {
       setPassword('');
       setErrorMessage('');
 
-      navigate('/se-connecter');
+      navigate('/se-connecter', { state: { showToast: true } });
     } catch (error: unknown) {
       if (error instanceof Error) {
         setErrorMessage('il y a eu un souci pendant la création du compte');
