@@ -107,11 +107,7 @@ function Login() {
             to="/password-reset"
             className="text-redZombie text-2xl text-right underline cursor-pointer"
           >
-<<<<<<< HEAD
-              Mot de passe oublié ?
-=======
             Mot de passe oublié ?
->>>>>>> 1607d4d0d3214f42fea7a5b1daf687e4cb0aae54
           </Link>
         </div>
         {error && (
