@@ -28,7 +28,6 @@ function Booking() {
 
     if (status && bookingId) {
       if (status === 'success') {
-        // Mettre à jour la réservation en 'confirmed'
         updateReservationStatus(bookingId, 'confirmed');
       } else if (status === 'cancel') {
         setMessage('Le paiement a été annulé.');
