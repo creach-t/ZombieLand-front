@@ -213,7 +213,7 @@ function Booking() {
                 placeholder="Entrez le nombre de visiteurs"
                 min={0}
                 max={100}
-                value={numberOfVisitors}
+                value={numberOfVisitors === 0 ? '' : numberOfVisitors}
                 onChange={handlePriceChange}
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
               />
