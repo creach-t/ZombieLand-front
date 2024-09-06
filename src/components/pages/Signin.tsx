@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/api';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // This will style the toast
 
 function Signin() {
   const [firstName, setFirstName] = useState('');
@@ -28,24 +30,105 @@ function Signin() {
 
     if (!firstName) {
       errors.firstName = true;
+      toast.warning('Le prénom est requis.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
     }
+
     if (!lastName) {
       errors.lastName = true;
+      toast.warning('Le nom est requis.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
     }
+
     if (!email) {
       errors.email = true;
+      toast.warning('L\'email est requis.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = true;
+      toast.warning('L\'email doit être valide (ex: adresse@provider.com).', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
     }
+
     if (!password) {
       errors.password = true;
-    } else if (
-      password.length < 6 ||
-      !/[0-9]/.test(password) ||
-      !/[A-Z]/.test(password) ||
-      !/[a-z]/.test(password)
-    ) {
-      errors.password = true;
+      toast.warning('Le mot de passe est requis.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
+    } else {
+      if (password.length < 6) {
+        errors.password = true;
+        toast.warning('Le mot de passe doit contenir au moins 6 caractères.', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      }
+      if (!/[0-9]/.test(password)) {
+        errors.password = true;
+        toast.warning('Le mot de passe doit contenir au moins un chiffre.', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      }
+      if (!/[A-Z]/.test(password)) {
+        errors.password = true;
+        toast.warning('Le mot de passe doit contenir au moins une majuscule.', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      }
+      if (!/[a-z]/.test(password)) {
+        errors.password = true;
+        toast.warning('Le mot de passe doit contenir au moins une minuscule.', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      }
     }
 
     return errors;
@@ -77,6 +160,14 @@ function Signin() {
     } catch (error: unknown) {
       if (error instanceof Error) {
         setErrorMessages({ general: true });
+        toast.warning('Il y a eu un souci pendant la création du compte.', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
       }
     }
   };
@@ -171,6 +262,7 @@ function Signin() {
           M&apos;inscrire
         </button>
       </form>
+      <ToastContainer />
     </main>
   );
 }
