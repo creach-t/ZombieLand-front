@@ -26,7 +26,7 @@ function PasswordReset() {
       );
 
       if (response.status === 200) {
-        navigate('/login');
+        navigate('/se-connecter');
       } else {
         setError('Erreur lors de l\'envoi de l\'email. 1');
       }
