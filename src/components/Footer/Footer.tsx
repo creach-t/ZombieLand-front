@@ -24,7 +24,7 @@ function Footer() {
           </p>
         </div>
         <div className="w-[150px] ">
-          <h3 className="text-xl uppercase">
+          <h3 className="text-2xl uppercase">
             Liens <span className="text-redZombie">utiles</span>
           </h3>
           <ul>
