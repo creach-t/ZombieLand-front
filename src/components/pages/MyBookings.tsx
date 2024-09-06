@@ -1,8 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Booking {
   booking_id: number;
@@ -19,6 +21,20 @@ function MyBookings() {
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 4;
   const formatter = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' });
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.showToast) {
+      toast.success('Merci, pour votre réservation.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-greenZombie text-black text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const loadUserBookings = async () => {
@@ -64,6 +80,7 @@ function MyBookings() {
       <h1 className="text-6xl text-center md:text-left mb-12">
         MON <em className="text-redZombie">COMPTE</em>
       </h1>
+      <ToastContainer />
       <Link
         to={`/mon-compte/${user?.user_id}`}
         className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
