@@ -160,7 +160,11 @@ function Booking() {
       }
     }
   }
-
+function handleClick() {
+    alert(
+      'Vous devez être connecté pour effectuer une réservation.\nVous allez être redirigé sur la page de connexion.'
+    );
+  }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -279,6 +283,7 @@ function Booking() {
             </p>
             <button
               type="submit"
+                 onClick={handleClick}
               className="w-full bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center mb-8"
             >
               Je réserve
