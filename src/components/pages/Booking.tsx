@@ -97,7 +97,6 @@ function Booking() {
     const inputValue = Number(event.target.value);
     setNumberOfVisitors(inputValue);
 
-    // Validate number of visitors
     if (inputValue <= 0 || inputValue > 100) {
       setVisitorError('Merci d\'indiquer un nombre de visiteurs valide');
     } else {
@@ -109,7 +108,6 @@ function Booking() {
     const selectedDate = event.target.value;
     setVisitDate(selectedDate);
 
-    // Validate visit date
     const today = new Date().toISOString().split('T')[0];
     if (selectedDate < today) {
       setDateError('Merci d\'indiquer une date valide pour votre visite');
@@ -177,7 +175,6 @@ function Booking() {
       return;
     }
 
-    // If there are validation errors, prevent submission
     if (visitorError || dateError) {
       return;
     }
