@@ -18,21 +18,24 @@ function Booking() {
   const [visitDate, setVisitDate] = useState(location.state?.visitDate || '');
   const [totalPrice, setTotalPrice] = useState(0);
   const { user } = useUser();
-  const [message, setMessage] = useState('');
   const navigate = useNavigate();
-
   const refInputTickets = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const status = searchParams.get('status');
     const bookingId = Number(searchParams.get('bookingId'));
 
     if (status && bookingId) {
       if (status === 'success') {
         updateReservationStatus(bookingId, 'confirmed');
       } else if (status === 'cancel') {
-        setMessage('Le paiement a été annulé.');
+        toast.warning('Le paiement a été annulé.', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
       }
     }
   }, [location.search]);
@@ -49,12 +52,22 @@ function Booking() {
         }
       );
       if (status === 'confirmed') {
-        navigate('/mes-reservations');
+        navigate('/mes-reservations', {
+          state: { showToast: true, bookingId: booking_id },
+        });
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setMessage(
-          'Il y a eu un souci pendant la mise à jour de votre réservation.'
+        toast.warning(
+          'Il y a eu un soucis pendant la mise à jour de votre réservation.',
+          {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-redZombie text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          }
         );
       }
     }
@@ -102,11 +115,28 @@ function Booking() {
 
         if (error) {
           console.warn(error.message);
-          setMessage('Le paiement a échoué. Veuillez réessayer.');
+          toast.warning('Le paiement a échoué. Veuillez réessayer.', {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-redZombie text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          });
         }
       } catch (error) {
         console.error('Erreur lors de la redirection Stripe:', error);
-        setMessage('Une erreur est survenue lors de la tentative de paiement.');
+        toast.warning(
+          'Une erreur est survenue lors de la tentative de paiement.',
+          {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-redZombie text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          }
+        );
       }
     }
   }
@@ -141,8 +171,16 @@ function Booking() {
       handleCheckout(bookingId);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setMessage(
-          'Il y a eu un souci pendant la création de votre réservation.'
+        toast.warning(
+          'Il y a eu un souci pendant la création de votre réservation.',
+          {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-redZombie text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          }
         );
       }
     }
@@ -154,15 +192,6 @@ function Booking() {
       <h1 className="self-center md:self-start text-6xl">
         Réser<span className="text-redZombie">vation</span>
       </h1>
-      {message && (
-        <p
-          className={`${
-            status === 'success' ? 'bg-darkGreenZombie' : 'bg-redZombie'
-          } rounded-xl p-2 mb-2 text-white`}
-        >
-          {message}
-        </p>
-      )}
       <section className="flex flex-wrap mt-4 justify-center w-full">
         <div className="md:w-1/2 flex items-center justify-start">
           <img src={ticketImg} className="" alt="ticket pour zombieLand" />
