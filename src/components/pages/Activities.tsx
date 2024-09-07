@@ -131,15 +131,15 @@ function Activities() {
             style={{
               backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(currentActivity.name)})`,
             }}
-            className="w-[400px] md:w-[200px] lg:w-[400px] h-[400px] md:h-[350px] lg:h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center"
+            className="w-[400px] md:w-[200px] lg:w-[400px] h-[400px] md:h-[350px] lg:h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center activity_card"
           >
-            <h2 className="badgrunge text-white text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
+            <h2 className="badgrunge text-white text-6xl text-center [text-shadow:_4px_3px_1px_rgb(0_0_0_/_80%)]">
               {currentActivity.name}
             </h2>
             <Link
               to={`/attractions/${currentActivity.activity_id}`}
               type="button"
-              className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
+              className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 shadow-["
             >
               En savoir plus
             </Link>

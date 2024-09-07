@@ -97,7 +97,7 @@ function Home() {
 
   return (
     <>
-      <section className=" mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home.webp')] bg-cover bg-center bg-no-repeat">
+      <section className=" mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
         <ToastContainer />
         <div className="bg-black bg-opacity-10 h-full w-full max-[600px]:px-8 px-16 flex items-center">
           <div className="px-14 py-5 bg-black bg-opacity-40 max-w-[550px] min-h-[400px] flex flex-col justify-around [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">

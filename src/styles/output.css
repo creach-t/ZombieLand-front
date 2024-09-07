@@ -252,6 +252,14 @@ input {
 Remove the inheritance of text transform in Edge and Firefox.
 */
 
+.activity_card {
+  box-shadow:
+    0px 1px 2px 0px rgba(0, 255, 255, 0.7),
+    1px 2px 4px 0px rgba(0, 255, 255, 0.7),
+    2px 4px 8px 0px rgba(0, 255, 255, 0.7),
+    2px 4px 16px 0px rgba(0, 255, 255, 0.7);
+}
+
 button,
 select {
   text-transform: none;
