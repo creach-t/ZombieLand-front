@@ -17,6 +17,8 @@ function Booking() {
   );
   const [visitDate, setVisitDate] = useState(location.state?.visitDate || '');
   const [totalPrice, setTotalPrice] = useState(0);
+  const [visitorError, setVisitorError] = useState('');
+  const [dateError, setDateError] = useState('');
   const { user } = useUser();
   const navigate = useNavigate();
   const refInputTickets = useRef<HTMLInputElement>(null);
@@ -94,6 +96,24 @@ function Booking() {
   function handlePriceChange(event: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = Number(event.target.value);
     setNumberOfVisitors(inputValue);
+
+    if (inputValue <= 0 || inputValue > 100) {
+      setVisitorError('Merci d\'indiquer un nombre de visiteurs valide');
+    } else {
+      setVisitorError('');
+    }
+  }
+
+  function handleDateChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const selectedDate = event.target.value;
+    setVisitDate(selectedDate);
+
+    const today = new Date().toISOString().split('T')[0];
+    if (selectedDate < today) {
+      setDateError('Merci d\'indiquer une date valide pour votre visite');
+    } else {
+      setDateError('');
+    }
   }
 
   async function handleCheckout(bookingId: number) {
@@ -140,7 +160,11 @@ function Booking() {
       }
     }
   }
-
+function handleClick() {
+    alert(
+      'Vous devez être connecté pour effectuer une réservation.\nVous allez être redirigé sur la page de connexion.'
+    );
+  }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -152,6 +176,10 @@ function Booking() {
           visitDate,
         },
       });
+      return;
+    }
+
+    if (visitorError || dateError) {
       return;
     }
 
@@ -167,6 +195,15 @@ function Booking() {
       );
 
       const bookingId = response.data.booking_id;
+
+      toast.success('Merci pour votre réservation', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-greenZombie text-black text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
 
       handleCheckout(bookingId);
     } catch (error: unknown) {
@@ -203,7 +240,10 @@ function Booking() {
                 htmlFor="numberOfVisitors"
                 className="text-3xl leading-loose"
               >
-                Nombre de visiteurs
+                Nombre de visiteurs{' '}
+                <span className="text-sm text-redZombie">
+                  {visitorError}
+                </span>
               </label>
               <input
                 ref={refInputTickets}
@@ -213,21 +253,25 @@ function Booking() {
                 placeholder="Entrez le nombre de visiteurs"
                 min={0}
                 max={100}
-                value={numberOfVisitors}
+                value={numberOfVisitors === 0 ? '' : numberOfVisitors}
                 onChange={handlePriceChange}
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
               />
             </div>
             <div className="mb-6 flex flex-col">
               <label htmlFor="date" className="text-3xl leading-loose">
-                Votre date de visite
+                Votre date de visite{' '}
+                <span className="text-sm text-redZombie">
+                  {dateError}
+                </span>
               </label>
               <input
                 type="date"
                 id="date"
                 name="date"
                 value={visitDate}
-                onChange={(e) => setVisitDate(e.target.value)}
+                min={new Date().toISOString().split('T')[0]}
+                onChange={handleDateChange}
                 className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
               />
             </div>
@@ -239,6 +283,7 @@ function Booking() {
             </p>
             <button
               type="submit"
+                 onClick={handleClick}
               className="w-full bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center mb-8"
             >
               Je réserve
