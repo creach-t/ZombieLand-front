@@ -4,28 +4,28 @@ import React, { useState, useEffect } from 'react';
 import layer1 from '../../assets/img/zombie-run/Background layers/Layer-1.webp';
 import layer2 from '../../assets/img/zombie-run/Background layers/Layer-2.webp';
 
-// frames de l'animation courrir (à changer en WebP)
-import run1 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run1.png';
-import run2 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run2.png';
-import run3 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run3.png';
-import run4 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run4.png';
-import run5 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run5.png';
-import run6 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run6.png';
-import run7 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run7.png';
-import run8 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run8.png';
-import run9 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run9.png';
-import run10 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run10.png';
+// frames de l'animation courrir
+import run1 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run1.webp';
+import run2 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run2.webp';
+import run3 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run3.webp';
+import run4 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run4.webp';
+import run5 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run5.webp';
+import run6 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run6.webp';
+import run7 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run7.webp';
+import run8 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run8.webp';
+import run9 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run9.webp';
+import run10 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run10.webp';
 
-// frames de l'animation sauter (à changer en WebP)
-import jump1 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump1.png';
-import jump2 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump2.png';
-import jump3 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump3.png';
-import jump4 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump4.png';
-import jump5 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump5.png';
-import jump6 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump6.png';
-import jump7 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump7.png';
+// frames de l'animation sauter
+import jump1 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump1.webp';
+import jump2 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump2.webp';
+import jump3 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump3.webp';
+import jump4 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump4.webp';
+import jump5 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump5.webp';
+import jump6 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump6.webp';
+import jump7 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump7.webp';
 
-import idle from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Idle1.png';
+import idle from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Idle1.webp';
 
 const runImgs: string[] = [
   run1,
