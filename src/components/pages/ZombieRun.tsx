@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 // Layers du background
-import ground from '../../assets/img/zombie-run/Background layers/Layer_0000_9.png';
-import grass from '../../assets/img/zombie-run/Background layers/Layer_0001_8.png';
-import leaves from '../../assets/img/zombie-run/Background layers/Layer_0002_7.png';
-import trees_1 from '../../assets/img/zombie-run/Background layers/Layer_0003_6.png';
-import lights_1 from '../../assets/img/zombie-run/Background layers/Layer_0004_Lights.png';
-import trees_2 from '../../assets/img/zombie-run/Background layers/Layer_0005_5.png';
-import trees_3 from '../../assets/img/zombie-run/Background layers/Layer_0006_4.png';
-import lights_2 from '../../assets/img/zombie-run/Background layers/Layer_0007_Lights.png';
-import trees_4 from '../../assets/img/zombie-run/Background layers/Layer_0008_3.png';
-import trees_5 from '../../assets/img/zombie-run/Background layers/Layer_0009_2.png';
-import mist from '../../assets/img/zombie-run/Background layers/Layer_0010_1.png';
-import mist_2 from '../../assets/img/zombie-run/Background layers/Layer_0011_0.png';
+import layer1 from '../../assets/img/zombie-run/Background layers/Layer-1.webp';
+import layer2 from '../../assets/img/zombie-run/Background layers/Layer-2.webp';
 
-// frames de l'animation courrir
+// frames de l'animation courrir (à changer en WebP)
 import run1 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run1.png';
 import run2 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run2.png';
 import run3 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run3.png';
@@ -26,7 +16,7 @@ import run8 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run8.png
 import run9 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run9.png';
 import run10 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Run10.png';
 
-// frames de l'animation sauter
+// frames de l'animation sauter (à changer en WebP)
 import jump1 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump1.png';
 import jump2 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump2.png';
 import jump3 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump3.png';
@@ -62,15 +52,27 @@ const animationFrames: { [key: string]: string[] } = {
 const STARTING_PHASE_END = 3; // Index de la dernière image de la phase de lancement de course
 const RUNNING_PHASE_START = 4; // Index de la première image de la phase de course (boucle infinie)
 
+//Constante pour la taille du background du jeu
+const BACKGROUND_WIDTH = 928;
+
 type AnimationState = 'run' | 'jump' | '';
+
+type LayerPositionState = {
+  layer1: number;
+  layer2: number;
+};
 
 function ZombieRun() {
   const [currentAnimation, setCurrentAnimation] = useState<AnimationState>('');
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [isJumping, setIsJumping] = useState<boolean>(false);
+  const [layerPositions, setLayerPositions] = useState<LayerPositionState>({
+    layer1: 0,
+    layer2: 0,
+  });
 
-  // Gestion du défilement des frames des animations
+  // Gestion du défilement des frames des animations du zombie
   useEffect(() => {
     let interval: number | undefined;
 
@@ -112,14 +114,37 @@ function ZombieRun() {
     }
   }, [currentAnimation]);
 
+  // Gestion du défilement du background
+  useEffect(() => {
+    let animationFrame: number;
+
+    const updatePositions = () => {
+      setLayerPositions((prev) => ({
+        layer1: (prev.layer1 - 3.5) % BACKGROUND_WIDTH,
+        layer2: (prev.layer2 - 2.8) % BACKGROUND_WIDTH,
+      }));
+      animationFrame = requestAnimationFrame(updatePositions);
+    };
+
+    if (isRunning) {
+      animationFrame = requestAnimationFrame(updatePositions);
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [isRunning]);
+
+  // Reset de l'animation du zombie à l'arrêt
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [currentAnimation]);
+
+  // Gestion des classes CSS pour les animations
   const getClassName = () => {
     if (isJumping) return 'animate-jump';
     return '';
   };
-
-  useEffect(() => {
-    setCurrentImageIndex(0);
-  }, [currentAnimation]);
 
   const handleRunClick = () => {
     setIsRunning((state) => !state);
@@ -134,60 +159,44 @@ function ZombieRun() {
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-xl mx-auto">
       <div
-        className="background-container relative w-full overflow-hidden"
-        style={{ height: '580px' }}
+        className="background-container relative overflow-hidden"
+        style={{ height: '580px', width: `${BACKGROUND_WIDTH}px` }}
       >
         <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${ground})`, zIndex: 12 }}
+          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom bg-repeat"
+          style={{
+            backgroundImage: `url(${layer1})`,
+            zIndex: 2,
+            transform: `translateX(${layerPositions.layer1}px)`,
+          }}
         ></div>
         <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${grass})`, zIndex: 11 }}
+          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom bg-repeat"
+          style={{
+            backgroundImage: `url(${layer1})`,
+            zIndex: 2,
+            transform: `translateX(${layerPositions.layer1 + BACKGROUND_WIDTH - 1}px)`,
+          }}
         ></div>
         <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${leaves})`, zIndex: 10 }}
+          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom bg-repeat"
+          style={{
+            backgroundImage: `url(${layer2})`,
+            zIndex: 1,
+            transform: `translateX(${layerPositions.layer2}px)`,
+          }}
         ></div>
         <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${trees_1})`, zIndex: 9 }}
-        ></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${lights_1})`, zIndex: 8 }}
-        ></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${trees_2})`, zIndex: 7 }}
-        ></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${trees_3})`, zIndex: 6 }}
-        ></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${lights_2})`, zIndex: 5 }}
-        ></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${trees_4})`, zIndex: 4 }}
-        ></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${trees_5})`, zIndex: 3 }}
-        ></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${mist})`, zIndex: 2 }}
-        ></div>
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom"
-          style={{ backgroundImage: `url(${mist_2})`, zIndex: 1 }}
+          className="absolute top-0 left-0 w-full h-full bg-auto bg-bottom bg-repeat"
+          style={{
+            backgroundImage: `url(${layer2})`,
+            zIndex: 1,
+            transform: `translateX(${layerPositions.layer2 + BACKGROUND_WIDTH}px)`,
+          }}
         ></div>
         <img
           className={`Zombie h-1/4 absolute bottom-14 left-24 ${getClassName()}`} // Applique la classe de l'animation en cours
-          style={{ zIndex: 11 }}
+          style={{ zIndex: 3 }}
           src={
             currentAnimation === ''
               ? idleImg
