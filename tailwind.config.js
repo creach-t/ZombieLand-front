@@ -9,6 +9,16 @@ export default {
         greenZombie: '#62F974',
         darkGreenZombie: '#2B7D64',
       },
+      keyframes: {
+        jump: {
+          '0%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-100px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        jump: 'jump 700ms ease',
+      },
     },
   },
   plugins: [],

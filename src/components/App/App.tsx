@@ -19,6 +19,7 @@ import MyBookings from '../pages/MyBookings';
 import PasswordReset from '../pages/passwordReset';
 import NewPassword from '../pages/newPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
+import ZombieRun from '../pages/ZombieRun';
 
 function App() {
   return (
@@ -37,13 +38,14 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/new-password" element={<NewPassword />} />
-          <Route path="*" element={<NotFoundPage />} />
           <Route path="/attractions/:id" element={<ActivityDetail />} />
           <Route path="/mes-reservations" element={<MyBookings />} />
           <Route
             path="/politique-de-confidentialite"
             element={<PrivacyPolicy />}
           />
+          <Route path="/zombie-run" element={<ZombieRun />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />
       </UserProvider>
