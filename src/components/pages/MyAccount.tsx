@@ -15,6 +15,69 @@ interface User {
   role: string;
 }
 
+const validateNewPassword = (password: string) => {
+  let errors = false;
+
+  if (password.length < 6) {
+    errors = true;
+    toast.warning(
+      'Votre nouveau mot de passe doit contenir au moins 6 caractères.',
+      {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      }
+    );
+  }
+  if (!/[0-9]/.test(password)) {
+    errors = true;
+    toast.warning(
+      'Votre nouveau mot de passe doit contenir au moins un chiffre.',
+      {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      }
+    );
+  }
+  if (!/[A-Z]/.test(password)) {
+    errors = true;
+    toast.warning(
+      'Votre nouveau mot de passe doit contenir au moins une majuscule.',
+      {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      }
+    );
+  }
+  if (!/[a-z]/.test(password)) {
+    errors = true;
+    toast.warning(
+      'Votre nouveau mot de passe doit contenir au moins une minuscule.',
+      {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      }
+    );
+  }
+
+  return !errors;
+};
+
 function MyAccount() {
   const { user, setUser } = useUser();
   const [thisUser, setThisUser] = useState<User | null>(null);
@@ -97,19 +160,35 @@ function MyAccount() {
           password: oldPassword,
         });
 
-        if (newPassword && newPassword === confirmPassword) {
-          updateData.password = newPassword;
-        } else {
+        const isNewPasswordValid = validateNewPassword(newPassword);
+
+        if (!newPassword) {
+          toast.error('Veuillez renseigner votre nouveau mot de passe', {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-redZombie text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          });
+          return;
+        }
+
+        if (!(newPassword === confirmPassword)) {
           toast.error('Les nouveaux mots de passe ne correspondent pas', {
             position: 'top-center',
             autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
-            className: 'bg-redZombie text-black text-2xl',
+            className: 'bg-redZombie text-white text-2xl',
             style: { fontFamily: 'League Gothic', top: '104px' },
           });
           return;
         }
+
+        if (!isNewPasswordValid) return;
+
+        updateData.password = newPassword;
       }
 
       const response = await axios.patch(
@@ -121,7 +200,6 @@ function MyAccount() {
           },
         }
       );
-
 
       const { newToken, newUser } = response.data;
       if (newToken && newUser) {
@@ -139,7 +217,6 @@ function MyAccount() {
         closeOnClick: true,
         className: 'bg-greenZombie text-black text-2xl',
         style: { fontFamily: 'League Gothic', top: '104px' },
-
       });
     } catch (error) {
       console.error('Erreur lors de la mise à jour des informations:', error);
