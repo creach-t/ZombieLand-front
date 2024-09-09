@@ -168,7 +168,7 @@ function Home() {
         <h2 className="text-7xl mb-5">
           Infos <span className="text-black">Pratiques</span>
         </h2>
-        <div className="flex flex-wrap justify-around items-center py-6">
+        <div className="flex flex-wrap gap-4 justify-around items-center py-6">
           <Link to="/reserver">
             <div className="bg-black flex flex-col justify-center items-center gap-5 py-10 px-5 rounded-xl">
               <img className="w-[250px]" src={tickets} alt="tickets" />

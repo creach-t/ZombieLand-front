@@ -2,6 +2,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useUser } from '../../context/UserContext';
+import user_icon_red from '../../assets/icons/user_red.svg';
+import user_icon_green from '../../assets/icons/user_green.svg';
 import useWindowDimensions from './utils/dimensions';
 
 function NavBar() {
@@ -69,34 +71,12 @@ function NavBar() {
                   aria-label="account"
                   className="text-white text-2xl hover:text-red-500"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="hover:fill-green-300 size-10 fill-greenZombie"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <img src={user_icon_green} width="42px" alt="profile" />
                 </Link>
               </>
             ) : (
               <Link to="/se-connecter" aria-label="login">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="hover:fill-red-700 size-10 fill-redZombie"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <img src={user_icon_red} width="42px" alt="profile" />
               </Link>
             )}
 

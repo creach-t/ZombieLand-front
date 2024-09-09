@@ -8,13 +8,6 @@ import getStripe from '../../utils/getStripe';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-/* interface Price {
-  price_id: number;
-  price: number;
-  created_at: string;
-  updated_at: string;
-} */
-
 function Booking() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -107,6 +100,7 @@ function Booking() {
       }
     }
   };
+  // Alert user connection
 
   useEffect(() => {
     setTotalPrice(price * numberOfVisitors);
@@ -114,7 +108,7 @@ function Booking() {
 
   useEffect(() => {
     if (location.state?.showToast) {
-      toast.success('Vous êtes connecté', {
+      toast.warning('Vous êtes connecté', {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -192,22 +186,34 @@ function Booking() {
       }
     }
   }
-  function handleClick() {
-    alert(
-      'Vous devez être connecté pour effectuer une réservation.\nVous allez être redirigé sur la page de connexion.'
-    );
-  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!user) {
-      navigate('/se-connecter', {
-        state: {
-          from: '/reserver',
-          numberOfVisitors,
-          visitDate,
-        },
-      });
+      toast.error(
+        "Vous n'êtes pas connecté(e) ! Vous allez être redirigé(e) sur la page de connexion",
+        {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        }
+      );
+      setTimeout(() => {
+        navigate('/se-connecter', {
+          state: {
+            from: '/reserver',
+            numberOfVisitors,
+            visitDate,
+          },
+        });
+      }, 3000);
       return;
     }
 
@@ -311,7 +317,6 @@ function Booking() {
             </p>
             <button
               type="submit"
-              onClick={handleClick}
               className="w-full bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center mb-8"
             >
               Je réserve
