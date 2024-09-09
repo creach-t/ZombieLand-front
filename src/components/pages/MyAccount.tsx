@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { jwtDecode } from 'jwt-decode';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface User {
   user_id: number;
@@ -14,18 +16,15 @@ interface User {
 }
 
 function MyAccount() {
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
   const [thisUser, setThisUser] = useState<User | null>(null);
-  const [message, setMessage] = useState<{
-    type: 'success' | 'error';
-    content: string;
-  } | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -62,9 +61,13 @@ function MyAccount() {
           'Erreur lors de la récupération des infos utilisateur:',
           error
         );
-        setMessage({
-          type: 'error',
-          content: 'Impossible de récupérer les informations utilisateur.',
+        toast.error('Impossible de récupérer les informations utilisateurs', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-black text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
         });
       }
     };
@@ -97,9 +100,13 @@ function MyAccount() {
         if (newPassword && newPassword === confirmPassword) {
           updateData.password = newPassword;
         } else {
-          setMessage({
-            type: 'error',
-            content: 'Les nouveaux mots de passe ne correspondent pas.',
+          toast.error('Les nouveaux mots de passe ne correspondent pas', {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-redZombie text-black text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
           });
           return;
         }
@@ -115,18 +122,36 @@ function MyAccount() {
         }
       );
 
-      setThisUser(response.data);
-      setMessage({
-        type: 'success',
-        content: 'Vos informations ont été mises à jour avec succès.',
+      const { newToken, newUser } = response.data;
+      if (newToken && newUser) {
+        localStorage.setItem('token', newToken);
+        setUser(newToken);
+        setThisUser(newUser);
+      }
+
+      setUser((prevUser) => prevUser && { ...prevUser, ...newUser });
+
+      toast.success('Informations mises à jour avec succès', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-greenZombie text-black text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
       });
     } catch (error) {
       console.error('Erreur lors de la mise à jour des informations:', error);
-      setMessage({
-        type: 'error',
-        content:
-          "Une erreur s'est produite lors de la mise à jour de vos informations.",
-      });
+      toast.error(
+        "Une erreur s'est produite lors de la mise à jour de vos informations",
+        {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-black text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        }
+      );
     }
   };
 
@@ -144,20 +169,25 @@ function MyAccount() {
       );
       localStorage.removeItem('token');
       setUser(null);
-      setMessage({
-        type: 'success',
-        content: 'Votre compte a été supprimé avec succès.',
-      });
       navigate('/');
     } catch (error) {
       console.error('Erreur lors de la suppression du compte:', error);
-      setMessage({
-        type: 'error',
-        content:
-          "Une erreur s'est produite lors de la suppression de votre compte.",
-      });
+      toast.error(
+        "Une erreur s'est produite lors de la suppression de votre compte",
+        {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-black text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        }
+      );
     }
   };
+
+  const openConfirmModal = () => setIsConfirmModalOpen(true);
+  const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -167,6 +197,7 @@ function MyAccount() {
 
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <ToastContainer />
       <h1 className="self-center md:self-start text-6xl">
         MON <em className="text-redZombie">COMPTE</em>
       </h1>
@@ -176,19 +207,6 @@ function MyAccount() {
       >
         Mes <em className="text-redZombie ">Réservations</em>
       </Link>
-
-      {message && (
-        <p
-          className={
-            message.type === 'success'
-              ? 'text-green-600 mt-4'
-              : 'text-red-600 mt-4'
-          }
-        >
-          {message.content}
-        </p>
-      )}
-
       <form onSubmit={handleSubmit} className="w-3/4 md:flex md:flex-col mt-10">
         <div className="w-3/4 flex justify-between items-center m-auto gap-8">
           <div className="w-1/2 mt-8">
@@ -293,12 +311,41 @@ function MyAccount() {
             Sauvegarder mes infos
           </button>
           <button
-            onClick={handleDelete}
+            onClick={openConfirmModal}
             type="button"
             className="min-w-max bg-redZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
           >
             Supprimer mon compte
           </button>
+          {isConfirmModalOpen && (
+            <div
+              className="modal-veil fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
+              onClick={closeConfirmModal}
+            >
+              <div
+                className="modal-container text-3xl p-8 rounded-xl flex flex-col gap-4"
+                onClick={(e) => e.stopPropagation()}
+                style={{ backgroundColor: '#121212' }}
+              >
+                <h2>Êtes-vous sûr de vouloir supprimer votre compte ?</h2>
+                <p>Cette action est irréversible.</p>
+                <div className="btn-container flex items-center justify-center gap-4">
+                  <button
+                    className="min-w-max bg-greenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
+                    onClick={handleDelete}
+                  >
+                    Confirmer
+                  </button>
+                  <button
+                    className="min-w-max bg-redZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
+                    onClick={closeConfirmModal}
+                  >
+                    Annuler
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           <button
             onClick={handleLogout}
             type="button"
