@@ -245,9 +245,11 @@ textarea {
   padding: 0;
   /* 3 */
 }
+
 input {
   color: white;
 }
+
 /*
 Remove the inheritance of text transform in Edge and Firefox.
 */
@@ -654,7 +656,7 @@ button:focus-visible {
   width: 0.3em;
   height: 0.3em;
   border-radius: 0 100% 100% 100%;
-  background-color: red;
+  background-color: #C90000;
   position: absolute;
   top: 72%;
   animation: drop 3s infinite both;
@@ -684,10 +686,12 @@ button:focus-visible {
     transform: translateY(0) scaleX(0.85) rotate(45deg);
     animation-timing-function: ease-out;
   }
+
   60% {
     transform: translateY(120%) scaleX(0.85) rotate(45deg);
     animation-timing-function: ease-in;
   }
+
   80%,
   100% {
     transform: translateY(105vh) scaleX(0.85) rotate(45deg);
