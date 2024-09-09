@@ -8,6 +8,13 @@ import getStripe from '../../utils/getStripe';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+/* interface Price {
+  price_id: number;
+  price: number;
+  created_at: string;
+  updated_at: string;
+} */
+
 function Booking() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -16,12 +23,38 @@ function Booking() {
     location.state?.numberOfVisitors || 0
   );
   const [visitDate, setVisitDate] = useState(location.state?.visitDate || '');
+  const [price, setPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [visitorError, setVisitorError] = useState('');
   const [dateError, setDateError] = useState('');
   const { user } = useUser();
   const navigate = useNavigate();
   const refInputTickets = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const loadPrice = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/price`
+        );
+        const activePrice = response.data.price;
+
+        setPrice(activePrice);
+      } catch (error) {
+        console.error('Erreur lors du chargement du prix', error);
+        toast.warning("Désolé il n'y a plus de place disponible", {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      }
+    };
+
+    loadPrice();
+  }, []);
 
   useEffect(() => {
     const bookingId = Number(searchParams.get('bookingId'));
@@ -76,9 +109,8 @@ function Booking() {
   };
 
   useEffect(() => {
-    const price = 6666;
-    setTotalPrice((price * numberOfVisitors) / 100);
-  }, [numberOfVisitors]);
+    setTotalPrice(price * numberOfVisitors);
+  }, [numberOfVisitors, price]);
 
   useEffect(() => {
     if (location.state?.showToast) {
@@ -98,7 +130,7 @@ function Booking() {
     setNumberOfVisitors(inputValue);
 
     if (inputValue <= 0 || inputValue > 100) {
-      setVisitorError('Merci d\'indiquer un nombre de visiteurs valide');
+      setVisitorError("Merci d'indiquer un nombre de visiteurs valide");
     } else {
       setVisitorError('');
     }
@@ -110,7 +142,7 @@ function Booking() {
 
     const today = new Date().toISOString().split('T')[0];
     if (selectedDate < today) {
-      setDateError('Merci d\'indiquer une date valide pour votre visite');
+      setDateError("Merci d'indiquer une date valide pour votre visite");
     } else {
       setDateError('');
     }
@@ -160,7 +192,7 @@ function Booking() {
       }
     }
   }
-function handleClick() {
+  function handleClick() {
     alert(
       'Vous devez être connecté pour effectuer une réservation.\nVous allez être redirigé sur la page de connexion.'
     );
@@ -241,9 +273,7 @@ function handleClick() {
                 className="text-3xl leading-loose"
               >
                 Nombre de visiteurs{' '}
-                <span className="text-sm text-redZombie">
-                  {visitorError}
-                </span>
+                <span className="text-sm text-redZombie">{visitorError}</span>
               </label>
               <input
                 ref={refInputTickets}
@@ -261,9 +291,7 @@ function handleClick() {
             <div className="mb-6 flex flex-col">
               <label htmlFor="date" className="text-3xl leading-loose">
                 Votre date de visite{' '}
-                <span className="text-sm text-redZombie">
-                  {dateError}
-                </span>
+                <span className="text-sm text-redZombie">{dateError}</span>
               </label>
               <input
                 type="date"
@@ -276,14 +304,14 @@ function handleClick() {
               />
             </div>
             <p className="text-3xl">
-              Tarif unique : <em className="text-redZombie">66.66€</em>
+              Tarif unique : <em className="text-redZombie">{price}</em>
             </p>
             <p className="text-5xl text-center my-12">
               Total : <em className="text-redZombie">{totalPrice} €</em>
             </p>
             <button
               type="submit"
-                 onClick={handleClick}
+              onClick={handleClick}
               className="w-full bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center mb-8"
             >
               Je réserve
