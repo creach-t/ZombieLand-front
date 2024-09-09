@@ -16,12 +16,38 @@ function Booking() {
     location.state?.numberOfVisitors || 0
   );
   const [visitDate, setVisitDate] = useState(location.state?.visitDate || '');
+  const [price, setPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [visitorError, setVisitorError] = useState('');
   const [dateError, setDateError] = useState('');
   const { user } = useUser();
   const navigate = useNavigate();
   const refInputTickets = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const loadPrice = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/price`
+        );
+        const activePrice = response.data.price;
+
+        setPrice(activePrice);
+      } catch (error) {
+        console.error('Erreur lors du chargement du prix', error);
+        toast.warning("Désolé il n'y a plus de place disponible", {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      }
+    };
+
+    loadPrice();
+  }, []);
 
   useEffect(() => {
     const bookingId = Number(searchParams.get('bookingId'));
@@ -77,9 +103,8 @@ function Booking() {
   // Alert user connection
 
   useEffect(() => {
-    const price = 6666;
-    setTotalPrice((price * numberOfVisitors) / 100);
-  }, [numberOfVisitors]);
+    setTotalPrice(price * numberOfVisitors);
+  }, [numberOfVisitors, price]);
 
   useEffect(() => {
     if (location.state?.showToast) {
@@ -161,6 +186,7 @@ function Booking() {
       }
     }
   }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -284,7 +310,7 @@ function Booking() {
               />
             </div>
             <p className="text-3xl">
-              Tarif unique : <em className="text-redZombie">66.66€</em>
+              Tarif unique : <em className="text-redZombie">{price}</em>
             </p>
             <p className="text-5xl text-center my-12">
               Total : <em className="text-redZombie">{totalPrice} €</em>
