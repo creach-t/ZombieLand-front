@@ -20,12 +20,13 @@ import PasswordReset from '../pages/passwordReset';
 import NewPassword from '../pages/newPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import ZombieRun from '../pages/ZombieRun';
-
+import ScrollToTop from '../ScrollTopTop/ScrollToTop';
 function App() {
   return (
     <div>
       <UserProvider>
         <NavBar />
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/mon-compte/:id" element={<MyAccount />} />
