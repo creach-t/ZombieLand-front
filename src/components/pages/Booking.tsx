@@ -74,6 +74,34 @@ function Booking() {
       }
     }
   };
+  // Alert user connection
+
+  const handleReserveClick = async () => {
+    if (!user) {
+      toast.error(
+        "Vous n'êtes pas connecté(e) ! Vous allez être redirigé(e) sur la page de connexion",
+        {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          className: 'bg-redZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        }
+      );
+
+      setTimeout(() => {
+        navigate('/se-connecter');
+      }, 3000);
+
+      return;
+    }
+  };
+
+  // fin Alert user connection
 
   useEffect(() => {
     const price = 6666;
@@ -82,7 +110,7 @@ function Booking() {
 
   useEffect(() => {
     if (location.state?.showToast) {
-      toast.success('Vous êtes connecté', {
+      toast.warning('Vous êtes connecté', {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -98,7 +126,7 @@ function Booking() {
     setNumberOfVisitors(inputValue);
 
     if (inputValue <= 0 || inputValue > 100) {
-      setVisitorError('Merci d\'indiquer un nombre de visiteurs valide');
+      setVisitorError("Merci d'indiquer un nombre de visiteurs valide");
     } else {
       setVisitorError('');
     }
@@ -110,7 +138,7 @@ function Booking() {
 
     const today = new Date().toISOString().split('T')[0];
     if (selectedDate < today) {
-      setDateError('Merci d\'indiquer une date valide pour votre visite');
+      setDateError("Merci d'indiquer une date valide pour votre visite");
     } else {
       setDateError('');
     }
@@ -159,11 +187,6 @@ function Booking() {
         );
       }
     }
-  }
-function handleClick() {
-    alert(
-      'Vous devez être connecté pour effectuer une réservation.\nVous allez être redirigé sur la page de connexion.'
-    );
   }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -241,9 +264,7 @@ function handleClick() {
                 className="text-3xl leading-loose"
               >
                 Nombre de visiteurs{' '}
-                <span className="text-sm text-redZombie">
-                  {visitorError}
-                </span>
+                <span className="text-sm text-redZombie">{visitorError}</span>
               </label>
               <input
                 ref={refInputTickets}
@@ -261,9 +282,7 @@ function handleClick() {
             <div className="mb-6 flex flex-col">
               <label htmlFor="date" className="text-3xl leading-loose">
                 Votre date de visite{' '}
-                <span className="text-sm text-redZombie">
-                  {dateError}
-                </span>
+                <span className="text-sm text-redZombie">{dateError}</span>
               </label>
               <input
                 type="date"
@@ -282,8 +301,8 @@ function handleClick() {
               Total : <em className="text-redZombie">{totalPrice} €</em>
             </p>
             <button
-              type="submit"
-                 onClick={handleClick}
+              type="button"
+              onClick={handleReserveClick}
               className="w-full bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center mb-8"
             >
               Je réserve
