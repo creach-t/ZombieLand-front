@@ -115,7 +115,13 @@ function MyAccount() {
         }
       );
 
-      setThisUser(response.data);
+      // Update the local state and context with the new user information
+      const updatedUser = response.data;
+      setThisUser(updatedUser);
+
+      // Update the UserContext to reflect the new user data in the navbar
+      setUser((prevUser) => prevUser && { ...prevUser, ...updatedUser });
+
       setMessage({
         type: 'success',
         content: 'Vos informations ont été mises à jour avec succès.',
