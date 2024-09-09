@@ -57,7 +57,7 @@ function Login() {
       const decodedUser = jwtDecode<User>(token);
       setUser(decodedUser);
 
-      navigate(`/mon-compte/${decodedUser.id}`, { state: { showToast: true } });
+      navigate(`/mon-compte/${decodedUser.user_id}`, { state: { showToast: true } });
     } catch (error) {
       console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
       setError("Nom d'utilisateur ou mot de passe non reconnu");
