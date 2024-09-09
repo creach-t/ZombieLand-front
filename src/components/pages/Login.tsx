@@ -1,6 +1,5 @@
-/* eslint-disable react/react-in-jsx-scope */
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useUser } from '../../context/UserContext';
@@ -15,6 +14,27 @@ function Login() {
   const { setUser } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      try {
+        const decodedUser = jwtDecode<User>(token);
+        const currentTime = Date.now() / 1000;
+
+        if (decodedUser.exp && decodedUser.exp < currentTime) {
+          localStorage.removeItem('token');
+        } else {
+          setUser(decodedUser);
+          navigate(`/mon-compte/${decodedUser.user_id}`);
+        }
+      } catch (error) {
+        console.error('Token is invalid', error);
+        localStorage.removeItem('token');
+      }
+    }
+  }, [setUser, navigate]);
 
   useEffect(() => {
     if (location.state?.showToast) {
@@ -41,30 +61,16 @@ function Login() {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/login`,
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
 
       const token = response.data.token;
       localStorage.setItem('token', token);
 
       const decodedUser = jwtDecode<User>(token);
-
       setUser(decodedUser);
 
-      const redirectTo = location.state?.from || '/';
-      const numberOfVisitors = location.state?.numberOfVisitors || 0;
-      const visitDate = location.state?.visitDate || '';
-
-      if (redirectTo === '/reserver') {
-        navigate('/reserver', {
-          state: { numberOfVisitors, visitDate, showToast: true },
-        });
-      } else {
-        navigate(redirectTo, { state: { showToast: true } });
-      }
+      navigate(`/`, { state: { showToast: true } });
     } catch (error) {
       console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
       setError("Nom d'utilisateur ou mot de passe non reconnu");
@@ -91,7 +97,7 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="mb-10 flex flex-col ">
+        <div className="mb-10 flex flex-col">
           <label htmlFor="password" className="text-3xl leading-loose">
             Mot de passe
           </label>
@@ -115,7 +121,7 @@ function Login() {
         )}
         <button
           type="submit"
-          className=" mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl w-full"
+          className="mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl w-full"
         >
           Me connecter
         </button>
