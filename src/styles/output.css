@@ -724,6 +724,7 @@ button:focus, button:focus-visible {
 }
 
 
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -738,3 +739,15 @@ button:focus, button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* margin h1  */
+@media screen and (min-device-width: 768px) and (max-device-width: 1536px) { 
+  main h1{
+   margin-left: 7%;
+  
+  }
+
+}
+
+
+
