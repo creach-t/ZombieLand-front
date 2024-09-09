@@ -122,6 +122,7 @@ function MyAccount() {
         }
       );
 
+
       const { newToken, newUser } = response.data;
       if (newToken && newUser) {
         localStorage.setItem('token', newToken);
@@ -138,6 +139,7 @@ function MyAccount() {
         closeOnClick: true,
         className: 'bg-greenZombie text-black text-2xl',
         style: { fontFamily: 'League Gothic', top: '104px' },
+
       });
     } catch (error) {
       console.error('Erreur lors de la mise à jour des informations:', error);
