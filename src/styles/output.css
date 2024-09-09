@@ -704,6 +704,25 @@ button:focus-visible {
     1px 2px 4px 0px rgba(98, 249, 116, 0.7),
     2px 4px 8px 0px rgba(98, 249, 116, 0.7);
 }
+/* back to top button */
+.backToTop{
+  border: 0;
+  position: fixed;
+  bottom: 20px;
+  right: 0px;
+  background: #f9f9f900;
+  z-index: 10
+}
+
+
+.backToTop:hover{
+  border: 0;
+
+}
+button:focus, button:focus-visible {
+  outline: 0;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
