@@ -1,12 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
-import { useEffect, useState, useContext, useRef } from 'react';
-import { UserContext } from '../../context/UserContext';
+import { useEffect, useState, useRef } from 'react';
+import { useUser } from '../../context/UserContext';
 import useWindowDimensions from './utils/dimensions';
 
 function NavBar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   const { width } = useWindowDimensions();
   const navRef = useRef(null);
 
@@ -103,9 +103,14 @@ function NavBar() {
             <Link
               to="/reserver"
               type="button"
-              className="text-white text-2xl bg-redZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center"
+              className="text-white text-2xl bg-redZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center blood"
             >
               Réservation
+              <span className="drop"></span>
+              <span className="drop"></span>
+              <span className="drop"></span>
+              <span className="drop"></span>
+              <span className="drop"></span>
             </Link>
             <button
               onClick={() => setIsNavOpen((prev) => !prev)}
