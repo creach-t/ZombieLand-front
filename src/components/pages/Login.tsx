@@ -17,12 +17,12 @@ function Login() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-  
+
     if (token) {
       try {
         const decodedUser = jwtDecode<User>(token);
         const currentTime = Date.now() / 1000;
-  
+
         if (decodedUser.exp && decodedUser.exp < currentTime) {
           localStorage.removeItem('token');
         } else {
@@ -30,34 +30,47 @@ function Login() {
           navigate(`/mon-compte/${decodedUser.user_id}`);
         }
       } catch (error) {
-        console.error("Token is invalid", error);
+        console.error('Token is invalid', error);
         localStorage.removeItem('token');
       }
     }
   }, [setUser, navigate]);
 
+  useEffect(() => {
+    if (location.state?.showToast) {
+      toast.success('Compte créé avec succès', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-greenZombie text-black text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
+    }
+  }, [location.state]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-  
+
     if (!email || !password) {
       setError('Veuillez remplir tous les champs');
       return;
     }
-  
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/login`,
         { email, password }
       );
-  
+
       const token = response.data.token;
       localStorage.setItem('token', token);
-  
+
       const decodedUser = jwtDecode<User>(token);
       setUser(decodedUser);
 
-      navigate(`/mon-compte/${decodedUser.user_id}`, { state: { showToast: true } });
+      navigate(`/`, { state: { showToast: true } });
     } catch (error) {
       console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
       setError("Nom d'utilisateur ou mot de passe non reconnu");
