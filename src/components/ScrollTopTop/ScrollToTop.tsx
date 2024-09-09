@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { animateScroll as scroll } from 'react-scroll';
-import backToTopImg from '../../assets/img/desktop/back-to-top-zombieland 2.webp';
+import backToTopImg from '../../assets/img/desktop/back-to-top-zombieland.webp';
 
 function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
