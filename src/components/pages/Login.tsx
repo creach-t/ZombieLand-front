@@ -6,7 +6,6 @@ import { useUser } from '../../context/UserContext';
 import { User } from '../../context/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Helmet } from 'react-helmet-async';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -79,16 +78,6 @@ function Login() {
   };
 
   return (
-
-    <div>
-      <Helmet>
-        <title>Connexion | Parc Zombieland | Paris </title>
-        <meta
-          name="description"
-          content="Connectez-vous à votre compte Zombieland pour gérer vos réservations, consulter vos avantages et préparer votre prochaine visite dans notre univers terrifiant."
-        />
-      </Helmet>
- 
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
       <h1 className="self-center md:self-start text-6xl">
         Log<em className="text-redZombie">in</em>
@@ -123,17 +112,9 @@ function Login() {
           <Link
             to="/password-reset"
             className="text-redZombie visited:text-redZombie text-2xl text-right underline cursor-pointer"
-
           >
-            Me connecter
-          </button>
-        </form>
-        <p className="text-center text-2xl mb-40">
-          Pas de compte ?
-          <Link className="text-redZombie text-2xl" to="/inscription">
-            Créer un compte
+            Mot de passe oublié ?
           </Link>
-
         </div>
         {error && (
           <p className="bg-redZombie text-2xl rounded-xl p-2 mb-2">{error}</p>
