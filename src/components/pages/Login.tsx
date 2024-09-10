@@ -111,7 +111,7 @@ function Login() {
           />
           <Link
             to="/password-reset"
-            className="text-redZombie text-2xl text-right underline cursor-pointer"
+            className="text-redZombie visited:text-redZombie text-2xl text-right underline cursor-pointer"
           >
             Mot de passe oublié ?
           </Link>
@@ -128,7 +128,10 @@ function Login() {
       </form>
       <p className="text-center text-2xl mb-40">
         Pas de compte ?
-        <Link className="text-redZombie text-2xl" to="/inscription">
+        <Link
+          className="text-redZombie visited:text-redZombie underline text-4xl ml-4"
+          to="/inscription"
+        >
           Créer un compte
         </Link>
       </p>
