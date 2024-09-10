@@ -1,11 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
-
-import { HelmetProvider } from 'react-helmet-async';
-
 import { PriceProvider } from '../../context/PriceContext';
-
 import Footer from '../Footer/Footer';
 
 import NavBar from '../NavBar/NavBar';
@@ -27,12 +23,8 @@ import PrivacyPolicy from '../pages/PrivacyPolicy';
 import ZombieRun from '../pages/ZombieRun';
 import ScrollToTop from '../ScrollTopTop/ScrollToTop';
 function App() {
-  const helmetContext = {};
   return (
     <div>
-
-      <HelmetProvider context={helmetContext}>
-      
       <UserProvider>
         <PriceProvider>
           <NavBar />
@@ -59,13 +51,8 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
           <Footer />
-        
         </PriceProvider>
-          </UserProvider>
-      </HelmetProvider>
-
-   
-
+      </UserProvider>
     </div>
   );
 }
