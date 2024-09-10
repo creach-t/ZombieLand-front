@@ -22,9 +22,13 @@ import NewPassword from '../pages/newPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import ZombieRun from '../pages/ZombieRun';
 import ScrollToTop from '../ScrollTopTop/ScrollToTop';
+import { HelmetProvider } from 'react-helmet-async';
+
 function App() {
+  const helmetContext = {};
   return (
     <div>
+        <HelmetProvider context={helmetContext}>
       <UserProvider>
         <PriceProvider>
           <NavBar />
@@ -53,6 +57,7 @@ function App() {
           <Footer />
         </PriceProvider>
       </UserProvider>
+        </HelmetProvider>
     </div>
   );
 }
