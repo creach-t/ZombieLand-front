@@ -39,19 +39,6 @@ function Infos() {
               {price ? price.price : 0.0} €
             </em>
           </div>
-          <div className="flex">
-            <img src={clockImg} className="mr-8 w-20" alt="icone horloge" />
-            <div className="flex flex-col">
-              <h2 className="text-4xl text-redZombie">Horaires d'ouverture</h2>
-              <p className="text-3xl">
-                Prêt à braver les ténèbres et affronter vos peurs ? Découvrez
-                notre tarif unique... à vos risques et périls !
-              </p>
-            </div>
-          </div>
-          <div className="text-center mb-10">
-            <em className="text-7xl text-redZombie">66,66€</em>
-          </div>
           <div>
             <div className="flex">
               <img src={clockImg} className="mr-8 w-20" alt="icone horloge" />

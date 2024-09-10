@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 
 interface Message {
@@ -12,6 +12,7 @@ function ChatBox() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [socket, setSocket] = useState<Socket | null>(null);
+  const ref = useChatScroll(messages);
 
   useEffect(() => {
     const newSocket = io(`${import.meta.env.VITE_API_URL}`);
@@ -63,10 +64,23 @@ function ChatBox() {
     };
   }, [socket]);
 
+  function useChatScroll<T>(dep: T): React.MutableRefObject<HTMLDivElement> {
+    const ref = React.useRef<HTMLDivElement>();
+    React.useEffect(() => {
+      if (ref.current) {
+        ref.current.scrollTop = ref.current.scrollHeight;
+      }
+    }, [dep]);
+    return ref;
+  }
+
   return (
     <div className="chat-window absolute p-4 bg-black border-redZombie border-2 rounded-xl h-[400px] w-[400px] z-50 right-8 bottom-20">
       <h3>Chat</h3>
-      <div className="chat-messages h-3/4 w-full bg-slate-400 rounded-xl overflow-y-auto">
+      <div
+        ref={ref}
+        className="chat-messages h-3/4 w-full bg-slate-400 rounded-xl overflow-y-auto"
+      >
         {messages.map((msg) => (
           <div
             key={msg.id}

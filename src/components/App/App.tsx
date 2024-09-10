@@ -41,7 +41,7 @@ function App() {
             <button
               type="button"
               onClick={toggleChat}
-              className="fixed bottom-5 right-5 bg-redZombie text-white p-4 rounded-full hover:border-greenZombie"
+              className="fixed bottom-8 right-20 bg-redZombie text-white p-4 rounded-full hover:border-greenZombie"
             >
               Chat
               <span className="absolute inline-flex rounded-full h-3 w-3 bg-red-600 top-0"></span>
