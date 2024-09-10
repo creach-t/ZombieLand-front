@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import map from '../../assets/img/desktop/zombieland_map.webp';
-
+import { Helmet } from 'react-helmet-async';
 interface Attraction {
   activity_id: number;
   name: string;
@@ -46,6 +46,14 @@ function ParcMap() {
   };
 
   return (
+      <div>
+      <Helmet>
+        <title>Plan du parc | Zombieland | Paris </title>
+        <meta
+          name="description"
+          content="Naviguez facilement dans Zombieland grâce à notre plan interactif. Repérez rapidement vos attractions préférées et optimisez votre visite du parc."
+        />
+      </Helmet>
     <div className="relative mt-[104px] max-w-[1200px] mx-auto flex gap-4 flex-wrap justify-center mb-12">
       <h2 className="ml-4 w-full uppercase text-6xl text-white mb-8">
         Plan<span className="text-redZombie"> du parc</span>
@@ -125,6 +133,7 @@ function ParcMap() {
         ))}
       </div>
     </div>
+        </div>
   );
 }
 
