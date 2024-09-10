@@ -3,6 +3,7 @@ import api from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // This will style the toast
+import { Helmet } from 'react-helmet-async';
 
 function Signin() {
   const [firstName, setFirstName] = useState('');

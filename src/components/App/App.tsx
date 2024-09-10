@@ -1,6 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
+import { HelmetProvider } from 'react-helmet-async';
+
 import Footer from '../Footer/Footer';
 
 import NavBar from '../NavBar/NavBar';
@@ -22,34 +24,37 @@ import PrivacyPolicy from '../pages/PrivacyPolicy';
 import ZombieRun from '../pages/ZombieRun';
 import ScrollToTop from '../ScrollTopTop/ScrollToTop';
 function App() {
+  const helmetContext = {};
   return (
     <div>
-      <UserProvider>
-        <NavBar />
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/mon-compte/:id" element={<MyAccount />} />
-          <Route path="/inscription" element={<Signin />} />
-          <Route path="/se-connecter" element={<Login />} />
-          <Route path="/plan-du-parc" element={<ParcMap />} />
-          <Route path="/infos-pratiques" element={<Infos />} />
-          <Route path="/reserver" element={<Booking />} />
-          <Route path="/attractions" element={<Activities />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/password-reset" element={<PasswordReset />} />
-          <Route path="/new-password" element={<NewPassword />} />
-          <Route path="/attractions/:id" element={<ActivityDetail />} />
-          <Route path="/mes-reservations" element={<MyBookings />} />
-          <Route
-            path="/politique-de-confidentialite"
-            element={<PrivacyPolicy />}
-          />
-          <Route path="/zombie-run" element={<ZombieRun />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <Footer />
-      </UserProvider>
+      <HelmetProvider context={helmetContext}>
+        <UserProvider>
+          <NavBar />
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/mon-compte/:id" element={<MyAccount />} />
+            <Route path="/inscription" element={<Signin />} />
+            <Route path="/se-connecter" element={<Login />} />
+            <Route path="/plan-du-parc" element={<ParcMap />} />
+            <Route path="/infos-pratiques" element={<Infos />} />
+            <Route path="/reserver" element={<Booking />} />
+            <Route path="/attractions" element={<Activities />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/password-reset" element={<PasswordReset />} />
+            <Route path="/new-password" element={<NewPassword />} />
+            <Route path="/attractions/:id" element={<ActivityDetail />} />
+            <Route path="/mes-reservations" element={<MyBookings />} />
+            <Route
+              path="/politique-de-confidentialite"
+              element={<PrivacyPolicy />}
+            />
+            <Route path="/zombie-run" element={<ZombieRun />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          <Footer />
+        </UserProvider>
+      </HelmetProvider>
     </div>
   );
 }
