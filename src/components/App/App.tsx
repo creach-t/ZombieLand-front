@@ -22,13 +22,29 @@ import NewPassword from '../pages/newPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import ZombieRun from '../pages/ZombieRun';
 import ScrollToTop from '../ScrollTopTop/ScrollToTop';
+import { useState } from 'react';
+import ChatBox from '../ChatBox/ChatBox';
 function App() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
   return (
     <div>
       <UserProvider>
         <PriceProvider>
           <NavBar />
-          <ScrollToTop />
+          <button
+            type="button"
+            onClick={toggleChat}
+            className="fixed bottom-5 right-5 bg-redZombie text-white p-4 rounded-full hover:border-greenZombie"
+          >
+            Chat
+            <span className="absolute inline-flex rounded-full h-3 w-3 bg-red-600 top-0"></span>
+            <span className="animate-ping absolute top-0 inline-flex h-3 w-3 rounded-full bg-red-500 opacity-75"></span>
+          </button>
+          {isChatOpen && <ChatBox />} <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/mon-compte/:id" element={<MyAccount />} />
