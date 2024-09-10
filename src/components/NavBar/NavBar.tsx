@@ -69,13 +69,13 @@ function NavBar() {
                 <Link
                   to={`/mon-compte/${user.user_id}`}
                   aria-label="account"
-                  className="text-white text-2xl hover:text-red-500"
+                  className="text-white text-2xl hover:text-red-500 px-3"
                 >
                   <img src={user_icon_green} width="42px" alt="profile" />
                 </Link>
               </>
             ) : (
-              <Link to="/se-connecter" aria-label="login">
+              <Link to="/se-connecter" aria-label="login" className='px-3'>
                 <img src={user_icon_red} width="42px" alt="profile" />
               </Link>
             )}
