@@ -27,6 +27,23 @@ import jump7 from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Jump7.w
 
 import idle from '../../assets/img/zombie-run/Zombies/Zombie1/animation/Idle1.webp';
 
+// obstacles
+import obstacle1 from '../../assets/img/zombie-run/obstacles/tombe1.webp';
+import obstacle2 from '../../assets/img/zombie-run/obstacles/tombe2.webp';
+import obstacle3 from '../../assets/img/zombie-run/obstacles/tombe3.webp';
+import obstacle4 from '../../assets/img/zombie-run/obstacles/tombe4.webp';
+import obstacle5 from '../../assets/img/zombie-run/obstacles/tombe5.webp';
+import obstacle6 from '../../assets/img/zombie-run/obstacles/tombe6.webp';
+
+const obstacles = [
+  obstacle1,
+  obstacle2,
+  obstacle3,
+  obstacle4,
+  obstacle5,
+  obstacle6,
+];
+
 const runImgs: string[] = [
   run1,
   run2,
@@ -194,6 +211,7 @@ function ZombieRun() {
             transform: `translateX(${layerPositions.layer2 + BACKGROUND_WIDTH}px)`,
           }}
         ></div>
+        <img src={obstacle6} className="absolute z-10 bottom-14" alt="" />
         <img
           className={`Zombie h-1/4 absolute bottom-14 left-24 ${getClassName()}`} // Applique la classe de l'animation en cours
           style={{ zIndex: 3 }}
