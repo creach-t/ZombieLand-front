@@ -102,7 +102,7 @@ function Contact() {
                 id="firstname"
                 name="firstname"
                 placeholder="Entrez votre prénom"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
               />
             </div>
             <div className="mb-6 flex flex-col">
@@ -115,7 +115,7 @@ function Contact() {
                 id="lastname"
                 name="lastname"
                 placeholder="Entrez votre nom"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
               />
             </div>
           </div>
@@ -129,7 +129,7 @@ function Contact() {
               id="email"
               name="email"
               placeholder="Entrez votre E-mail"
-              className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+              className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
             />
           </div>
           <div className="mb-6 flex flex-col">
@@ -150,11 +150,14 @@ function Contact() {
               type="checkbox"
               name="privacyPolicy-checkbox"
               id="privacyPolicy-checkbox"
-              className="mr-4 h-12 w-12"
+              className="mr-4 h-12 w-12 text-white bg-zinc-900"
             />
             <label htmlFor="privacyPolicy-checkbox" className="text-3xl">
               En cochant cette case, j'accepte la{' '}
-              <Link to="/politique-de-confidentialite" className="underline cursor-pointer">
+              <Link
+                to="/politique-de-confidentialite"
+                className="underline cursor-pointer"
+              >
                 Politique de confidentialité
               </Link>{' '}
               du site

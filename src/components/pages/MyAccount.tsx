@@ -298,7 +298,7 @@ function MyAccount() {
                 id="lastName"
                 name="lastName"
                 placeholder="Entrez votre Nom"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -312,7 +312,7 @@ function MyAccount() {
                 id="firstName"
                 name="firstName"
                 placeholder="Entrez votre Prénom"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
@@ -326,7 +326,7 @@ function MyAccount() {
                 id="email"
                 name="email"
                 placeholder="Entrez votre E-mail"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -343,7 +343,7 @@ function MyAccount() {
                 id="oldPassword"
                 name="oldPassword"
                 placeholder="Entrez votre ancien mot de passe"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
               />
@@ -357,7 +357,7 @@ function MyAccount() {
                 id="newPassword"
                 name="newPassword"
                 placeholder="Entrez votre nouveau mot de passe"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
               />
@@ -374,7 +374,7 @@ function MyAccount() {
                 id="confirmPassword"
                 name="confirmPassword"
                 placeholder="Confirmez mot de passe"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
