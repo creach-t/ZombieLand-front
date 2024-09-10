@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
+import { Helmet } from 'react-helmet-async';
 
 interface Category {
   category_id: number;
@@ -71,6 +72,14 @@ function ActivityDetail() {
   const mobileImage = `/src/assets/img/mobile/attractions/${getImageName(attractionDetail.name)}`;
 
   return (
+     <div>
+      <Helmet>
+        <title>{attractionDetail.name} | Parc Zombieland | Paris</title>
+        <meta
+          name="description"
+          content={`${attractionDetail.name} : ${attractionDetail.description_short}`}
+        />
+      </Helmet>
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
       <h1 className="self-center md:self-start text-6xl">
         {attractionDetail.name}{' '}
@@ -134,6 +143,7 @@ function ActivityDetail() {
         </div>
       </section>
     </main>
+       </div>
   );
 }
 
