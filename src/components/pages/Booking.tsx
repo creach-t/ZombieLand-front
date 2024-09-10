@@ -9,7 +9,6 @@ import getStripe from '../../utils/getStripe';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet-async';
-
 function Booking() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -240,7 +239,6 @@ function Booking() {
   };
 
   return (
-
     <div>
       <Helmet>
         <title>Réservation Parc Zombieland | Paris | 0666 666 666 </title>
@@ -249,67 +247,19 @@ function Booking() {
           content="Réservez vos billets pour Zombieland en quelques clics ! Sécurisez votre place pour vivre une expérience unique dans notre parc à thème post-apocalyptique."
         />
       </Helmet>
-
-    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-      <ToastContainer />
-      <h1 className="self-center md:self-start text-6xl">
-        Réser<span className="text-redZombie">vation</span>
-      </h1>
-      <section className="flex flex-wrap mt-4 justify-center w-full">
-        <div className="md:w-1/2 flex items-center justify-start">
-          <img src={ticketImg} className="" alt="ticket pour zombieLand" />
-        </div>
-        <div className="w-full md:w-1/2 items-center justify-start p-8 text-white text-2xl">
-          <form onSubmit={handleSubmit} className="w-full md:flex md:flex-col">
-            <div className="mb-6 flex flex-col">
-              <label
-                htmlFor="numberOfVisitors"
-                className="text-3xl leading-loose"
-              >
-                Nombre de visiteurs{' '}
-                <span className="text-sm text-redZombie">{visitorError}</span>
-              </label>
-              <input
-                ref={refInputTickets}
-                type="number"
-                id="numberOfVisitors"
-                name="numberOfVisitors"
-                placeholder="Entrez le nombre de visiteurs"
-                min={0}
-                max={100}
-                value={numberOfVisitors === 0 ? '' : numberOfVisitors}
-                onChange={handlePriceChange}
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-              />
-            </div>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="date" className="text-3xl leading-loose">
-                Votre date de visite{' '}
-                <span className="text-sm text-redZombie">{dateError}</span>
-              </label>
-              <input
-                type="date"
-                id="date"
-                name="date"
-                value={visitDate}
-                min={new Date().toISOString().split('T')[0]}
-                onChange={handleDateChange}
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center bg-zinc-900"
-              />
-            </div>
-            <p className="text-3xl">
-              Tarif unique :{' '}
-              <em className="text-redZombie">{price ? price.price : 0.0} €</em>
-            </p>
-            <p className="text-5xl text-center my-12">
-              Total :{' '}
-              <em className="text-redZombie">
-                {totalPrice ? totalPrice.toFixed(2) : '0.00'} €
-              </em>
-            </p>
-            <button
-              type="submit"
-              className="w-full bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center mb-8"
+      <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+        <ToastContainer />
+        <h1 className="self-center md:self-start text-6xl">
+          Réser<span className="text-redZombie">vation</span>
+        </h1>
+        <section className="flex flex-wrap mt-4 justify-center w-full">
+          <div className="md:w-1/2 flex items-center justify-start">
+            <img src={ticketImg} className="" alt="ticket pour zombieLand" />
+          </div>
+          <div className="w-full md:w-1/2 items-center justify-start p-8 text-white text-2xl">
+            <form
+              onSubmit={handleSubmit}
+              className="w-full md:flex md:flex-col"
             >
               <div className="mb-6 flex flex-col">
                 <label
@@ -348,10 +298,16 @@ function Booking() {
                 />
               </div>
               <p className="text-3xl">
-                Tarif unique : <em className="text-redZombie">{price}</em>
+                Tarif unique :{' '}
+                <em className="text-redZombie">
+                  {price ? price.price : 0.0} €
+                </em>
               </p>
               <p className="text-5xl text-center my-12">
-                Total : <em className="text-redZombie">{totalPrice} €</em>
+                Total :{' '}
+                <em className="text-redZombie">
+                  {totalPrice ? totalPrice.toFixed(2) : '0.00'} €
+                </em>
               </p>
               <button
                 type="submit"
