@@ -97,7 +97,7 @@ function Home() {
   }, [location.state]);
 
   return (
-    <>
+    <div>
       <Helmet>
         <title>Parc Zombieland | Paris | 0666 666 666 </title>
         <meta
@@ -209,7 +209,7 @@ function Home() {
           }
         </style>
       </section>
-    </>
+    </div>
   );
 }
 
