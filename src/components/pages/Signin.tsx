@@ -3,6 +3,7 @@ import api from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // This will style the toast
+import { Helmet } from 'react-helmet-async';
 
 function Signin() {
   const [firstName, setFirstName] = useState('');
@@ -177,6 +178,14 @@ function Signin() {
   };
 
   return (
+      <div>
+      <Helmet>
+        <title>Inscription | Zombieland | Paris </title>
+        <meta
+          name="description"
+          content="Inscrivez-vous dès maintenant au Parc Zombieland et accédez à nos attractions uniques. Créez votre compte en quelques étapes simples et profitez d'offres exclusives pour planifier votre visite inoubliable."
+        />
+      </Helmet>
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
       <h1 className="self-center md:self-start text-6xl">
         Sign<em className="text-redZombie">In</em>
@@ -277,6 +286,7 @@ function Signin() {
       </form>
       <ToastContainer />
     </main>
+        </div>
   );
 }
 
