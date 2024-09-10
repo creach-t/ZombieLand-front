@@ -291,7 +291,7 @@ function Booking() {
                 max={100}
                 value={numberOfVisitors === 0 ? '' : numberOfVisitors}
                 onChange={handlePriceChange}
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
               />
             </div>
             <div className="mb-6 flex flex-col">
@@ -306,7 +306,7 @@ function Booking() {
                 value={visitDate}
                 min={new Date().toISOString().split('T')[0]}
                 onChange={handleDateChange}
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
               />
             </div>
             <p className="text-3xl">

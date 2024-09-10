@@ -9,7 +9,9 @@ function Signin() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessages, setErrorMessages] = useState<{ [key: string]: boolean }>({});
+  const [errorMessages, setErrorMessages] = useState<{
+    [key: string]: boolean;
+  }>({});
   const [flashClass, setFlashClass] = useState('text-sm text-gray-500');
   const navigate = useNavigate();
 
@@ -17,7 +19,9 @@ function Signin() {
     if (Object.keys(errorMessages).length > 0) {
       const interval = setInterval(() => {
         setFlashClass((prevClass) =>
-          prevClass === 'text-sm text-gray-500' ? 'text-sm text-redZombie' : 'text-sm text-gray-500'
+          prevClass === 'text-sm text-gray-500'
+            ? 'text-sm text-redZombie'
+            : 'text-sm text-gray-500'
         );
       }, 500);
 
@@ -54,7 +58,7 @@ function Signin() {
 
     if (!email) {
       errors.email = true;
-      toast.warning('L\'email est requis.', {
+      toast.warning("L'email est requis.", {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -64,7 +68,7 @@ function Signin() {
       });
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = true;
-      toast.warning('L\'email doit être valide (ex: adresse@provider.com).', {
+      toast.warning("L'email doit être valide (ex: adresse@provider.com).", {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -185,7 +189,9 @@ function Signin() {
         <div className="mb-6 flex flex-col">
           <label htmlFor="first_name" className="text-3xl leading-loose">
             Prénom{' '}
-            <span className={`${errorMessages.firstName ? flashClass : 'text-sm text-gray-500'}`}>
+            <span
+              className={`${errorMessages.firstName ? flashClass : 'text-sm text-gray-500'}`}
+            >
               * champs requis
             </span>
           </label>
@@ -194,7 +200,7 @@ function Signin() {
             id="first_name"
             name="first_name"
             placeholder="Entrez votre prénom"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
@@ -202,7 +208,9 @@ function Signin() {
         <div className="mb-6 flex flex-col">
           <label htmlFor="last_name" className="text-3xl leading-loose">
             Nom{' '}
-            <span className={`${errorMessages.lastName ? flashClass : 'text-sm text-gray-500'}`}>
+            <span
+              className={`${errorMessages.lastName ? flashClass : 'text-sm text-gray-500'}`}
+            >
               * champs requis
             </span>
           </label>
@@ -211,7 +219,7 @@ function Signin() {
             id="last_name"
             name="last_name"
             placeholder="Entrez votre nom"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
@@ -219,7 +227,9 @@ function Signin() {
         <div className="mb-6 flex flex-col">
           <label htmlFor="mail" className="text-3xl leading-loose">
             E-mail{' '}
-            <span className={`${errorMessages.email ? flashClass : 'text-sm text-gray-500'}`}>
+            <span
+              className={`${errorMessages.email ? flashClass : 'text-sm text-gray-500'}`}
+            >
               * champs requis, doit correspondre au format adresse@provider.com
             </span>
           </label>
@@ -228,7 +238,7 @@ function Signin() {
             id="mail"
             name="mail"
             placeholder="Entrez votre E-mail"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -236,8 +246,11 @@ function Signin() {
         <div className="mb-10 flex flex-col">
           <label htmlFor="password" className="text-3xl leading-loose">
             Mot de passe{' '}
-            <span className={`${errorMessages.password ? flashClass : 'text-sm text-gray-500'}`}>
-              * doit contenir au minimum 6 caractères, dont 1 chiffre, 1 majuscule et 1 minuscule
+            <span
+              className={`${errorMessages.password ? flashClass : 'text-sm text-gray-500'}`}
+            >
+              * doit contenir au minimum 6 caractères, dont 1 chiffre, 1
+              majuscule et 1 minuscule
             </span>
           </label>
           <input
@@ -245,7 +258,7 @@ function Signin() {
             id="password"
             name="password"
             placeholder="Entrez votre mot de passe"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

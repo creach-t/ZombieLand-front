@@ -17,12 +17,12 @@ function NewPassword() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
-  
+
     if (!token) {
       setError('Token non valide ou expiré.');
       return;
     }
-  
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/account/reset-password`,
@@ -33,7 +33,7 @@ function NewPassword() {
           },
         }
       );
-  
+
       if (response.status === 200) {
         navigate('/se-connecter');
       } else {
@@ -59,7 +59,7 @@ function NewPassword() {
             id="password"
             name="password"
             placeholder="Entrez votre nouveau mot de passe"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -74,7 +74,7 @@ function NewPassword() {
             id="confirmPassword"
             name="confirmPassword"
             placeholder="Confirmez votre nouveau mot de passe"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
