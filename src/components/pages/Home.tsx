@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Slider from 'react-slick';
@@ -96,7 +97,15 @@ function Home() {
   }, [location.state]);
 
   return (
-    <>
+    <div>
+      <Helmet>
+        <title>Parc Zombieland | Paris | 0666 666 666 </title>
+        <meta
+          name="description"
+          content="Plongez dans l’univers palpitant de Zombieland, le parc d’attractions unique en son genre. Vivez des sensations fortes et des aventures inoubliables au cœur d’un monde post-apocalyptique."
+        />
+      </Helmet>
+
       <section className=" mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
         <ToastContainer />
         <div className="bg-black bg-opacity-10 h-full w-full max-[600px]:px-8 px-16 flex items-center">
@@ -200,7 +209,7 @@ function Home() {
           }
         </style>
       </section>
-    </>
+    </div>
   );
 }
 
