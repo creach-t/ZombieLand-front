@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
+import { Helmet } from 'react-helmet-async';
 
 interface Activity {
   activity_id: number;
@@ -70,6 +71,14 @@ function Activities() {
   });
 
   return (
+     <div>
+      <Helmet>
+        <title>Les attractions | Parc Zombieland | Paris </title>
+        <meta
+          name="description"
+          content="Découvrez nos attractions effrayantes et palpitantes à Zombieland. Frissons garantis avec des parcours immersifs et des expériences inoubliables !"
+        />
+      </Helmet>
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
       <h1 className="self-center md:self-start text-6xl">
         LES <span className="text-redZombie">ATTRACTIONS</span>
@@ -147,6 +156,7 @@ function Activities() {
         ))}
       </section>
     </main>
+       </div>
   );
 }
 
