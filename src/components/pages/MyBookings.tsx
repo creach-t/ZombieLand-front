@@ -5,6 +5,7 @@ import { useUser } from '../../context/UserContext';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from 'react-helmet-async';
 
 interface Booking {
   booking_id: number;
@@ -69,6 +70,10 @@ function MyBookings() {
   };
 
   return (
+       <div>
+      <Helmet>
+        <title>Mes réservations | Zombieland | Paris </title>
+      </Helmet>
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-5 max-w-screen-2xl mx-auto">
       <h1 className="text-6xl text-center md:text-left mb-12">
         MON <em className="text-redZombie">COMPTE</em>
@@ -152,6 +157,7 @@ function MyBookings() {
         </div>
       </div>
     </main>
+         </div>
   );
 }
 
