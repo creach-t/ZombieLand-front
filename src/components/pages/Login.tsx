@@ -93,7 +93,7 @@ function Login() {
             id="mail"
             name="mail"
             placeholder="Entrez votre E-mail"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -106,7 +106,7 @@ function Login() {
             id="password"
             name="password"
             placeholder="Entrez votre mot de passe"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
             onChange={(e) => setPassword(e.target.value)}
           />
           <Link
@@ -128,7 +128,7 @@ function Login() {
       </form>
       <p className="text-center text-2xl mb-40">
         Pas de compte ?
-        <Link className="text-redZombie" to="/inscription">
+        <Link className="text-redZombie text-2xl" to="/inscription">
           Créer un compte
         </Link>
       </p>
