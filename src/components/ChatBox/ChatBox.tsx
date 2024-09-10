@@ -75,7 +75,7 @@ function ChatBox() {
   }
 
   return (
-    <div className="chat-window absolute p-4 bg-black border-redZombie border-2 rounded-xl h-[400px] w-[400px] z-50 right-8 bottom-20">
+    <div className="chat-window fixed p-4 bg-black border-redZombie border-2 rounded-xl h-[400px] w-[400px] z-50 right-20 bottom-24">
       <h3>Chat</h3>
       <div
         ref={ref}
