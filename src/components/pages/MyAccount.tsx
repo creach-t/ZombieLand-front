@@ -6,6 +6,7 @@ import { useUser } from '../../context/UserContext';
 import { jwtDecode } from 'jwt-decode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from 'react-helmet-async';
 
 interface User {
   user_id: number;
@@ -275,6 +276,10 @@ function MyAccount() {
   };
 
   return (
+     <div>
+      <Helmet>
+        <title>Mon compte 🧟 | Zombieland | Paris </title>
+      </Helmet>
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
       <ToastContainer />
       <h1 className="self-center md:self-start text-6xl">
@@ -435,6 +440,7 @@ function MyAccount() {
         </div>
       </form>
     </main>
+       </div>
   );
 }
 
