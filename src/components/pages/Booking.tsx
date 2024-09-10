@@ -283,7 +283,7 @@ function Booking() {
                 value={visitDate}
                 min={new Date().toISOString().split('T')[0]}
                 onChange={handleDateChange}
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center bg-zinc-900"
               />
             </div>
             <p className="text-3xl">

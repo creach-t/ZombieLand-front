@@ -141,7 +141,7 @@ function Contact() {
               placeholder="Votre message ici..."
               name="message"
               id="message"
-              className="w-full text-3xl border-white border-2 rounded-xl p-2 h-60 resize-none"
+              className="w-full text-3xl border-white border-2 rounded-xl p-2 h-60 resize-none text-white bg-zinc-900"
             />
           </div>
           <div className="mb-6 flex items-center">
