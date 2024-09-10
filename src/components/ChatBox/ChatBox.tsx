@@ -64,27 +64,34 @@ function ChatBox() {
   }, [socket]);
 
   return (
-    <div className="chat-window absolute p-5 bg-white rounded-xl h-[400px] w-[400px] z-50 right-8 bottom-20">
+    <div className="chat-window absolute p-4 bg-black border-redZombie border-2 rounded-xl h-[400px] w-[400px] z-50 right-8 bottom-20">
       <h3>Chat</h3>
       <div className="chat-messages h-3/4 w-full bg-slate-400 rounded-xl overflow-y-auto">
         {messages.map((msg) => (
-          <div key={msg.id}>
+          <div
+            key={msg.id}
+            className={
+              msg.sender === 'client'
+                ? 'flex justify-end p-2'
+                : 'flex justify-start p-2'
+            }
+          >
             <strong>{msg.sender}:</strong> {msg.text}
           </div>
         ))}
       </div>
       <form
         onSubmit={handleSendMessage}
-        className="absolute right-1 bottom-1 w-full flex justify-end"
+        className="absolute right-1 bottom-1 w-full p-2 flex justify-end"
       >
         <input
           type="text"
-          className="rounded-xl w-3/4 px-2"
+          className="rounded-xl w-3/4 px-2 border-white border-2"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Tapez votre message..."
         />
-        <button type="submit" className="ml-5">
+        <button type="submit" className="ml-5 border-white border-2">
           Envoyer
         </button>
       </form>
