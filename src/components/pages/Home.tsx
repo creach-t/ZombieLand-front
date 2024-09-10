@@ -16,7 +16,7 @@ import compass from '../../assets/img/desktop/horaires-tickets-parc-zombieland.w
 import skull from '../../assets/img/desktop/plan-parc-zombieland-_1_.webp';
 import plan from '../../assets/img/desktop/plan-parc-zombieland.webp';
 import ActivityCard from '../ActivityCard/ActivityCard';
-
+import { Helmet } from 'react-helmet-async';
 interface Activity {
   activity_id: number;
   name: string;
@@ -96,7 +96,14 @@ function Home() {
   }, [location.state]);
 
   return (
-    <>
+     <div>
+      <Helmet>
+        <title>Parc Zombieland | Paris | 0666 666 666 </title>
+        <meta
+          name="description"
+          content="Plongez dans l’univers palpitant de Zombieland, le parc d’attractions unique en son genre. Vivez des sensations fortes et des aventures inoubliables au cœur d’un monde post-apocalyptique."
+        />
+      </Helmet>
       <section className=" mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
         <ToastContainer />
         <div className="bg-black bg-opacity-10 h-full w-full max-[600px]:px-8 px-16 flex items-center">
@@ -200,7 +207,7 @@ function Home() {
           }
         </style>
       </section>
-    </>
+    </div>
   );
 }
 
