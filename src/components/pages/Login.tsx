@@ -79,6 +79,7 @@ function Login() {
   };
 
   return (
+
     <div>
       <Helmet>
         <title>Connexion | Parc Zombieland | Paris </title>
@@ -87,53 +88,42 @@ function Login() {
           content="Connectez-vous à votre compte Zombieland pour gérer vos réservations, consulter vos avantages et préparer votre prochaine visite dans notre univers terrifiant."
         />
       </Helmet>
-      <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-        <h1 className="self-center md:self-start text-6xl">
-          Log<em className="text-redZombie">in</em>
-        </h1>
-        <ToastContainer />
-        <form
-          onSubmit={handleSubmit}
-          className="md:flex md:flex-col py-14 w-4/5"
-        >
-          <div className="mb-6 flex flex-col">
-            <label htmlFor="mail" className="text-3xl leading-loose">
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="mail"
-              name="mail"
-              placeholder="Entrez votre E-mail"
-              className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="mb-10 flex flex-col">
-            <label htmlFor="password" className="text-3xl leading-loose">
-              Mot de passe
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Entrez votre mot de passe"
-              className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Link
-              to="/password-reset"
-              className="text-redZombie text-2xl text-right underline cursor-pointer"
-            >
-              Mot de passe oublié ?
-            </Link>
-          </div>
-          {error && (
-            <p className="bg-redZombie text-2xl rounded-xl p-2 mb-2">{error}</p>
-          )}
-          <button
-            type="submit"
-            className="mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl w-full"
+ 
+    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <h1 className="self-center md:self-start text-6xl">
+        Log<em className="text-redZombie">in</em>
+      </h1>
+      <ToastContainer />
+      <form onSubmit={handleSubmit} className="md:flex md:flex-col py-14 w-4/5">
+        <div className="mb-6 flex flex-col">
+          <label htmlFor="mail" className="text-3xl leading-loose">
+            E-mail
+          </label>
+          <input
+            type="email"
+            id="mail"
+            name="mail"
+            placeholder="Entrez votre E-mail"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="mb-10 flex flex-col">
+          <label htmlFor="password" className="text-3xl leading-loose">
+            Mot de passe
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Entrez votre mot de passe"
+            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Link
+            to="/password-reset"
+            className="text-redZombie visited:text-redZombie text-2xl text-right underline cursor-pointer"
+
           >
             Me connecter
           </button>
@@ -143,9 +133,28 @@ function Login() {
           <Link className="text-redZombie text-2xl" to="/inscription">
             Créer un compte
           </Link>
-        </p>
-      </main>
-    </div>
+
+        </div>
+        {error && (
+          <p className="bg-redZombie text-2xl rounded-xl p-2 mb-2">{error}</p>
+        )}
+        <button
+          type="submit"
+          className="mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl w-full"
+        >
+          Me connecter
+        </button>
+      </form>
+      <p className="text-center text-2xl mb-40">
+        Pas de compte ?
+        <Link
+          className="text-redZombie visited:text-redZombie underline text-4xl ml-4"
+          to="/inscription"
+        >
+          Créer un compte
+        </Link>
+      </p>
+    </main>
   );
 }
 

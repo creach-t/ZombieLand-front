@@ -1,7 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
+
 import { HelmetProvider } from 'react-helmet-async';
+
+import { PriceProvider } from '../../context/PriceContext';
 
 import Footer from '../Footer/Footer';
 
@@ -27,8 +30,11 @@ function App() {
   const helmetContext = {};
   return (
     <div>
+
       <HelmetProvider context={helmetContext}>
-        <UserProvider>
+      
+      <UserProvider>
+        <PriceProvider>
           <NavBar />
           <ScrollToTop />
           <Routes>
@@ -53,8 +59,13 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
           <Footer />
-        </UserProvider>
+        
+        </PriceProvider>
+          </UserProvider>
       </HelmetProvider>
+
+   
+
     </div>
   );
 }
