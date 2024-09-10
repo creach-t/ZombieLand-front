@@ -1,11 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/react-in-jsx-scope */
+import { usePrice } from '../../context/PriceContext';
 import euroImg from '../../assets/img/desktop/infos/Euro.svg';
 import clockImg from '../../assets/img/desktop/infos/Clock.svg';
 import skullImg from '../../assets/img/desktop/infos/Skull.svg';
 import gpsImg from '../../assets/img/desktop/infos/Gps.svg';
 
 function Infos() {
+  const { price } = usePrice();
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
       <h1 className="self-center md:self-start text-6xl">
@@ -23,7 +25,9 @@ function Infos() {
           </div>
         </div>
         <div className="text-center mb-10">
-          <em className="text-7xl text-redZombie">66,66€</em>
+          <em className="text-7xl text-redZombie">
+            {price ? price.price : 0.0} €
+          </em>
         </div>
         <div>
           <div className="flex">

@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '../../context/UserContext';
+import { usePrice } from '../../context/PriceContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ticketImg from '../../assets/img/desktop/Rectangle-8.webp';
 import axios from 'axios';
@@ -16,38 +17,13 @@ function Booking() {
     location.state?.numberOfVisitors || 0
   );
   const [visitDate, setVisitDate] = useState(location.state?.visitDate || '');
-  const [price, setPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [visitorError, setVisitorError] = useState('');
   const [dateError, setDateError] = useState('');
   const { user } = useUser();
+  const { price } = usePrice();
   const navigate = useNavigate();
   const refInputTickets = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const loadPrice = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/price`
-        );
-        const activePrice = response.data.price;
-
-        setPrice(activePrice);
-      } catch (error) {
-        console.error('Erreur lors du chargement du prix', error);
-        toast.warning("Désolé il n'y a plus de place disponible", {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          className: 'bg-redZombie text-white text-2xl',
-          style: { fontFamily: 'League Gothic', top: '104px' },
-        });
-      }
-    };
-
-    loadPrice();
-  }, []);
 
   useEffect(() => {
     const bookingId = Number(searchParams.get('bookingId'));
@@ -100,10 +76,11 @@ function Booking() {
       }
     }
   };
-  // Alert user connection
 
   useEffect(() => {
-    setTotalPrice(price * numberOfVisitors);
+    if (price && numberOfVisitors > 0) {
+      setTotalPrice(price.price * numberOfVisitors);
+    }
   }, [numberOfVisitors, price]);
 
   useEffect(() => {
@@ -310,10 +287,14 @@ function Booking() {
               />
             </div>
             <p className="text-3xl">
-              Tarif unique : <em className="text-redZombie">{price}</em>
+              Tarif unique :{' '}
+              <em className="text-redZombie">{price ? price.price : 0.0} €</em>
             </p>
             <p className="text-5xl text-center my-12">
-              Total : <em className="text-redZombie">{totalPrice} €</em>
+              Total :{' '}
+              <em className="text-redZombie">
+                {totalPrice ? totalPrice.toFixed(2) : '0.00'} €
+              </em>
             </p>
             <button
               type="submit"
