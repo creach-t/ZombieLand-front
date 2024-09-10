@@ -704,8 +704,9 @@ button:focus-visible {
     1px 2px 4px 0px rgba(98, 249, 116, 0.7),
     2px 4px 8px 0px rgba(98, 249, 116, 0.7);
 }
+
 /* back to top button */
-.backToTop{
+.backToTop {
   border: 0;
   position: fixed;
   bottom: 20px;
@@ -715,11 +716,13 @@ button:focus-visible {
 }
 
 
-.backToTop:hover{
+.backToTop:hover {
   border: 0;
 
 }
-button:focus, button:focus-visible {
+
+button:focus,
+button:focus-visible {
   outline: 0;
 }
 
@@ -741,13 +744,10 @@ button:focus, button:focus-visible {
 }
 
 /* margin h1  */
-@media screen and (min-device-width: 768px) and (max-device-width: 1536px) { 
-  main h1{
-   margin-left: 7%;
-  
+@media screen and (min-device-width: 768px) and (max-device-width: 1536px) {
+  main h1 {
+    margin-left: 7%;
+
   }
 
 }
-
-
-
