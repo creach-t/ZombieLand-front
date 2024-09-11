@@ -5,6 +5,7 @@ import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
+import { useUser } from '../../context/UserContext';
 
 interface Category {
   category_id: number;
@@ -38,6 +39,7 @@ interface Activity {
 }
 
 function ActivityDetail() {
+  const { user } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newContent, setNewContent] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
@@ -50,19 +52,17 @@ function ActivityDetail() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Récupère les détails de l'attraction actuelle
         const { data: attraction } = await axios.get(
           `${import.meta.env.VITE_API_URL}/activities/${id}`
         );
         setAttractionDetail(attraction);
+        console.log(attractionDetail);
 
         if (attraction.categories.length > 0) {
-          // Récupère les attractions ayant la même catégorie
           const categoryId = attraction.categories[0].category_id;
           const { data: similarActivities } = await axios.get(
             `${import.meta.env.VITE_API_URL}/activities/category/${categoryId}`
           );
-          // Exclu l'attraction actuelle des attractions similaires
           const filteredAttractions = similarActivities.filter(
             (activity: Activity) =>
               activity.activity_id !== attraction.activity_id
@@ -79,22 +79,30 @@ function ActivityDetail() {
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      alert('Vous devez être connecté pour soumettre un avis');
+      return;
+    }
     try {
-      // Envoyer la review à l'API
       const newReviewData = {
         rating,
-        content: newReview,
-        client_id: 1, // L'ID du client peut être récupéré dynamiquement
+        content: newContent,
+        client_id: user?.user_id,
       };
       await axios.post(
         `${import.meta.env.VITE_API_URL}/reviews`,
         newReviewData
       );
-      setIsModalOpen(false); // Fermer la modale après l'envoi
+      setIsModalOpen(false);
+      setNewContent(''); // Réinitialiser le contenu après soumission
+      setRating(0); // Réinitialiser la note après soumission
     } catch (error) {
-      console.error("Erreur lors de l'envoi de la review:", error);
+      console.error("Erreur lors de l'envoi de l'avis:", error);
     }
   };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   if (!attractionDetail) {
     return <div>Chargement...</div>;
@@ -120,7 +128,7 @@ function ActivityDetail() {
       <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           {attractionDetail.name}{' '}
-          <span className="text-redZombie ali">ATTRACTIONS</span>
+          <span className="text-redZombie">ATTRACTIONS</span>
         </h1>
 
         <button className="text-white text-2xl bg-red-700 font-bold rounded-xl px-3 py-1 md:self-start mt-4">
@@ -134,7 +142,7 @@ function ActivityDetail() {
               <img src={mobileImage} alt={attractionDetail.name} />
             </picture>
             <div className="md:w-1/2 self-center p-8">
-              <p className=" text-white text-2xl">
+              <p className="text-white text-2xl">
                 {attractionDetail.description}
               </p>
 
@@ -152,11 +160,18 @@ function ActivityDetail() {
 
           <Link
             to="/reserver"
-            type="button"
             className="text-white text-2xl text-center font-bold rounded-xl w-5/6 py-1 self-center mt-4 bg-transparent border-2 border-white"
           >
             Acheter un billet
           </Link>
+
+          {/* Button to open modal */}
+          <button
+            onClick={openModal}
+            className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
+          >
+            Laisser un avis
+          </button>
         </section>
 
         <section className="bg-black py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
@@ -178,8 +193,7 @@ function ActivityDetail() {
                   </h2>
                   <Link
                     to={`/attractions/${currentActivity.activity_id}`}
-                    type="button"
-                    className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
+                    className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
                   >
                     En savoir plus
                   </Link>
@@ -193,6 +207,40 @@ function ActivityDetail() {
           </div>
         </section>
       </main>
+
+      {/* Modal for adding a review */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg w-96">
+            <h2 className="text-2xl mb-4">Laisser un avis</h2>
+            <form onSubmit={handleReviewSubmit}>
+              <textarea
+                className="w-full p-2 border border-gray-400 rounded mb-4"
+                rows={5}
+                value={newContent}
+                onChange={(e) => setNewContent(e.target.value)}
+                placeholder="Écrivez votre avis..."
+              />
+              <StarRating rating={rating} setRating={setRating} />
+              <div className="flex justify-between mt-4">
+                <button
+                  type="submit"
+                  className="bg-darkGreenZombie text-white font-bold py-2 px-4 rounded"
+                >
+                  Soumettre
+                </button>
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                >
+                  Annuler
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
