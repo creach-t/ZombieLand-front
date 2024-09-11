@@ -78,7 +78,7 @@ function Contact() {
           content="Vous avez une question ? Contactez-nous ! L’équipe de Zombieland est à votre disposition pour répondre à toutes vos demandes et faciliter votre visite."
         />
       </Helmet>
-      <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           Nous <em className="text-redZombie">contacter</em>
         </h1>

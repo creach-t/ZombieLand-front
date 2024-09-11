@@ -88,7 +88,7 @@ function Login() {
         />
       </Helmet>
 
-      <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           Log<em className="text-redZombie">in</em>
         </h1>

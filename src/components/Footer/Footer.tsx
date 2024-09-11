@@ -14,7 +14,7 @@ function Footer() {
     });
   }, []);
   return (
-    <footer className="w-screen bg-black text-white">
+    <footer className="w-screen  text-white">
       <div className="flex flex-wrap gap-2 justify-around p-4 pb-0">
         <div className="w-[150px] ">
           <h2 className="badgrunge text-3xl">ZombieLand</h2>

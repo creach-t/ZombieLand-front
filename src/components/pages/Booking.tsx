@@ -247,7 +247,7 @@ function Booking() {
           content="Réservez vos billets pour Zombieland en quelques clics ! Sécurisez votre place pour vivre une expérience unique dans notre parc à thème post-apocalyptique."
         />
       </Helmet>
-      <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <ToastContainer />
         <h1 className="self-center md:self-start text-6xl">
           Réser<span className="text-redZombie">vation</span>
