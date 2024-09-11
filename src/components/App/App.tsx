@@ -16,6 +16,7 @@ import Login from '../pages/Login';
 import Contact from '../pages/Contact';
 import ActivityDetail from '../pages/ActivityDetail';
 import MyBookings from '../pages/MyBookings';
+import MyMessages from '../pages/MyMessages';
 import PasswordReset from '../pages/passwordReset';
 import NewPassword from '../pages/newPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
@@ -51,6 +52,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/mon-compte/:id" element={<MyAccount />} />
+              <Route path="/mes-reservations" element={<MyBookings />} />
+              <Route path="/mes-messages" element={<MyMessages />} />
               <Route path="/inscription" element={<Signin />} />
               <Route path="/se-connecter" element={<Login />} />
               <Route path="/plan-du-parc" element={<ParcMap />} />
@@ -61,7 +64,6 @@ function App() {
               <Route path="/password-reset" element={<PasswordReset />} />
               <Route path="/new-password" element={<NewPassword />} />
               <Route path="/attractions/:id" element={<ActivityDetail />} />
-              <Route path="/mes-reservations" element={<MyBookings />} />
               <Route
                 path="/politique-de-confidentialite"
                 element={<PrivacyPolicy />}

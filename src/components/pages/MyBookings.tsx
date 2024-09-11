@@ -79,16 +79,24 @@ function MyBookings() {
         <title>Mes réservations | Zombieland | Paris </title>
       </Helmet>
       <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-5 max-w-screen-2xl mx-auto">
-        <h1 className="text-6xl text-center md:text-left mb-12">
+        <h1 className="self-center md:self-start text-6xl">
           MON <em className="text-redZombie">COMPTE</em>
         </h1>
         <ToastContainer />
-        <Link
-          to={`/mon-compte/${user?.user_id}`}
-          className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
-        >
-          Mes <em className="text-redZombie ">Informations</em>
-        </Link>
+        <div className="flex gap-4">
+          <Link
+            to={`/mon-compte/${user?.user_id}`}
+            className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
+          >
+            Mes <em className="text-redZombie ">Informations</em>
+          </Link>
+          <Link
+            to="/mes-messages"
+            className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
+          >
+            Mes <em className="text-redZombie ">Messages</em>
+          </Link>
+        </div>
         <div className="w-3/4 mx-auto py-1">
           <div className="relative flex flex-col w-full h-full text-white bg-clip-border">
             <div className="overflow-y-auto max-h-[400px]">
