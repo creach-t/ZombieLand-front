@@ -4,10 +4,24 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
+import StarRating from '../StarRating/StarRating';
 
 interface Category {
   category_id: number;
   name: string;
+}
+
+interface User {
+  first_name: string;
+  last_name: string;
+}
+
+interface Review {
+  review_id: number;
+  rating: number;
+  content: string;
+  client_id: number;
+  client: User;
 }
 
 interface Activity {
@@ -20,9 +34,13 @@ interface Activity {
   x: number;
   y: number;
   categories: Category[];
+  reviews: Review[];
 }
 
 function ActivityDetail() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newContent, setNewContent] = useState<string>('');
+  const [rating, setRating] = useState<number>(0);
   const [attractionDetail, setAttractionDetail] = useState<Activity | null>(
     null
   );
@@ -59,6 +77,25 @@ function ActivityDetail() {
     loadData();
   }, [id]);
 
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      // Envoyer la review à l'API
+      const newReviewData = {
+        rating,
+        content: newReview,
+        client_id: 1, // L'ID du client peut être récupéré dynamiquement
+      };
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/reviews`,
+        newReviewData
+      );
+      setIsModalOpen(false); // Fermer la modale après l'envoi
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de la review:", error);
+    }
+  };
+
   if (!attractionDetail) {
     return <div>Chargement...</div>;
   }
@@ -91,15 +128,27 @@ function ActivityDetail() {
         </button>
 
         <section className="flex flex-wrap mt-4 justify-center">
-          <picture className="md:w-1/2">
-            <source media="(min-width:465px)" srcSet={desktopImage} />
-            <img src={mobileImage} alt={attractionDetail.name} />
-          </picture>
+          <div className="flex w-full justify-around items-center">
+            <picture className="md:w-1/2">
+              <source media="(min-width:465px)" srcSet={desktopImage} />
+              <img src={mobileImage} alt={attractionDetail.name} />
+            </picture>
+            <div className="md:w-1/2 self-center p-8">
+              <p className=" text-white text-2xl">
+                {attractionDetail.description}
+              </p>
 
-          <p className="md:w-1/2 self-center p-8 text-white text-2xl">
-            {attractionDetail.description}
-          </p>
-
+              {attractionDetail.reviews.map((review: Review) => (
+                <div key={review.review_id} className="w-full">
+                  <p className="text-white text-2xl">{review.content}</p>
+                  <p>
+                    {review.client.first_name} {review.client.last_name}
+                  </p>
+                  <StarRating rating={review.rating} />
+                </div>
+              ))}
+            </div>
+          </div>
           <Link
             to="/reserver"
             type="button"
@@ -108,7 +157,6 @@ function ActivityDetail() {
             Acheter un billet
           </Link>
         </section>
-
         <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
           <h2 className="text-white text-2xl mt-4">
             D’autres attractions qui pourraient vous plaire
