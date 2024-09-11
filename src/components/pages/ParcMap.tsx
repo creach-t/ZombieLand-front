@@ -59,7 +59,6 @@ function ParcMap() {
           Plan<span className="text-redZombie"> du parc</span>
         </h1>
         <div className="relative">
-          {/* Image de la carte */}
           <img
             className="w-[600px] h-[600px]"
             src={map}
