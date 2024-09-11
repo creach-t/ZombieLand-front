@@ -186,7 +186,7 @@ function Signin() {
           content="Inscrivez-vous dès maintenant au Parc Zombieland et accédez à nos attractions uniques. Créez votre compte en quelques étapes simples et profitez d'offres exclusives pour planifier votre visite inoubliable."
         />
       </Helmet>
-    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+    <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
       <h1 className="self-center md:self-start text-6xl">
         Sign<em className="text-redZombie">In</em>
       </h1>

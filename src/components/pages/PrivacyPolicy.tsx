@@ -3,7 +3,7 @@
 
 const PrivacyPolicy = () => {
   return (
-    <main className="bg-black text-white h-full w-full mt-[104px] p-10 flex flex-col items-center max-w-screen-2xl mx-auto">
+    <main className="text-white h-full w-full mt-[104px] p-10 flex flex-col items-center max-w-screen-2xl mx-auto">
       <h1 className="text-6xl mb-8">Politique de Confidentialité</h1>
 
       <section className="text-lg">

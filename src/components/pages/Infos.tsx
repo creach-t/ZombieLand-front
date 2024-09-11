@@ -19,11 +19,11 @@ function Infos() {
         />
       </Helmet>
 
-      <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           Infos <em className="text-redZombie">Pratiques</em>
         </h1>
-        <section className="price-schedules-section flex flex-col px-10 md:px-24 max-w-7xl m-auto bg-black py-14">
+        <section className="price-schedules-section flex flex-col px-10 md:px-24 max-w-7xl m-auto  py-14">
           <div className="flex mb-10">
             <img src={euroImg} className="mr-8 w-16 md:w-20" alt="icone euro" />
             <div className="flex flex-col justify-center">
@@ -43,7 +43,7 @@ function Infos() {
             <div className="flex">
               <img src={clockImg} className="mr-8 w-20" alt="icone horloge" />
               <div className="flex flex-col">
-                <h2 className="text-4xl text-redZombie">
+                <h2 id="horaires" className="text-4xl text-redZombie">
                   Horaires d'ouverture
                 </h2>
                 <p className="text-3xl">

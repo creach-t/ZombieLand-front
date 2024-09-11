@@ -95,8 +95,19 @@ function Home() {
     }
   }, [location.state]);
 
+  useEffect(() => {
+    const links = document.querySelectorAll('a');
+
+    // Ajouter l'événement onClick à chaque lien pour défiler vers le haut
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      });
+    });
+  }, []);
+
   return (
-     <div>
+    <div>
       <Helmet>
         <title>Parc Zombieland | Paris | 0666 666 666 </title>
         <meta
@@ -106,7 +117,7 @@ function Home() {
       </Helmet>
       <section className=" mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
         <ToastContainer />
-        <div className="bg-black bg-opacity-10 h-full w-full max-[600px]:px-8 px-16 flex items-center">
+        <div className="h-full w-full max-[600px]:px-8 px-16 flex items-center">
           <div className="px-14 py-5 bg-black bg-opacity-40 max-w-[550px] min-h-[400px] flex flex-col justify-around [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
             <h1 className="text-6xl text-white [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)] uppercase">
               Bienvenue à Zombieland
@@ -138,7 +149,7 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="bg-black min-h-[550px] py-10 flex justify-around items-center">
+      <section className="min-h-[550px] py-10 flex justify-around items-center">
         {loading ? (
           <p>Chargement...</p>
         ) : (
@@ -149,7 +160,7 @@ function Home() {
           </Slider>
         )}
       </section>
-      <section className="bg-black p-10 flex flex-wrap justify-center items-center gap-20">
+      <section className=" p-10 flex flex-wrap justify-center items-center gap-20">
         <div>
           <img className="max-h-[350px]" src={zombieFace} alt="heads zombie" />
         </div>

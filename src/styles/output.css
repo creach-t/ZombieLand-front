@@ -66,13 +66,17 @@ html,
 */
 
 body {
-  background-color: #000000;
+  background-image: url('../assets/bg_global.webp');
+  background-color: #000000f5;
+  background-blend-mode: darken;
+  background-attachment: fixed;
+  background-size: auto auto;
+
   margin: 0;
   /* 1 */
   line-height: inherit;
   /* 2 */
   font-family: 'League Gothic', sans-serif;
-  background-color: #000;
   overflow-x: hidden;
 }
 
