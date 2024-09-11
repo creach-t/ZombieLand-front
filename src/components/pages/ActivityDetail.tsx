@@ -117,11 +117,7 @@ function ActivityDetail() {
           content={`${attractionDetail.name} : ${attractionDetail.description_short}`}
         />
       </Helmet>
-<<<<<<< HEAD
       <main className="h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-=======
-      <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
->>>>>>> 3f7fc904b451edd36695793a6892c0ae48177ec2
         <h1 className="self-center md:self-start text-6xl">
           {attractionDetail.name}{' '}
           <span className="text-redZombie ali">ATTRACTIONS</span>
@@ -132,16 +128,6 @@ function ActivityDetail() {
         </button>
 
         <section className="flex flex-wrap mt-4 justify-center">
-<<<<<<< HEAD
-          <picture className="md:w-1/2">
-            <source media="(min-width:465px)" srcSet={desktopImage} />
-            <img src={mobileImage} alt={attractionDetail.name} />
-          </picture>
-
-          <p className="md:w-1/2 self-center p-8 text-white text-2xl">
-            {attractionDetail.description}
-          </p>
-=======
           <div className="flex w-full justify-around items-center">
             <picture className="md:w-1/2">
               <source media="(min-width:465px)" srcSet={desktopImage} />
@@ -163,8 +149,6 @@ function ActivityDetail() {
               ))}
             </div>
           </div>
->>>>>>> 3f7fc904b451edd36695793a6892c0ae48177ec2
-
           <Link
             to="/reserver"
             type="button"
@@ -173,12 +157,7 @@ function ActivityDetail() {
             Acheter un billet
           </Link>
         </section>
-
-<<<<<<< HEAD
         <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
-=======
-        <section className="bg-black py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
->>>>>>> 3f7fc904b451edd36695793a6892c0ae48177ec2
           <h2 className="text-white text-2xl mt-4">
             D’autres attractions qui pourraient vous plaire
           </h2>
