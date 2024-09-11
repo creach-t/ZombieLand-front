@@ -280,7 +280,7 @@ function MyAccount() {
       <Helmet>
         <title>Mon compte 🧟 | Zombieland | Paris </title>
       </Helmet>
-    <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+    <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
       <ToastContainer />
       <h1 className="self-center md:self-start text-6xl">
         MON <em className="text-redZombie">COMPTE</em>

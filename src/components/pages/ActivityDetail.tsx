@@ -117,7 +117,7 @@ function ActivityDetail() {
           content={`${attractionDetail.name} : ${attractionDetail.description_short}`}
         />
       </Helmet>
-      <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <main className="h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           {attractionDetail.name}{' '}
           <span className="text-redZombie ali">ATTRACTIONS</span>
@@ -149,7 +149,6 @@ function ActivityDetail() {
               ))}
             </div>
           </div>
-
           <Link
             to="/reserver"
             type="button"
@@ -158,8 +157,7 @@ function ActivityDetail() {
             Acheter un billet
           </Link>
         </section>
-
-        <section className="bg-black py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
+        <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
           <h2 className="text-white text-2xl mt-4">
             D’autres attractions qui pourraient vous plaire
           </h2>
