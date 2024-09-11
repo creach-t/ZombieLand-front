@@ -5,7 +5,49 @@ import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
+import ReviewCard from '../ReviewCard/ReviewCard';
 import { useUser } from '../../context/UserContext';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+// Slider configuration
+const sliderSettings = {
+  dots: false,
+  infinite: true,
+  speed: 2000,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 4000,
+  pauseOnHover: true,
+  responsive: [
+    {
+      breakpoint: 1350,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: false,
+      },
+    },
+    {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 500,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+      },
+    },
+  ],
+};
 
 interface Category {
   category_id: number;
@@ -141,27 +183,34 @@ function ActivityDetail() {
               <source media="(min-width:465px)" srcSet={desktopImage} />
               <img src={mobileImage} alt={attractionDetail.name} />
             </picture>
-            <div className="md:w-1/2 self-center p-8">
+            <div className="md:w-1/2 self-center h-full p-8 flex flex-col justify-around">
               <p className="text-white text-2xl">
                 {attractionDetail.description}
               </p>
+              {/* Section review */}
+              <div className="bg-redZombie rounded pt-6 pb-6 flex-col">
+                <h2 className="text-2xl">Avis des survivants</h2>
 
-              {attractionDetail.reviews.map((review: Review) => (
-                <div key={review.review_id} className="w-full">
-                  <p className="text-white text-2xl">{review.content}</p>
-                  <p>
-                    {review.client.first_name} {review.client.last_name}
-                  </p>
-                  <StarRating rating={review.rating} />
-                </div>
-              ))}
-              {/* Button to open modal */}
-              <button
-                onClick={openModal}
-                className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
-              >
-                Laisser un avis
-              </button>
+                {/* Slider to show reviews */}
+                <Slider {...sliderSettings}>
+                  {attractionDetail.reviews.map((review: Review) => (
+                    <ReviewCard
+                      key={review.review_id}
+                      content={review.content}
+                      rating={review.rating}
+                      clientName={`${review.client.first_name} ${review.client.last_name}`}
+                    />
+                  ))}
+                </Slider>
+
+                {/* Button review */}
+                <button
+                  onClick={openModal}
+                  className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
+                >
+                  Laisser un avis
+                </button>
+              </div>
             </div>
           </div>
           <Link
