@@ -67,7 +67,7 @@ function NavBar() {
                   </p>
                 )}
                 <Link
-                  to={`/mon-compte/${user.user_id}`}
+                  to={`/mon-compte`}
                   aria-label="account"
                   className="text-white text-2xl hover:text-red-500 px-3"
                 >

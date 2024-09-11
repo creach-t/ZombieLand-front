@@ -40,7 +40,7 @@ function MyBookings() {
       const token = localStorage.getItem('token');
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/account/${user?.user_id}`,
+          `${import.meta.env.VITE_API_URL}/account`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -84,7 +84,7 @@ function MyBookings() {
         </h1>
         <ToastContainer />
         <Link
-          to={`/mon-compte/${user?.user_id}`}
+          to={`/mon-compte`}
           className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
         >
           Mes <em className="text-redZombie ">Informations</em>
