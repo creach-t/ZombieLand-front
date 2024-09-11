@@ -79,7 +79,7 @@ const validateNewPassword = (password: string) => {
 };
 
 function MyAccount() {
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
   const [thisUser, setThisUser] = useState<User | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');

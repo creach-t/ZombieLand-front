@@ -145,16 +145,70 @@ function ActivityDetail() {
               <p className="text-white text-2xl">
                 {attractionDetail.description}
               </p>
+              {attractionDetail.reviews.length > 0 ? (
+                attractionDetail.reviews.map((review: Review) => (
+                  <div key={review.review_id} className="w-full">
+                    <p className="text-white text-2xl">{review.content}</p>
+                    <p>
+                      {review.client.first_name} {review.client.last_name}
+                    </p>
+                    <StarRating rating={review.rating} />
+                  </div>
+                ))
+              ) : (
+                <p className="text-white text-2xl">Aucun avis pour le moment</p>
+              )}
 
-              {attractionDetail.reviews.map((review: Review) => (
-                <div key={review.review_id} className="w-full">
-                  <p className="text-white text-2xl">{review.content}</p>
-                  <p>
-                    {review.client.first_name} {review.client.last_name}
-                  </p>
-                  <StarRating rating={review.rating} />
+              {/* Modal for adding a review */}
+              {isModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                  <div className="bg-black p-8 rounded-lg w-[400px] shadow-md shadow-greenZombie">
+                    <h2 className="text-2xl font-bold mb-4">Laisser un avis</h2>
+                    <form onSubmit={handleReviewSubmit}>
+                      <div className="mb-4">
+                        <label
+                          htmlFor="rating"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Note
+                        </label>
+                        <StarRating rating={rating} setRating={setRating} />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          htmlFor="content"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Avis
+                        </label>
+                        <textarea
+                          id="content"
+                          value={newContent}
+                          onChange={(e) => setNewContent(e.target.value)}
+                          className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                          rows={4}
+                        />
+                      </div>
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          onClick={closeModal}
+                          className="mr-2 text-gray-600 hover:text-gray-800"
+                        >
+                          Annuler
+                        </button>
+                        <button
+                          type="submit"
+                          className="text-white bg-redZombie hover:bg-red-800 font-medium rounded-md px-4 py-2"
+                        >
+                          Soumettre
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-              ))}
+              )}
+
               {/* Button to open modal */}
               <button
                 onClick={openModal}
@@ -171,6 +225,7 @@ function ActivityDetail() {
             Acheter un billet
           </Link>
         </section>
+
         <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
           <h2 className="text-white text-2xl mt-4">
             D’autres attractions qui pourraient vous plaire
@@ -204,40 +259,6 @@ function ActivityDetail() {
           </div>
         </section>
       </main>
-
-      {/* Modal for adding a review */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
-          <div className="bg-black p-6 rounded-lg w-96">
-            <h2 className="text-2xl mb-4">Laisser un avis</h2>
-            <form onSubmit={handleReviewSubmit}>
-              <textarea
-                className="w-full p-2 border border-gray-400 rounded mb-4"
-                rows={5}
-                value={newContent}
-                onChange={(e) => setNewContent(e.target.value)}
-                placeholder="Écrivez votre avis..."
-              />
-              <StarRating rating={rating} setRating={setRating} />
-              <div className="flex justify-between mt-4">
-                <button
-                  type="submit"
-                  className="bg-darkGreenZombie text-white font-bold py-2 px-4 rounded"
-                >
-                  Soumettre
-                </button>
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                >
-                  Annuler
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
