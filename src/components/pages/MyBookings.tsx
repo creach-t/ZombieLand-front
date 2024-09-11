@@ -37,14 +37,18 @@ function MyBookings() {
 
   useEffect(() => {
     const loadUserBookings = async () => {
+      const token = localStorage.getItem('token');
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/booking`
+          `${import.meta.env.VITE_API_URL}/account/${user?.user_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
-        const filteredBookings = response.data.filter(
-          (booking: Booking) => booking.client_id === Number(user?.user_id)
-        );
-        setBookings(filteredBookings);
+
+        setBookings(response.data.booking);
       } catch (error) {
         console.error('Erreur lors du chargement des réservations:', error);
       }
@@ -70,94 +74,96 @@ function MyBookings() {
   };
 
   return (
-       <div>
+    <div>
       <Helmet>
         <title>Mes réservations | Zombieland | Paris </title>
       </Helmet>
-    <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-5 max-w-screen-2xl mx-auto">
-      <h1 className="text-6xl text-center md:text-left mb-12">
-        MON <em className="text-redZombie">COMPTE</em>
-      </h1>
-      <ToastContainer />
-      <Link
-        to={`/mon-compte/${user?.user_id}`}
-        className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
-      >
-        Mes <em className="text-redZombie ">Informations</em>
-      </Link>
-      <div className="w-3/4 mx-auto py-1">
-        <div className="relative flex flex-col w-full h-full text-white bg-clip-border">
-          <div className="overflow-y-auto max-h-[400px]">
-            {' '}
-            {/* Set maximum height and enable scrollbar */}
-            <table className="w-full text-left table-auto mb-[100px] min-w-max">
-              <thead>
-                <tr>
-                  <th className="p-3 border-b border-slate-200 bg-white">
-                    <p className="text-md font-semibold leading-none text-black">
-                      #
-                    </p>
-                  </th>
-                  <th className="p-3 border-b border-slate-200 bg-white">
-                    <p className="text-md font-semibold leading-none text-black">
-                      Nombre de billet(s)
-                    </p>
-                  </th>
-                  <th className="p-3 border-b border-slate-200 bg-white">
-                    <p className="text-md font-semibold leading-none text-black">
-                      Status
-                    </p>
-                  </th>
-                  <th className="p-3 border-b border-slate-200 bg-white">
-                    <p className="text-md font-semibold leading-none text-black">
-                      Date de visite
-                    </p>
-                  </th>
-                  <th className="p-3 border-b border-slate-200 bg-white">
-                    <p className="text-md font-semibold leading-none text-black">
-                      Réservé le
-                    </p>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {bookings.map((booking) => (
-                  <tr
-                    key={booking.booking_id}
-                    className="hover:bg-redZombie border-b border-slate-200"
-                  >
-                    <td className="p-3">
-                      <p className="block font-semibold text-sm text-white">
-                        {booking.booking_id}
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-5 max-w-screen-2xl mx-auto">
+        <h1 className="text-6xl text-center md:text-left mb-12">
+          MON <em className="text-redZombie">COMPTE</em>
+        </h1>
+        <ToastContainer />
+        <Link
+          to={`/mon-compte/${user?.user_id}`}
+          className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
+        >
+          Mes <em className="text-redZombie ">Informations</em>
+        </Link>
+        <div className="w-3/4 mx-auto py-1">
+          <div className="relative flex flex-col w-full h-full text-white bg-clip-border">
+            <div className="overflow-y-auto max-h-[400px]">
+              {' '}
+              {/* Set maximum height and enable scrollbar */}
+              <table className="w-full text-left table-auto mb-[100px] min-w-max">
+                <thead>
+                  <tr>
+                    <th className="p-3 border-b border-slate-200 bg-white">
+                      <p className="text-md font-semibold leading-none text-black">
+                        #
                       </p>
-                    </td>
-                    <td className="p-3">
-                      <p className="text-md text-white">{booking.nb_tickets}</p>
-                    </td>
-                    <td className="p-3">
-                      <p className="text-md text-white">
-                        {translateStatus(booking.status)}
+                    </th>
+                    <th className="p-3 border-b border-slate-200 bg-white">
+                      <p className="text-md font-semibold leading-none text-black">
+                        Nombre de billet(s)
                       </p>
-                    </td>
-                    <td className="p-3 ">
-                      <p className="text-md text-white">
-                        {formatter.format(new Date(booking.date))}
+                    </th>
+                    <th className="p-3 border-b border-slate-200 bg-white">
+                      <p className="text-md font-semibold leading-none text-black">
+                        Status
                       </p>
-                    </td>
-                    <td className="p-3 ">
-                      <p className="text-md text-white">
-                        {formatter.format(new Date(booking.created_at))}
+                    </th>
+                    <th className="p-3 border-b border-slate-200 bg-white">
+                      <p className="text-md font-semibold leading-none text-black">
+                        Date de visite
                       </p>
-                    </td>
+                    </th>
+                    <th className="p-3 border-b border-slate-200 bg-white">
+                      <p className="text-md font-semibold leading-none text-black">
+                        Réservé le
+                      </p>
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {bookings.map((booking) => (
+                    <tr
+                      key={booking.booking_id}
+                      className="hover:bg-redZombie border-b border-slate-200"
+                    >
+                      <td className="p-3">
+                        <p className="block font-semibold text-sm text-white">
+                          {booking.booking_id}
+                        </p>
+                      </td>
+                      <td className="p-3">
+                        <p className="text-md text-white">
+                          {booking.nb_tickets}
+                        </p>
+                      </td>
+                      <td className="p-3">
+                        <p className="text-md text-white">
+                          {translateStatus(booking.status)}
+                        </p>
+                      </td>
+                      <td className="p-3 ">
+                        <p className="text-md text-white">
+                          {formatter.format(new Date(booking.date))}
+                        </p>
+                      </td>
+                      <td className="p-3 ">
+                        <p className="text-md text-white">
+                          {formatter.format(new Date(booking.created_at))}
+                        </p>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
-         </div>
+      </main>
+    </div>
   );
 }
 
