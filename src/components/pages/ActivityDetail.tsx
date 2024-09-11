@@ -6,6 +6,7 @@ import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
 import { useUser } from '../../context/UserContext';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface Category {
   category_id: number;
@@ -48,6 +49,7 @@ function ActivityDetail() {
   );
   const [similarAttractions, setSimilarAttractions] = useState<Activity[]>([]);
   const { id } = useParams<{ id: string }>();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const loadData = async () => {
@@ -83,19 +85,31 @@ function ActivityDetail() {
       return;
     }
     try {
-      const newReviewData = {
-        rating,
-        content: newContent,
-        client_id: user?.user_id,
-        activity_id: attractionDetail?.activity_id,
-      };
       await axios.post(
         `${import.meta.env.VITE_API_URL}/reviews`,
-        newReviewData
+        {
+          rating,
+          content: newContent,
+          client_id: user?.user_id,
+          activity_id: attractionDetail?.activity_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setIsModalOpen(false);
       setNewContent('');
       setRating(0);
+      toast.success('Merci pour votre avis', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-greenZombie text-black text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
     } catch (error) {
       console.error("Erreur lors de l'envoi de l'avis:", error);
     }
@@ -126,6 +140,7 @@ function ActivityDetail() {
         />
       </Helmet>
       <main className="h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+        <ToastContainer />
         <h1 className="self-center md:self-start text-6xl">
           {attractionDetail.name}{' '}
           <span className="text-redZombie">ATTRACTIONS</span>
