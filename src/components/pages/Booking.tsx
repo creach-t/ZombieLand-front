@@ -24,6 +24,7 @@ function Booking() {
   const { price } = usePrice();
   const navigate = useNavigate();
   const refInputTickets = useRef<HTMLInputElement>(null);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const bookingId = Number(searchParams.get('bookingId'));
@@ -53,6 +54,11 @@ function Booking() {
         `${import.meta.env.VITE_API_URL}/booking/${booking_id}`,
         {
           status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       if (status === 'confirmed') {
@@ -206,6 +212,11 @@ function Booking() {
           status: 'pending',
           nb_tickets: numberOfVisitors,
           client_id: user.user_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
