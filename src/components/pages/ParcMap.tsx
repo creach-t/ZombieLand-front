@@ -94,12 +94,11 @@ function ParcMap() {
               onMouseEnter={() => handleAttractionMouseEnter(attraction)}
               onMouseLeave={handleAttractionMouseLeave}
             >
-              {/* Nom de l'attraction */}
               <div className="text-white whitespace-nowrap">
                 {attraction.name}
               </div>
 
-              {/* Contenu déroulant pour la description */}
+              {/* Contenu déroulant pour la description  */}
               <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
                   hoveredAttraction &&
