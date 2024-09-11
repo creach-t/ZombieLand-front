@@ -51,9 +51,9 @@ function App() {
             {isChatOpen && <ChatBox />} <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/mon-compte/:id" element={<MyAccount />} />
               <Route path="/mes-reservations" element={<MyBookings />} />
               <Route path="/mes-messages" element={<MyMessages />} />
+              <Route path="/mon-compte" element={<MyAccount />} />
               <Route path="/inscription" element={<Signin />} />
               <Route path="/se-connecter" element={<Login />} />
               <Route path="/plan-du-parc" element={<ParcMap />} />

@@ -89,7 +89,6 @@ function MyAccount() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -102,7 +101,7 @@ function MyAccount() {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/account/${id}`,
+          `${import.meta.env.VITE_API_URL}/account`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -131,7 +130,7 @@ function MyAccount() {
     };
 
     fetchUser();
-  }, [id, navigate]);
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
