@@ -56,7 +56,6 @@ function ActivityDetail() {
           `${import.meta.env.VITE_API_URL}/activities/${id}`
         );
         setAttractionDetail(attraction);
-        console.log(attractionDetail);
 
         if (attraction.categories.length > 0) {
           const categoryId = attraction.categories[0].category_id;
@@ -88,14 +87,15 @@ function ActivityDetail() {
         rating,
         content: newContent,
         client_id: user?.user_id,
+        activity_id: attractionDetail?.activity_id,
       };
       await axios.post(
         `${import.meta.env.VITE_API_URL}/reviews`,
         newReviewData
       );
       setIsModalOpen(false);
-      setNewContent(''); // Réinitialiser le contenu après soumission
-      setRating(0); // Réinitialiser la note après soumission
+      setNewContent('');
+      setRating(0);
     } catch (error) {
       console.error("Erreur lors de l'envoi de l'avis:", error);
     }
@@ -155,6 +155,13 @@ function ActivityDetail() {
                   <StarRating rating={review.rating} />
                 </div>
               ))}
+              {/* Button to open modal */}
+              <button
+                onClick={openModal}
+                className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
+              >
+                Laisser un avis
+              </button>
             </div>
           </div>
           <Link
@@ -163,14 +170,6 @@ function ActivityDetail() {
           >
             Acheter un billet
           </Link>
-
-          {/* Button to open modal */}
-          <button
-            onClick={openModal}
-            className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
-          >
-            Laisser un avis
-          </button>
         </section>
         <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
           <h2 className="text-white text-2xl mt-4">
@@ -209,7 +208,7 @@ function ActivityDetail() {
       {/* Modal for adding a review */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg w-96">
+          <div className="bg-black p-6 rounded-lg w-96">
             <h2 className="text-2xl mb-4">Laisser un avis</h2>
             <form onSubmit={handleReviewSubmit}>
               <textarea

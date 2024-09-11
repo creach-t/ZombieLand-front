@@ -2,17 +2,23 @@ import React from 'react';
 
 interface StarRatingProps {
   rating: number;
+  setRating: (rating: number) => void;
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
+const StarRating: React.FC<StarRatingProps> = ({ rating, setRating }) => {
   const stars = [];
 
   for (let i = 0; i < 5; i++) {
-    if (i < rating) {
-      stars.push(<span key={i}>★</span>); // Étoile pleine
-    } else {
-      stars.push(<span key={i}>☆</span>); // Étoile vide
-    }
+    stars.push(
+      <span
+        key={i}
+        onClick={() => setRating(i + 1)} // Met à jour la note quand l'utilisateur clique sur une étoile
+        style={{ cursor: 'pointer', fontSize: '2rem' }} // Ajoute un style de curseur pour indiquer que c'est cliquable
+      >
+        {i < rating ? '★' : '☆'}{' '}
+        {/* Étoile pleine ou vide en fonction de la note actuelle */}
+      </span>
+    );
   }
 
   return <div>{stars}</div>;
