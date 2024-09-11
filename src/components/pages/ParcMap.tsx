@@ -54,10 +54,10 @@ function ParcMap() {
           content="Naviguez facilement dans Zombieland grâce à notre plan interactif. Repérez rapidement vos attractions préférées et optimisez votre visite du parc."
         />
       </Helmet>
-      <div className="relative mt-[104px] max-w-[1200px] mx-auto flex gap-4 flex-wrap justify-center mb-12">
-        <h2 className="ml-4 w-full uppercase text-6xl text-white mb-8">
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+        <h1 className="self-center md:self-start text-6xl">
           Plan<span className="text-redZombie"> du parc</span>
-        </h2>
+        </h1>
         <div className="relative">
           {/* Image de la carte */}
           <img
@@ -132,7 +132,7 @@ function ParcMap() {
             </div>
           ))}
         </div>
-      </div>
+      </main>
     </div>
   );
 }
