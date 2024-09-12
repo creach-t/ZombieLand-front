@@ -9,6 +9,7 @@ interface Message {
   message: string;
   sender_id: number;
   receiver_id: number;
+  isRead: boolean;
   created_at: string;
   updated_at: string;
   adminId: number;
@@ -24,9 +25,9 @@ function ChatBox() {
 
   useEffect(() => {
     const newSocket = io(`${import.meta.env.VITE_API_URL}`);
-    setSocket(newSocket);
+    newSocket.emit('joinClient', user?.user_id);
 
-    newSocket.emit('joinClient');
+    setSocket(newSocket);
 
     newSocket.on('message', (message: Message) => {
       setMessages((prevMessages) => {
@@ -45,26 +46,65 @@ function ChatBox() {
         newSocket.disconnect();
       }
     };
-  }, []);
+  }, [user?.user_id]);
 
   //charger les messages de la base de données
   useEffect(() => {
     const fetchMessages = async () => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/messages`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/messages`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      setMessages(response.data.messages);
-
-      console.log(user?.user_id);
+        setMessages(response.data.messages);
+      } catch (error) {
+        console.error('Failed to fetch messages', error);
+      }
     };
+
     fetchMessages();
   }, []);
+
+  // Nouveau useEffect pour marquer les messages comme lus après la mise à jour des messages
+  useEffect(() => {
+    const markMessagesAsRead = async () => {
+      try {
+        if (messages.length > 0) {
+          const unreadMessages = messages.filter(
+            (msg) => !msg.isRead && msg.sender_id !== Number(user?.user_id)
+          );
+          if (unreadMessages.length > 0) {
+            const adminId = unreadMessages[0].adminId;
+            await axios.patch(
+              `${import.meta.env.VITE_API_URL}/messages/markAsRead`,
+              {
+                userId: user?.user_id,
+                adminId: adminId,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            console.log('Messages marked as read');
+          }
+        }
+      } catch (error) {
+        console.error('Failed to mark messages as read', error);
+      }
+    };
+
+    // Condition pour éviter de lancer une boucle infinie
+    if (messages.length > 0 && messages.some((msg) => !msg.isRead)) {
+      markMessagesAsRead();
+    }
+  }, [messages, user?.user_id, token]); // Ce useEffect dépend des messages et de l'utilisateur
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,8 +121,6 @@ function ChatBox() {
         },
       }
     );
-
-    console.log(response.data);
 
     if (socket && newMessage.trim()) {
       const message: Message = response.data;
@@ -134,11 +172,12 @@ function ChatBox() {
                   }
                 >
                   {msg.sender_id === Number(user?.user_id)
-                    ? 'Utilisateur'
+                    ? user?.first_name
                     : 'Admin'}
                 </span>
               </p>
               <p className="text-xl">{msg.message}</p>
+              <p className="text-xl text-sky-600">{msg.isRead ? 'lu' : ''}</p>
             </div>
           </div>
         ))}
