@@ -1,12 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
 import { useUser } from '../../context/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
+
+interface APIErrorResponse {
+  message: string;
+}
 
 interface Category {
   category_id: number;
@@ -81,9 +85,18 @@ function ActivityDetail() {
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      alert('Vous devez être connecté pour soumettre un avis');
+      // Utilisation de toast.error pour l'utilisateur non connecté
+      toast.error('Vous devez être connecté pour soumettre un avis', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-red-600 text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
       return;
     }
+
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/reviews`,
@@ -102,16 +115,40 @@ function ActivityDetail() {
       setIsModalOpen(false);
       setNewContent('');
       setRating(0);
+
+      // Affichage du message de succès (en vert)
       toast.success('Merci pour votre avis', {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
-        className: 'bg-greenZombie text-black text-2xl',
+        className: 'bg-green-500 text-white text-2xl',
         style: { fontFamily: 'League Gothic', top: '104px' },
       });
     } catch (error) {
-      console.error("Erreur lors de l'envoi de l'avis:", error);
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response?.data?.message) {
+        // Affichage du message d'erreur spécifique (en rouge)
+        toast.error(axiosError.response.data.message, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-red-600 text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      } else {
+        // Affichage d'un message d'erreur générique (en rouge)
+        toast.error("Une erreur est survenue lors de l'envoi de votre avis", {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-red-600 text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      }
     }
   };
 
