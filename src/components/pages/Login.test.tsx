@@ -13,6 +13,7 @@ const mockAxios = new MockAdapter(axios);
 
 describe('Login Component', () => {
   beforeEach(() => {
+    jest.resetModules();
     jest.spyOn(Storage.prototype, 'setItem'); // Mock the localStorage setItem method
     jest.spyOn(console, 'error').mockImplementation(() => {});  // Suppress console.error in tests
     mockAxios.reset();
