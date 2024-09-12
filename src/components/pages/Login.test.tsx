@@ -7,22 +7,31 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Login from './Login';
 import { UserProvider } from '../../context/UserContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 const mockAxios = new MockAdapter(axios);
 
 describe('Login Component', () => {
-  const localhost = "http://localhost:3000";
   beforeEach(() => {
+    jest.spyOn(Storage.prototype, 'setItem'); // Mock the localStorage setItem method
+    jest.spyOn(console, 'error').mockImplementation(() => {});  // Suppress console.error in tests
     mockAxios.reset();
+  });
+  
+  afterEach(() => {
+    jest.clearAllMocks(); // Clear mocks after each test to avoid interference between tests
+    jest.restoreAllMocks();
   });
 
   it('renders login form with email and password fields', () => {
     render(
-      <Router>
-        <UserProvider>
-          <Login />
-        </UserProvider>
-      </Router>
+      <HelmetProvider>
+        <Router>
+          <UserProvider>
+            <Login />
+          </UserProvider>
+        </Router>
+      </HelmetProvider>
     );
 
     expect(screen.getByLabelText(/e-mail/i)).toBeInTheDocument();
@@ -30,77 +39,99 @@ describe('Login Component', () => {
     expect(screen.getByRole('button', { name: /me connecter/i })).toBeInTheDocument();
   });
 
-  // it('shows an error if fields are empty on submit', async () => {
-  //   render(
-  //     <Router>
-  //       <UserProvider>
-  //         <Login />
-  //       </UserProvider>
-  //     </Router>
-  //   );
+  it('shows an error if fields are empty on submit', async () => {
+    render(
+      <HelmetProvider>
+        <Router>
+          <UserProvider>
+            <Login />
+          </UserProvider>
+        </Router>
+      </HelmetProvider>
+    );
 
-  //   fireEvent.click(screen.getByRole('button', { name: /me connecter/i }));
+    fireEvent.click(screen.getByRole('button', { name: /me connecter/i }));
 
-  //   expect(await screen.findByText('Veuillez remplir tous les champs')).toBeInTheDocument();
-  // });
+    expect(await screen.findByText('Veuillez remplir tous les champs')).toBeInTheDocument();
+  });
 
-  // it('sends a login request and redirects on success', async () => {
-  //   // Mock successful login
-  //   mockAxios.onPost(`${localhost}/login`).reply(200, {
-  //     token: 'valid_jwt_token',
-  //   });
+  it('sends a login request and redirects on success', async () => {
+    // Mock successful login
 
-  //   render(
-  //     <Router>
-  //       <UserProvider>
-  //         <Login />
-  //       </UserProvider>
-  //     </Router>
-  //   );
+    // ${import.meta.env.VITE_API_URL}
+    // http://localhost:3000
+    // ${process.env.VITE_API_URL}
+    mockAxios.onPost(`${process.env.VITE_API_URL}/login`).reply(200, {
+      token: 'valid_jwt_token',
+    });
 
-  //   fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'test@example.com' } });
-  //   fireEvent.change(screen.getByLabelText(/mot de passe/i), { target: { value: 'password123' } });
+    render(
+      <HelmetProvider>
+        <Router>
+          <UserProvider>
+            <Login />
+          </UserProvider>
+        </Router>
+      </HelmetProvider>
+    );
 
-  //   fireEvent.click(screen.getByRole('button', { name: /me connecter/i }));
+    fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText(/mot de passe/i), { target: { value: 'password123' } });
 
-  //   await waitFor(() => expect(localStorage.setItem).toHaveBeenCalledWith('token', 'valid_jwt_token'));
-  //   // Here you can also test navigation if needed
-  // });
+    fireEvent.click(screen.getByRole('button', { name: /me connecter/i }));
 
-  // it('displays an error message if login fails', async () => {
-  //   // Mock failed login
-  //   mockAxios.onPost(`${localhost}/login`).reply(401, {
-  //     message: "Nom d'utilisateur ou mot de passe non reconnu",
-  //   });
+    await waitFor(() => expect(localStorage.setItem).toHaveBeenCalledWith('token', 'valid_jwt_token'));
+    // Here you can also test navigation if needed
+  });
 
-  //   render(
-  //     <Router>
-  //       <UserProvider>
-  //         <Login />
-  //       </UserProvider>
-  //     </Router>
-  //   );
+  it('displays an error message if login fails', async () => {
+    // Mock failed login
 
-  //   fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'test@example.com' } });
-  //   fireEvent.change(screen.getByLabelText(/mot de passe/i), { target: { value: 'wrongpassword' } });
+    // ${import.meta.env.VITE_API_URL}
+    // http://localhost:3000
+    // ${process.env.VITE_API_URL}
+    mockAxios.onPost(`${process.env.VITE_API_URL}/login`).reply(401, {
+      message: "Nom d'utilisateur ou mot de passe non reconnu",
+    });
 
-  //   fireEvent.click(screen.getByRole('button', { name: /me connecter/i }));
+    render(
+      <HelmetProvider>
+        <Router>
+          <UserProvider>
+            <Login />
+          </UserProvider>
+        </Router>
+      </HelmetProvider>
+    );
 
-  //   expect(await screen.findByText(/nom d'utilisateur ou mot de passe non reconnu/i)).toBeInTheDocument();
-  // });
+    fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'erreur@email.com' } });
+    fireEvent.change(screen.getByLabelText(/mot de passe/i), { target: { value: 'User1234' } });
+
+    fireEvent.click(screen.getByRole('button', { name: /me connecter/i }));
+
+    expect(await screen.findByText(/nom d'utilisateur ou mot de passe non reconnu/i)).toBeInTheDocument();
+  });
 
   // it('displays a success toast when a user is redirected with a state toast', async () => {
+  //   jest.mock('react-toastify', () => ({
+  //     toast: {
+  //       success: jest.fn(),
+  //       error: jest.fn(),
+  //     }
+  //   }));
   //   render(
-  //     <Router>
-  //       <UserProvider>
-  //         <Login />
-  //       </UserProvider>
-  //     </Router>
+  //     <HelmetProvider>
+  //       <Router>
+  //         <UserProvider>
+  //           <Login />
+  //         </UserProvider>
+  //       </Router>
+  //     </HelmetProvider>
   //   );
 
   //   // Simulating redirection with toast
   //   fireEvent.click(screen.getByRole('button', { name: /me connecter/i }));
 
-  //   expect(await screen.findByText('Compte créé avec succès')).toBeInTheDocument();
+  //   expect(require('react-toastify').toast.success).toHaveBeenCalledWith('Compte créé avec succès');
   // });
 });

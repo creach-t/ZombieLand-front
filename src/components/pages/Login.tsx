@@ -61,7 +61,10 @@ function Login() {
 
     try {
       const response = await axios.post(
-        `http://localhost:3000/login`,
+        // ${import.meta.env.VITE_API_URL}
+        // http://localhost:3000
+        // ${process.env.VITE_API_URL}
+        `${import.meta.env.VITE_API_URL}/login`,
         { email, password }
       );
 
