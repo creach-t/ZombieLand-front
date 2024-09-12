@@ -178,7 +178,7 @@ function Signin() {
   };
 
   return (
-      <div>
+    <div>
       <Helmet>
         <title>Inscription | Zombieland | Paris </title>
         <meta
@@ -186,107 +186,108 @@ function Signin() {
           content="Inscrivez-vous dès maintenant au Parc Zombieland et accédez à nos attractions uniques. Créez votre compte en quelques étapes simples et profitez d'offres exclusives pour planifier votre visite inoubliable."
         />
       </Helmet>
-    <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-      <h1 className="self-center md:self-start text-6xl">
-        Sign<em className="text-redZombie">In</em>
-      </h1>
-      <form
-        onSubmit={handleSubmit}
-        action="#"
-        className="md:flex md:flex-col w-4/5 py-14"
-      >
-        <div className="mb-6 flex flex-col">
-          <label htmlFor="first_name" className="text-3xl leading-loose">
-            Prénom{' '}
-            <span
-              className={`${errorMessages.firstName ? flashClass : 'text-sm text-gray-500'}`}
-            >
-              * champs requis
-            </span>
-          </label>
-          <input
-            type="text"
-            id="first_name"
-            name="first_name"
-            placeholder="Entrez votre prénom"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
-        <div className="mb-6 flex flex-col">
-          <label htmlFor="last_name" className="text-3xl leading-loose">
-            Nom{' '}
-            <span
-              className={`${errorMessages.lastName ? flashClass : 'text-sm text-gray-500'}`}
-            >
-              * champs requis
-            </span>
-          </label>
-          <input
-            type="text"
-            id="last_name"
-            name="last_name"
-            placeholder="Entrez votre nom"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
-        <div className="mb-6 flex flex-col">
-          <label htmlFor="mail" className="text-3xl leading-loose">
-            E-mail{' '}
-            <span
-              className={`${errorMessages.email ? flashClass : 'text-sm text-gray-500'}`}
-            >
-              * champs requis, doit correspondre au format adresse@provider.com
-            </span>
-          </label>
-          <input
-            type="email"
-            id="mail"
-            name="mail"
-            placeholder="Entrez votre E-mail"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="mb-10 flex flex-col">
-          <label htmlFor="password" className="text-3xl leading-loose">
-            Mot de passe{' '}
-            <span
-              className={`${errorMessages.password ? flashClass : 'text-sm text-gray-500'}`}
-            >
-              * doit contenir au minimum 6 caractères, dont 1 chiffre, 1
-              majuscule et 1 minuscule
-            </span>
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Entrez votre mot de passe"
-            className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        {errorMessages.general && (
-          <p className="bg-redZombie rounded-xl p-2 mb-2 text-white">
-            Il y a eu un souci pendant la création du compte
-          </p>
-        )}
-        <button
-          type="submit"
-          className="w-full mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl self-center"
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+        <h1 className="self-center md:self-start text-6xl">
+          Sign<em className="text-redZombie">In</em>
+        </h1>
+        <form
+          onSubmit={handleSubmit}
+          action="#"
+          className="md:flex md:flex-col w-4/5 py-14"
         >
-          M&apos;inscrire
-        </button>
-      </form>
-      <ToastContainer />
-    </main>
-        </div>
+          <div className="mb-6 flex flex-col">
+            <label htmlFor="first_name" className="text-3xl leading-loose">
+              Prénom{' '}
+              <span
+                className={`${errorMessages.firstName ? flashClass : 'text-sm text-gray-500'}`}
+              >
+                * champs requis
+              </span>
+            </label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              placeholder="Entrez votre prénom"
+              className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="mb-6 flex flex-col">
+            <label htmlFor="last_name" className="text-3xl leading-loose">
+              Nom{' '}
+              <span
+                className={`${errorMessages.lastName ? flashClass : 'text-sm text-gray-500'}`}
+              >
+                * champs requis
+              </span>
+            </label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              placeholder="Entrez votre nom"
+              className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div className="mb-6 flex flex-col">
+            <label htmlFor="mail" className="text-3xl leading-loose">
+              E-mail{' '}
+              <span
+                className={`${errorMessages.email ? flashClass : 'text-sm text-gray-500'}`}
+              >
+                * champs requis, doit correspondre au format
+                adresse@provider.com
+              </span>
+            </label>
+            <input
+              type="email"
+              id="mail"
+              name="mail"
+              placeholder="Entrez votre E-mail"
+              className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="mb-10 flex flex-col">
+            <label htmlFor="password" className="text-3xl leading-loose">
+              Mot de passe{' '}
+              <span
+                className={`${errorMessages.password ? flashClass : 'text-sm text-gray-500'}`}
+              >
+                * doit contenir au minimum 6 caractères, dont 1 chiffre, 1
+                majuscule et 1 minuscule
+              </span>
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Entrez votre mot de passe"
+              className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          {errorMessages.general && (
+            <p className="bg-redZombie rounded-xl p-2 mb-2 text-white">
+              Il y a eu un souci pendant la création du compte
+            </p>
+          )}
+          <button
+            type="submit"
+            className="w-full mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl self-center"
+          >
+            M&apos;inscrire
+          </button>
+        </form>
+        <ToastContainer />
+      </main>
+    </div>
   );
 }
 

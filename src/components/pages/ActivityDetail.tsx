@@ -5,12 +5,52 @@ import axios, { AxiosError } from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
+import ReviewCard from '../ReviewCard/ReviewCard';
 import { useUser } from '../../context/UserContext';
-import { ToastContainer, toast } from 'react-toastify';
 
-interface APIErrorResponse {
-  message: string;
-}
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+// Slider configuration
+const sliderSettings = {
+  dots: false,
+  infinite: true,
+  speed: 2000,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 4000,
+  pauseOnHover: true,
+  responsive: [
+    {
+      breakpoint: 1350,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: false,
+      },
+    },
+    {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 500,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+      },
+    },
+  ],
+};
+
+import { ToastContainer, toast } from 'react-toastify';
 
 interface Category {
   category_id: number;
@@ -193,23 +233,31 @@ function ActivityDetail() {
               <source media="(min-width:465px)" srcSet={desktopImage} />
               <img src={mobileImage} alt={attractionDetail.name} />
             </picture>
-            <div className="md:w-1/2 self-center p-8">
-              <p className="text-white text-2xl">
+            <div className="md:w-1/2 self-center h-full p-8 flex flex-col justify-around ">
+              <p className="text-white text-2xl pl-2">
                 {attractionDetail.description}
               </p>
-              {attractionDetail.reviews.length > 0 ? (
-                attractionDetail.reviews.map((review: Review) => (
-                  <div key={review.review_id} className="w-full">
-                    <p className="text-white text-2xl">{review.content}</p>
-                    <p>
-                      {review.client.first_name} {review.client.last_name}
-                    </p>
-                    <StarRating rating={review.rating} />
-                  </div>
-                ))
-              ) : (
-                <p className="text-white text-2xl">Aucun avis pour le moment</p>
-              )}
+
+              {/* Section review */}
+              <div className="bg-redZombie rounded pt-6 pb-6 flex-col justify-between w-full pl-2 h-90 ">
+                <h2 className="text-2xl">Avis des survivants</h2>
+                <div className="sliderCss flex justify-center my-8">
+                  {/* Slider to show reviews */}
+                  <Slider
+                    className="custom-slick-slider w-full"
+                    {...sliderSettings}
+                  >
+                    {attractionDetail.reviews.map((review: Review) => (
+                      <ReviewCard
+                        key={review.review_id}
+                        content={review.content}
+                        rating={review.rating}
+                        clientName={`${review.client.first_name} ${review.client.last_name}`}
+                      />
+                    ))}
+                  </Slider>
+                </div>
+              </div>
 
               {/* Modal for adding a review */}
               {isModalOpen && (
@@ -270,13 +318,16 @@ function ActivityDetail() {
               </button>
             </div>
           </div>
-          <Link
-            to="/reserver"
-            className="text-white text-2xl text-center font-bold rounded-xl w-5/6 py-1 self-center mt-4 bg-transparent border-2 border-white"
-          >
-            Acheter un billet
-          </Link>
         </section>
+
+        <Link
+          to="/reserver"
+          className="text-white text-2xl text-center font-bold rounded-xl w-5/6 py-1 self-center mt-4 bg-transparent border-2 border-white"
+        >
+          Acheter un billet
+        </Link>
+
+        {/* Section for similar attractions */}
 
         <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
           <h2 className="text-white text-2xl mt-4">
@@ -288,7 +339,9 @@ function ActivityDetail() {
                 <div
                   key={currentActivity.activity_id}
                   style={{
-                    backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(currentActivity.name)})`,
+                    backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(
+                      currentActivity.name
+                    )})`,
                   }}
                   className="w-[400px] md:w-[200px] lg:w-[400px] h-[400px] md:h-[350px] lg:h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center"
                 >
@@ -311,6 +364,45 @@ function ActivityDetail() {
           </div>
         </section>
       </main>
+
+      {/* Modal for adding a review */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
+          <div className="bg-black p-6 rounded-lg w-96">
+            <h2 className="text-2xl mb-4">Laisser un avis</h2>
+            <form onSubmit={handleReviewSubmit}>
+              <textarea
+                className="w-full p-2 border border-gray-400 rounded mb-4"
+                rows={5}
+                value={newContent}
+                onChange={(e) => setNewContent(e.target.value)}
+                placeholder="Écrivez votre avis..."
+              />
+              <StarRating rating={rating} setRating={setRating} />
+              <div className="flex justify-between mt-4">
+                <button
+                  type="submit"
+                  className="bg-darkGreenZombie text-white font-bold py-2 px-4 rounded"
+                >
+                  Soumettre
+                </button>
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                >
+                  Annuler
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      <style>
+        {
+          '.custom-slick-slider { width: 84%; } .slick-slide > div {display: flex; place-items: center; .slick-prev { left: 40px} .slick-next {right: 20px} }'
+        }
+      </style>
     </div>
   );
 }
