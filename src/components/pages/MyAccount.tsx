@@ -1,9 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import { jwtDecode } from 'jwt-decode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet-async';
@@ -80,7 +79,7 @@ const validateNewPassword = (password: string) => {
 };
 
 function MyAccount() {
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
   const [thisUser, setThisUser] = useState<User | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -90,25 +89,19 @@ function MyAccount() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const decodedToken = jwtDecode<User>(token as string);
 
     if (!token) {
       navigate('/se-connecter');
       return;
     }
 
-    if (decodedToken.user_id !== Number(id)) {
-      navigate('/404');
-    }
-
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/account/${id}`,
+          `${import.meta.env.VITE_API_URL}/account`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -137,7 +130,7 @@ function MyAccount() {
     };
 
     fetchUser();
-  }, [id, navigate]);
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -276,171 +269,182 @@ function MyAccount() {
   };
 
   return (
-     <div>
+    <div>
       <Helmet>
         <title>Mon compte 🧟 | Zombieland | Paris </title>
       </Helmet>
-    <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-      <ToastContainer />
-      <h1 className="self-center md:self-start text-6xl">
-        MON <em className="text-redZombie">COMPTE</em>
-      </h1>
-      <Link
-        to="/mes-reservations"
-        className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
-      >
-        Mes <em className="text-redZombie ">Réservations</em>
-      </Link>
-      <form onSubmit={handleSubmit} className="w-3/4 md:flex md:flex-col mt-10">
-        <div className="w-3/4 flex justify-between items-center m-auto gap-8">
-          <div className="w-1/2 mt-8">
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="lastName" className="text-3xl leading-loose">
-                Nom
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                placeholder="Entrez votre Nom"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="firstName" className="text-3xl leading-loose">
-                Prénom
-              </label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                placeholder="Entrez votre Prénom"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </div>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="email" className="text-3xl leading-loose">
-                E-mail
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Entrez votre E-mail"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="w-1/2">
-            <h4 className="text-center text-2xl ">Changer de mot de passe</h4>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="oldPassword" className="text-3xl leading-loose">
-                Ancien mot de passe
-              </label>
-              <input
-                type="password"
-                id="oldPassword"
-                name="oldPassword"
-                placeholder="Entrez votre ancien mot de passe"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
-              />
-            </div>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="newPassword" className="text-3xl leading-loose">
-                Nouveau mot de passe
-              </label>
-              <input
-                type="password"
-                id="newPassword"
-                name="newPassword"
-                placeholder="Entrez votre nouveau mot de passe"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </div>
-            <div className="mb-6 flex flex-col">
-              <label
-                htmlFor="confirmPassword"
-                className="text-3xl leading-loose"
-              >
-                Confirmez mot de passe
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirmez mot de passe"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-          </div>
+      <main className="h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+        <ToastContainer />
+        <h1 className="self-center md:self-start text-6xl">
+          MON <em className="text-redZombie">COMPTE</em>
+        </h1>
+        <div className="flex gap-4">
+          <Link
+            to="/mes-reservations"
+            className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
+          >
+            Mes <em className="text-redZombie ">Réservations</em>
+          </Link>
+          <Link
+            to="/mes-messages"
+            className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
+          >
+            Mes <em className="text-redZombie ">Messages</em>
+          </Link>
         </div>
-
-        <div className="my-6 m-auto flex gap-10 flex-col md:flex-row">
-          <button
-            type="submit"
-            className="min-w-max bg-greenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
-          >
-            Sauvegarder mes infos
-          </button>
-          <button
-            onClick={openConfirmModal}
-            type="button"
-            className="min-w-max bg-redZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
-          >
-            Supprimer mon compte
-          </button>
-          {isConfirmModalOpen && (
-            <div
-              className="modal-veil fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
-              onClick={closeConfirmModal}
-            >
-              <div
-                className="modal-container text-3xl p-8 rounded-xl flex flex-col gap-4"
-                onClick={(e) => e.stopPropagation()}
-                style={{ backgroundColor: '#121212' }}
-              >
-                <h2>Êtes-vous sûr de vouloir supprimer votre compte ?</h2>
-                <p>Cette action est irréversible.</p>
-                <div className="btn-container flex items-center justify-center gap-4">
-                  <button
-                    className="min-w-max bg-greenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
-                    onClick={handleDelete}
-                  >
-                    Confirmer
-                  </button>
-                  <button
-                    className="min-w-max bg-redZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
-                    onClick={closeConfirmModal}
-                  >
-                    Annuler
-                  </button>
-                </div>
+        <form
+          onSubmit={handleSubmit}
+          className="w-3/4 md:flex md:flex-col mt-10"
+        >
+          <div className="w-3/4 flex justify-between items-center m-auto gap-8">
+            <div className="w-1/2 mt-8">
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="lastName" className="text-3xl leading-loose">
+                  Nom
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="Entrez votre Nom"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="firstName" className="text-3xl leading-loose">
+                  Prénom
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  placeholder="Entrez votre Prénom"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="email" className="text-3xl leading-loose">
+                  E-mail
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Entrez votre E-mail"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
             </div>
-          )}
-          <button
-            onClick={handleLogout}
-            type="button"
-            className="min-w-max bg-darkGreenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
-          >
-            Se déconnecter
-          </button>
-        </div>
-      </form>
-    </main>
-       </div>
+            <div className="w-1/2">
+              <h4 className="text-center text-2xl ">Changer de mot de passe</h4>
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="oldPassword" className="text-3xl leading-loose">
+                  Ancien mot de passe
+                </label>
+                <input
+                  type="password"
+                  id="oldPassword"
+                  name="oldPassword"
+                  placeholder="Entrez votre ancien mot de passe"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                />
+              </div>
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="newPassword" className="text-3xl leading-loose">
+                  Nouveau mot de passe
+                </label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  name="newPassword"
+                  placeholder="Entrez votre nouveau mot de passe"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+              <div className="mb-6 flex flex-col">
+                <label
+                  htmlFor="confirmPassword"
+                  className="text-3xl leading-loose"
+                >
+                  Confirmez mot de passe
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Confirmez mot de passe"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="my-6 m-auto flex gap-10 flex-col md:flex-row">
+            <button
+              type="submit"
+              className="min-w-max bg-greenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
+            >
+              Sauvegarder mes infos
+            </button>
+            <button
+              onClick={openConfirmModal}
+              type="button"
+              className="min-w-max bg-redZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
+            >
+              Supprimer mon compte
+            </button>
+            {isConfirmModalOpen && (
+              <div
+                className="modal-veil fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
+                onClick={closeConfirmModal}
+              >
+                <div
+                  className="modal-container text-3xl p-8 rounded-xl flex flex-col gap-4"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ backgroundColor: '#121212' }}
+                >
+                  <h2>Êtes-vous sûr de vouloir supprimer votre compte ?</h2>
+                  <p>Cette action est irréversible.</p>
+                  <div className="btn-container flex items-center justify-center gap-4">
+                    <button
+                      className="min-w-max bg-greenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
+                      onClick={handleDelete}
+                    >
+                      Confirmer
+                    </button>
+                    <button
+                      className="min-w-max bg-redZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
+                      onClick={closeConfirmModal}
+                    >
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+            <button
+              onClick={handleLogout}
+              type="button"
+              className="min-w-max bg-darkGreenZombie text-white text-2xl border-white border-2 rounded-xl self-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]"
+            >
+              Se déconnecter
+            </button>
+          </div>
+        </form>
+      </main>
+    </div>
   );
 }
 

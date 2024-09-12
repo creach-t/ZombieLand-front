@@ -71,7 +71,17 @@ function Login() {
       const decodedUser = jwtDecode<User>(token);
       setUser(decodedUser);
 
-      navigate(`/`, { state: { showToast: true } });
+      const redirectTo = location.state?.from || '/';
+      const numberOfVisitors = location.state?.numberOfVisitors || 0;
+      const visitDate = location.state?.visitDate || '';
+
+      if (redirectTo === '/reserver') {
+        navigate('/reserver', {
+          state: { numberOfVisitors, visitDate, showToast: true },
+        });
+      } else {
+        navigate(redirectTo, { state: { showToast: true } });
+      }
     } catch (error) {
       console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
       setError("Nom d'utilisateur ou mot de passe non reconnu");

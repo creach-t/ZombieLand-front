@@ -1,12 +1,13 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { useUser } from '../../context/UserContext';
+
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -49,6 +50,13 @@ const sliderSettings = {
   ],
 };
 
+import { ToastContainer, toast } from 'react-toastify';
+
+interface APIErrorResponse {
+  message: string;
+}
+
+
 interface Category {
   category_id: number;
   name: string;
@@ -90,6 +98,7 @@ function ActivityDetail() {
   );
   const [similarAttractions, setSimilarAttractions] = useState<Activity[]>([]);
   const { id } = useParams<{ id: string }>();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const loadData = async () => {
@@ -121,25 +130,70 @@ function ActivityDetail() {
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      alert('Vous devez être connecté pour soumettre un avis');
+      // Utilisation de toast.error pour l'utilisateur non connecté
+      toast.error('Vous devez être connecté pour soumettre un avis', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-red-600 text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
       return;
     }
+
     try {
-      const newReviewData = {
-        rating,
-        content: newContent,
-        client_id: user?.user_id,
-        activity_id: attractionDetail?.activity_id,
-      };
       await axios.post(
         `${import.meta.env.VITE_API_URL}/reviews`,
-        newReviewData
+        {
+          rating,
+          content: newContent,
+          client_id: user?.user_id,
+          activity_id: attractionDetail?.activity_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setIsModalOpen(false);
       setNewContent('');
       setRating(0);
+
+      // Affichage du message de succès (en vert)
+      toast.success('Merci pour votre avis', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-green-500 text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
     } catch (error) {
-      console.error("Erreur lors de l'envoi de l'avis:", error);
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response?.data?.message) {
+        // Affichage du message d'erreur spécifique (en rouge)
+        toast.error(axiosError.response.data.message, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-red-600 text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      } else {
+        // Affichage d'un message d'erreur générique (en rouge)
+        toast.error("Une erreur est survenue lors de l'envoi de votre avis", {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-red-600 text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      }
     }
   };
 
@@ -168,6 +222,7 @@ function ActivityDetail() {
         />
       </Helmet>
       <main className="h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+        <ToastContainer />
         <h1 className="self-center md:self-start text-6xl">
           {attractionDetail.name}{' '}
           <span className="text-redZombie">ATTRACTIONS</span>
@@ -187,6 +242,7 @@ function ActivityDetail() {
               <p className="text-white text-2xl pl-2">
                 {attractionDetail.description}
               </p>
+
               {/* Section review */}
               <div className="bg-redZombie rounded pt-6 pb-6 flex-col justify-between w-full pl-2 h-90 ">
                 <h2 className="text-2xl">Avis des survivants</h2>
@@ -214,6 +270,79 @@ function ActivityDetail() {
                   Laisser un avis
                 </button>
               </div>
+
+              {attractionDetail.reviews.length > 0 ? (
+                attractionDetail.reviews.map((review: Review) => (
+                  <div key={review.review_id} className="w-full">
+                    <p className="text-white text-2xl">{review.content}</p>
+                    <p>
+                      {review.client.first_name} {review.client.last_name}
+                    </p>
+                    <StarRating rating={review.rating} />
+                  </div>
+                ))
+              ) : (
+                <p className="text-white text-2xl">Aucun avis pour le moment</p>
+              )}
+
+              {/* Modal for adding a review */}
+              {isModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
+                  <div className="bg-black p-8 rounded-lg w-[400px] shadow-md shadow-greenZombie">
+                    <h2 className="text-2xl font-bold mb-4">Laisser un avis</h2>
+                    <form onSubmit={handleReviewSubmit}>
+                      <div className="mb-4">
+                        <label
+                          htmlFor="rating"
+                          className="block text-sm font-medium text-gray-500"
+                        >
+                          Note
+                        </label>
+                        <StarRating rating={rating} setRating={setRating} />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          htmlFor="content"
+                          className="block text-sm font-medium text-gray-500"
+                        >
+                          Avis
+                        </label>
+                        <textarea
+                          id="content"
+                          value={newContent}
+                          onChange={(e) => setNewContent(e.target.value)}
+                          className="text-black dark:text-white mt-1 p-2 border border-gray-300 rounded-md w-full"
+                          rows={4}
+                        />
+                      </div>
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          onClick={closeModal}
+                          className="mr-2 text-gray-500 hover:text-gray-400 hover:border-greenZombie"
+                        >
+                          Annuler
+                        </button>
+                        <button
+                          type="submit"
+                          className="text-white bg-redZombie hover:bg-red-800 hover:border-greenZombie font-medium rounded-md px-4 py-2"
+                        >
+                          Soumettre
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
+
+              {/* Button to open modal */}
+              <button
+                onClick={openModal}
+                className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
+              >
+                Laisser un avis
+              </button>
+
             </div>
           </div>
         </section>
@@ -226,6 +355,7 @@ function ActivityDetail() {
         </Link>
 
         {/* Section for similar attractions */}
+
         <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
           <h2 className="text-white text-2xl mt-4">
             D’autres attractions qui pourraient vous plaire
@@ -261,6 +391,7 @@ function ActivityDetail() {
           </div>
         </section>
       </main>
+
 
       {/* Modal for adding a review */}
       {isModalOpen && (
@@ -300,6 +431,7 @@ function ActivityDetail() {
           '.custom-slick-slider { width: 84%; } .slick-slide > div {display: flex; place-items: center; .slick-prev { left: 40px} .slick-next {right: 20px} }'
         }
       </style>
+
     </div>
   );
 }
