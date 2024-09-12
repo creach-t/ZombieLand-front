@@ -183,27 +183,30 @@ function ActivityDetail() {
               <source media="(min-width:465px)" srcSet={desktopImage} />
               <img src={mobileImage} alt={attractionDetail.name} />
             </picture>
-            <div className="md:w-1/2 self-center h-full p-8 flex flex-col justify-around">
-              <p className="text-white text-2xl">
+            <div className="md:w-1/2 self-center h-full p-8 flex flex-col justify-around ">
+              <p className="text-white text-2xl pl-2">
                 {attractionDetail.description}
               </p>
               {/* Section review */}
-              <div className="bg-redZombie rounded pt-6 pb-6 flex-col">
+              <div className="bg-redZombie rounded pt-6 pb-6 flex-col justify-between w-full pl-2 h-90 ">
                 <h2 className="text-2xl">Avis des survivants</h2>
-
-                {/* Slider to show reviews */}
-                <Slider {...sliderSettings}>
-                  {attractionDetail.reviews.map((review: Review) => (
-                    <ReviewCard
-                      key={review.review_id}
-                      content={review.content}
-                      rating={review.rating}
-                      clientName={`${review.client.first_name} ${review.client.last_name}`}
-                    />
-                  ))}
-                </Slider>
-
-                {/* Button review */}
+                <div className="sliderCss flex justify-center">
+                  {/* Slider to show reviews */}
+                  <Slider
+                    className="custom-slick-slider w-full"
+                    {...sliderSettings}
+                  >
+                    {attractionDetail.reviews.map((review: Review) => (
+                      <ReviewCard
+                        key={review.review_id}
+                        content={review.content}
+                        rating={review.rating}
+                        clientName={`${review.client.first_name} ${review.client.last_name}`}
+                      />
+                    ))}
+                  </Slider>
+                </div>
+                {/* Button to leave review */}
                 <button
                   onClick={openModal}
                   className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
@@ -213,13 +216,16 @@ function ActivityDetail() {
               </div>
             </div>
           </div>
-          <Link
-            to="/reserver"
-            className="text-white text-2xl text-center font-bold rounded-xl w-5/6 py-1 self-center mt-4 bg-transparent border-2 border-white"
-          >
-            Acheter un billet
-          </Link>
         </section>
+
+        <Link
+          to="/reserver"
+          className="text-white text-2xl text-center font-bold rounded-xl w-5/6 py-1 self-center mt-4 bg-transparent border-2 border-white"
+        >
+          Acheter un billet
+        </Link>
+
+        {/* Section for similar attractions */}
         <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
           <h2 className="text-white text-2xl mt-4">
             D’autres attractions qui pourraient vous plaire
@@ -230,7 +236,9 @@ function ActivityDetail() {
                 <div
                   key={currentActivity.activity_id}
                   style={{
-                    backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(currentActivity.name)})`,
+                    backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(
+                      currentActivity.name
+                    )})`,
                   }}
                   className="w-[400px] md:w-[200px] lg:w-[400px] h-[400px] md:h-[350px] lg:h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center"
                 >
@@ -287,6 +295,11 @@ function ActivityDetail() {
           </div>
         </div>
       )}
+      <style>
+        {
+          '.custom-slick-slider { width: 84%; } .slick-slide > div {display: flex; place-items: center; .slick-prev { left: 40px} .slick-next {right: 20px} }'
+        }
+      </style>
     </div>
   );
 }
