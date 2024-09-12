@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useUser } from '../../context/UserContext';
 import { User } from '../../context/UserContext';
@@ -11,7 +11,6 @@ import { Helmet } from 'react-helmet-async';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const { setUser } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,7 +43,7 @@ function Login() {
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
-        className: 'bg-greenZombie text-black text-2xl',
+        className: 'bg-green-500 text-white text-2xl',
         style: { fontFamily: 'League Gothic', top: '104px' },
       });
     }
@@ -52,10 +51,17 @@ function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
 
     if (!email || !password) {
-      setError('Veuillez remplir tous les champs');
+      // Utiliser toast.error au lieu de setError
+      toast.error('Veuillez remplir tous les champs', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-red-600 text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
       return;
     }
 
@@ -82,9 +88,32 @@ function Login() {
       } else {
         navigate(redirectTo, { state: { showToast: true } });
       }
+
+      // Afficher un toast de succès après connexion
+      toast.success('Connexion réussie', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-green-500 text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
     } catch (error) {
-      console.error("Nom d'utilisateur ou mot de passe non reconnu", error);
-      setError("Nom d'utilisateur ou mot de passe non reconnu");
+      const axiosError = error as AxiosError;
+      console.error(
+        "Nom d'utilisateur ou mot de passe non reconnu",
+        axiosError
+      );
+
+      // Utiliser toast.error pour afficher un message d'erreur
+      toast.error("Nom d'utilisateur ou mot de passe non reconnu", {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-red-600 text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
     }
   };
 
@@ -139,9 +168,6 @@ function Login() {
               Mot de passe oublié ?
             </Link>
           </div>
-          {error && (
-            <p className="bg-redZombie text-2xl rounded-xl p-2 mb-2">{error}</p>
-          )}
           <button
             type="submit"
             className="mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl w-full"
