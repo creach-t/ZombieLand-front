@@ -755,3 +755,10 @@ button:focus-visible {
   }
 
 }
+
+/* rating */
+
+.ratingFont span{
+  font-size: 1.5rem!important;
+}
+

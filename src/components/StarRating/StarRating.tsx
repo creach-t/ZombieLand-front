@@ -20,7 +20,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating, setRating }) => {
     );
   }
 
-  return <div>{stars}</div>;
+  return <div className="ratingFont">{stars}</div>;
 };
 
 export default StarRating;
