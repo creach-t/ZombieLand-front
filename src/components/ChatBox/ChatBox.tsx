@@ -75,11 +75,10 @@ function ChatBox() {
   }
 
   return (
-    <div className="chat-window fixed p-4 bg-black border-redZombie border-2 rounded-xl h-[400px] w-[400px] z-50 right-20 bottom-24">
-      <h3>Chat</h3>
+    <div className="chat-window m-auto p-4 border-white border-2 rounded-xl h-[550px] w-11/12 z-50 right-20 bottom-24 flex flex-col justify-between">
       <div
         ref={ref}
-        className="chat-messages h-3/4 w-full bg-slate-400 rounded-xl overflow-y-auto"
+        className="chat-messages h-3/4 w-full rounded-xl overflow-y-auto p-2"
       >
         {messages.map((msg) => (
           <div
@@ -90,24 +89,51 @@ function ChatBox() {
                 : 'flex justify-start p-2'
             }
           >
-            <strong>{msg.sender}:</strong> {msg.text}
+            <div
+              className={
+                msg.sender === 'client'
+                  ? 'bg-zinc-700 text-white p-3 rounded-xl w-fit max-w-xl mr-4'
+                  : 'bg-zinc-900 text-white p-3 rounded-xl w-fit max-w-xl ml-4'
+              }
+            >
+              <p className="text-2xl">
+                Message de :{' '}
+                <span
+                  className={
+                    msg.sender === 'client'
+                      ? 'text-greenZombie'
+                      : 'text-redZombie'
+                  }
+                >
+                  {msg.sender === 'client' ? 'Utilisateur' : 'Admin'}
+                </span>
+              </p>
+              <p className="text-xl">{msg.text}</p>
+            </div>
           </div>
         ))}
       </div>
       <form
         onSubmit={handleSendMessage}
-        className="absolute right-1 bottom-1 w-full p-2 flex justify-end"
+        className="w-full flex justify-between"
       >
-        <input
-          type="text"
-          className="rounded-xl w-3/4 px-2 border-white border-2"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Tapez votre message..."
-        />
-        <button type="submit" className="ml-5 border-white border-2">
-          Envoyer
-        </button>
+        <div className="input-container relative w-full h-full">
+          <textarea
+            placeholder="Envoyer votre message, un admin vous répondra dans les plus brefs délais"
+            className="w-full h-20 bg-zinc-900 border-2 border-white rounded-xl m-auto text-2xl p-2 pr-20 duration-300 focus:h-40 resize-none"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+          ></textarea>
+          <button
+            type="submit"
+            className="absolute h-4/5 bg-zinc-900 m top-1/2 right-6 text-white text-2xl font-bold px-3 py-1 border-none border-white rounded-xl hover:bg-zinc-700 z-10"
+            style={{
+              transform: 'translateY(-55%)',
+            }}
+          >
+            Envoyer
+          </button>
+        </div>
       </form>
     </div>
   );
