@@ -176,14 +176,14 @@ function ActivityDetail() {
 
               {/* Modal for adding a review */}
               {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
                   <div className="bg-black p-8 rounded-lg w-[400px] shadow-md shadow-greenZombie">
                     <h2 className="text-2xl font-bold mb-4">Laisser un avis</h2>
                     <form onSubmit={handleReviewSubmit}>
                       <div className="mb-4">
                         <label
                           htmlFor="rating"
-                          className="block text-sm font-medium text-gray-700"
+                          className="block text-sm font-medium text-gray-500"
                         >
                           Note
                         </label>
@@ -192,7 +192,7 @@ function ActivityDetail() {
                       <div className="mb-4">
                         <label
                           htmlFor="content"
-                          className="block text-sm font-medium text-gray-700"
+                          className="block text-sm font-medium text-gray-500"
                         >
                           Avis
                         </label>
@@ -200,7 +200,7 @@ function ActivityDetail() {
                           id="content"
                           value={newContent}
                           onChange={(e) => setNewContent(e.target.value)}
-                          className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                          className="text-black dark:text-white mt-1 p-2 border border-gray-300 rounded-md w-full"
                           rows={4}
                         />
                       </div>
@@ -208,13 +208,13 @@ function ActivityDetail() {
                         <button
                           type="button"
                           onClick={closeModal}
-                          className="mr-2 text-gray-600 hover:text-gray-800"
+                          className="mr-2 text-gray-500 hover:text-gray-400 hover:border-greenZombie"
                         >
                           Annuler
                         </button>
                         <button
                           type="submit"
-                          className="text-white bg-redZombie hover:bg-red-800 font-medium rounded-md px-4 py-2"
+                          className="text-white bg-redZombie hover:bg-red-800 hover:border-greenZombie font-medium rounded-md px-4 py-2"
                         >
                           Soumettre
                         </button>
