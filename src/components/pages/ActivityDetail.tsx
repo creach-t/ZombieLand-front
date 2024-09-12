@@ -271,20 +271,6 @@ function ActivityDetail() {
                 </button>
               </div>
 
-              {attractionDetail.reviews.length > 0 ? (
-                attractionDetail.reviews.map((review: Review) => (
-                  <div key={review.review_id} className="w-full">
-                    <p className="text-white text-2xl">{review.content}</p>
-                    <p>
-                      {review.client.first_name} {review.client.last_name}
-                    </p>
-                    <StarRating rating={review.rating} />
-                  </div>
-                ))
-              ) : (
-                <p className="text-white text-2xl">Aucun avis pour le moment</p>
-              )}
-
               {/* Modal for adding a review */}
               {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
