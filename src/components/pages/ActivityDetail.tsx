@@ -52,11 +52,6 @@ const sliderSettings = {
 
 import { ToastContainer, toast } from 'react-toastify';
 
-interface APIErrorResponse {
-  message: string;
-}
-
-
 interface Category {
   category_id: number;
   name: string;
@@ -262,13 +257,6 @@ function ActivityDetail() {
                     ))}
                   </Slider>
                 </div>
-                {/* Button to leave review */}
-                <button
-                  onClick={openModal}
-                  className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
-                >
-                  Laisser un avis
-                </button>
               </div>
 
               {/* Modal for adding a review */}
@@ -328,7 +316,6 @@ function ActivityDetail() {
               >
                 Laisser un avis
               </button>
-
             </div>
           </div>
         </section>
@@ -378,7 +365,6 @@ function ActivityDetail() {
         </section>
       </main>
 
-
       {/* Modal for adding a review */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
@@ -417,7 +403,6 @@ function ActivityDetail() {
           '.custom-slick-slider { width: 84%; } .slick-slide > div {display: flex; place-items: center; .slick-prev { left: 40px} .slick-next {right: 20px} }'
         }
       </style>
-
     </div>
   );
 }
