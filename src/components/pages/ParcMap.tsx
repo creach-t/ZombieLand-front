@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import map from '../../assets/img/desktop/zombieland_map.webp';
+import map from '../../assets/img/desktop/plan-du-parc-zombieland-v2.webp';
 import { Helmet } from 'react-helmet-async';
 interface Attraction {
   activity_id: number;
