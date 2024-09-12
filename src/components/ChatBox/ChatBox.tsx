@@ -22,6 +22,7 @@ function ChatBox() {
   const [socket, setSocket] = useState<Socket | null>(null);
   const ref = useChatScroll(messages);
   const token = localStorage.getItem('token');
+  const adminId = 11;
 
   useEffect(() => {
     const newSocket = io(`${import.meta.env.VITE_API_URL}`);
@@ -32,7 +33,11 @@ function ChatBox() {
     newSocket.on('message', (message: Message) => {
       setMessages((prevMessages) => {
         if (
-          !prevMessages.some((msg) => msg.message_id === message.message_id)
+          !prevMessages.some(
+            (msg) =>
+              msg.message_id === message.message_id &&
+              msg.sender_id === message.sender_id
+          )
         ) {
           return [...prevMessages, message];
         }
@@ -79,7 +84,6 @@ function ChatBox() {
             (msg) => !msg.isRead && msg.sender_id !== Number(user?.user_id)
           );
           if (unreadMessages.length > 0) {
-            const adminId = unreadMessages[0].adminId;
             await axios.patch(
               `${import.meta.env.VITE_API_URL}/messages/markAsRead`,
               {
@@ -113,7 +117,7 @@ function ChatBox() {
       {
         message: newMessage,
         sender_id: user?.user_id,
-        receiver_id: messages[0].adminId,
+        receiver_id: adminId,
       },
       {
         headers: {
