@@ -2,8 +2,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useUser } from '../../context/UserContext';
-import user_icon_red from '../../assets/icons/user_red.svg';
-import user_icon_green from '../../assets/icons/user_green.svg';
+import user_icon_red from '/icons/user_red.svg';
+import user_icon_green from '/icons/user_green.svg';
 import useWindowDimensions from './utils/dimensions';
 
 function NavBar() {

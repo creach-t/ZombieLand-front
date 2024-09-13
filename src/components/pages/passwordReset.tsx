@@ -28,10 +28,11 @@ function PasswordReset() {
       if (response.status === 200) {
         navigate('/se-connecter');
       } else {
-        setError('Erreur lors de l\'envoi de l\'email. 1');
+        setError("Erreur lors de l'envoi de l'email. 1");
       }
     } catch (error) {
-      setError('Erreur lors de l\'envoi de l\'email. 2');
+      console.error(error);
+      setError("Erreur lors de l'envoi de l'email. 2");
     }
   };
 

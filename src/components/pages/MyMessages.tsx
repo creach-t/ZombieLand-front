@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import ChatBox from '../ChatBox/ChatBox';

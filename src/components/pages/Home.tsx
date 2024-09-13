@@ -10,13 +10,14 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import zombieFace from '../../assets/img/desktop/zombie-apocalypse-zombieland.webp';
-import tickets from '../../assets/img/desktop/achat-tickets-parc-zombieland.webp';
-import compass from '../../assets/img/desktop/horaires-tickets-parc-zombieland.webp';
-import skull from '../../assets/img/desktop/plan-parc-zombieland-_1_.webp';
-import plan from '../../assets/img/desktop/plan-parc-zombieland.webp';
+import zombieFace from '/img/desktop/zombie-apocalypse-zombieland.webp';
+import tickets from '/img/desktop/achat-tickets-parc-zombieland.webp';
+import compass from '/img/desktop/horaires-tickets-parc-zombieland.webp';
+import skull from '/img/desktop/plan-parc-zombieland-_1_.webp';
+import plan from '/img/desktop/plan-parc-zombieland.webp';
 import ActivityCard from '../ActivityCard/ActivityCard';
 import { Helmet } from 'react-helmet-async';
+
 interface Activity {
   activity_id: number;
   name: string;
@@ -115,7 +116,7 @@ function Home() {
           content="Plongez dans l’univers palpitant de Zombieland, le parc d’attractions unique en son genre. Vivez des sensations fortes et des aventures inoubliables au cœur d’un monde post-apocalyptique."
         />
       </Helmet>
-      <section className=" mt-[104px] h-[850px] w-full bg-[url('/src/assets/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
+      <section className=" mt-[104px] h-[850px] w-full bg-[url('/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
         <ToastContainer />
         <div className="h-full w-full max-[600px]:px-8 px-16 flex items-center">
           <div className="px-14 py-5 bg-black bg-opacity-40 max-w-[550px] min-h-[400px] flex flex-col justify-around [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">

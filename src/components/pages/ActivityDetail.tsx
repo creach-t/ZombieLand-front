@@ -217,8 +217,8 @@ function ActivityDetail() {
       ? attractionDetail.categories[0].name
       : 'Non spécifié';
 
-  const desktopImage = `/src/assets/img/desktop/attractions/${getImageName(attractionDetail.name)}`;
-  const mobileImage = `/src/assets/img/mobile/attractions/${getImageName(attractionDetail.name)}`;
+  const desktopImage = `/img/desktop/attractions/${getImageName(attractionDetail.name)}`;
+  const mobileImage = `/img/mobile/attractions/${getImageName(attractionDetail.name)}`;
 
   return (
     <div>
@@ -352,7 +352,7 @@ function ActivityDetail() {
                 <div
                   key={currentActivity.activity_id}
                   style={{
-                    backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(
+                    backgroundImage: `url(/img/desktop/attractions/${getImageName(
                       currentActivity.name
                     )})`,
                   }}
