@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { useUser } from '../../context/UserContext';
+import { ToastContainer, toast } from 'react-toastify';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -45,10 +46,6 @@ const sliderSettings = {
     },
   ],
 };
-
-
-import { ToastContainer, toast } from 'react-toastify';
-
 
 interface Category {
   category_id: number;
@@ -140,7 +137,6 @@ function ActivityDetail() {
       setNewContent('');
       setRating(0);
     } catch (error) {
-
       console.error("Erreur lors de l'envoi de l'avis:", error);
 
       if (axios.isAxiosError(error)) {
@@ -179,7 +175,6 @@ function ActivityDetail() {
           style: { fontFamily: 'League Gothic', top: '104px' },
         });
       }
-
     }
   };
 
@@ -212,7 +207,7 @@ function ActivityDetail() {
           {attractionDetail.name}{' '}
           <span className="text-redZombie">ATTRACTIONS</span>
         </h1>
-
+        <ToastContainer />
         <button className="mt-4 text-lg md:text-2xl text-white bg-red-700 font-bold rounded-xl px-4 py-2">
           {categoryName}
         </button>
@@ -304,7 +299,6 @@ function ActivityDetail() {
         </section>
       </main>
 
-
       {/* Modal for adding a review */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
@@ -338,7 +332,6 @@ function ActivityDetail() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
