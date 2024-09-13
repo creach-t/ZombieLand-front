@@ -766,6 +766,6 @@ button:focus-visible {
   font-size: 1.5rem!important;
 }
 
-
-
-
+.slick-slide {
+  padding: 0 15px; /* Ajoute un padding de 15px à gauche et à droite de chaque slide */
+}
