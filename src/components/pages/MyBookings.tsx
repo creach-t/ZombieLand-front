@@ -6,6 +6,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet-async';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 interface Booking {
   booking_id: number;
@@ -21,6 +23,7 @@ function MyBookings() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const formatter = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' });
   const location = useLocation();
+  const [loadingBookings, setLoadingBookings] = useState<boolean>(true);
 
   useEffect(() => {
     if (location.state?.showToast) {
@@ -51,6 +54,8 @@ function MyBookings() {
         setBookings(response.data.booking);
       } catch (error) {
         console.error('Erreur lors du chargement des réservations:', error);
+      } finally {
+        setLoadingBookings(false);
       }
     };
 
@@ -102,72 +107,75 @@ function MyBookings() {
           <div className="relative flex flex-col w-full h-full text-white bg-clip-border">
             <div className="overflow-y-auto max-h-[400px]">
               {' '}
-              {/* Set maximum height and enable scrollbar */}
-              <table className="w-full text-left table-auto mb-[100px] min-w-max">
-                <thead>
-                  <tr>
-                    <th className="p-3 border-b border-slate-200 bg-white">
-                      <p className="text-md font-semibold leading-none text-black">
-                        #
-                      </p>
-                    </th>
-                    <th className="p-3 border-b border-slate-200 bg-white">
-                      <p className="text-md font-semibold leading-none text-black">
-                        Nombre de billet(s)
-                      </p>
-                    </th>
-                    <th className="p-3 border-b border-slate-200 bg-white">
-                      <p className="text-md font-semibold leading-none text-black">
-                        Status
-                      </p>
-                    </th>
-                    <th className="p-3 border-b border-slate-200 bg-white">
-                      <p className="text-md font-semibold leading-none text-black">
-                        Date de visite
-                      </p>
-                    </th>
-                    <th className="p-3 border-b border-slate-200 bg-white">
-                      <p className="text-md font-semibold leading-none text-black">
-                        Réservé le
-                      </p>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {bookings.map((booking) => (
-                    <tr
-                      key={booking.booking_id}
-                      className="hover:bg-redZombie border-b border-slate-200"
-                    >
-                      <td className="p-3">
-                        <p className="block font-semibold text-sm text-white">
-                          {booking.booking_id}
+              {loadingBookings ? (
+                <Skeleton height={188} className="rounded-xl w-full" />
+              ) : (
+                <table className="w-full text-left table-auto mb-[100px] min-w-max">
+                  <thead>
+                    <tr>
+                      <th className="p-3 border-b border-slate-200 bg-white">
+                        <p className="text-md font-semibold leading-none text-black">
+                          #
                         </p>
-                      </td>
-                      <td className="p-3">
-                        <p className="text-md text-white">
-                          {booking.nb_tickets}
+                      </th>
+                      <th className="p-3 border-b border-slate-200 bg-white">
+                        <p className="text-md font-semibold leading-none text-black">
+                          Nombre de billet(s)
                         </p>
-                      </td>
-                      <td className="p-3">
-                        <p className="text-md text-white">
-                          {translateStatus(booking.status)}
+                      </th>
+                      <th className="p-3 border-b border-slate-200 bg-white">
+                        <p className="text-md font-semibold leading-none text-black">
+                          Status
                         </p>
-                      </td>
-                      <td className="p-3 ">
-                        <p className="text-md text-white">
-                          {formatter.format(new Date(booking.date))}
+                      </th>
+                      <th className="p-3 border-b border-slate-200 bg-white">
+                        <p className="text-md font-semibold leading-none text-black">
+                          Date de visite
                         </p>
-                      </td>
-                      <td className="p-3 ">
-                        <p className="text-md text-white">
-                          {formatter.format(new Date(booking.created_at))}
+                      </th>
+                      <th className="p-3 border-b border-slate-200 bg-white">
+                        <p className="text-md font-semibold leading-none text-black">
+                          Réservé le
                         </p>
-                      </td>
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {bookings.map((booking) => (
+                      <tr
+                        key={booking.booking_id}
+                        className="hover:bg-redZombie border-b border-slate-200"
+                      >
+                        <td className="p-3">
+                          <p className="block font-semibold text-sm text-white">
+                            {booking.booking_id}
+                          </p>
+                        </td>
+                        <td className="p-3">
+                          <p className="text-md text-white">
+                            {booking.nb_tickets}
+                          </p>
+                        </td>
+                        <td className="p-3">
+                          <p className="text-md text-white">
+                            {translateStatus(booking.status)}
+                          </p>
+                        </td>
+                        <td className="p-3 ">
+                          <p className="text-md text-white">
+                            {formatter.format(new Date(booking.date))}
+                          </p>
+                        </td>
+                        <td className="p-3 ">
+                          <p className="text-md text-white">
+                            {formatter.format(new Date(booking.created_at))}
+                          </p>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>

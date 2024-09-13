@@ -58,7 +58,7 @@ function Contact() {
       setPrivacyChecked(false);
     } catch (error) {
       console.error("Erreur lors de l'envoi du message:", error);
-      toast.warning("Une erreur est survenue lors de l'envoi du message.", {
+      toast.warning('Veuillez remplir tous les champs.', {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -106,6 +106,7 @@ function Contact() {
                   Prénom
                 </label>
                 <input
+                  required
                   onChange={(e) => setFirstname(e.target.value)}
                   type="text"
                   id="firstname"
@@ -119,6 +120,7 @@ function Contact() {
                   Nom
                 </label>
                 <input
+                  required
                   onChange={(e) => setLastname(e.target.value)}
                   type="text"
                   id="lastname"
@@ -133,6 +135,7 @@ function Contact() {
                 E-mail
               </label>
               <input
+                required
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 id="email"
@@ -146,6 +149,7 @@ function Contact() {
                 Message
               </label>
               <textarea
+                required
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Votre message ici..."
                 name="message"
