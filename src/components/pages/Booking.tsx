@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import { usePrice } from '../../context/PriceContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ticketImg from '../../assets/img/desktop/Rectangle-8.webp';
+import ticketImg from '/img/desktop/Rectangle-8.webp';
 import axios from 'axios';
 import getStripe from '../../utils/getStripe';
 import { ToastContainer, toast } from 'react-toastify';

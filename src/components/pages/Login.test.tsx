@@ -34,7 +34,9 @@ describe('Login component security tests', () => {
 
     expect(screen.getByLabelText(/e-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/mot de passe/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /me connecter/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /me connecter/i })
+    ).toBeInTheDocument();
   });
 
   it('displays error toast if email and password are missing', async () => {

@@ -28,7 +28,7 @@ function Login() {
           localStorage.removeItem('token');
         } else {
           setUser(decodedUser);
-          navigate(`/mon-compte/${decodedUser.user_id}`);
+          navigate('/mon-compte');
         }
       } catch (error) {
         console.error('Token is invalid', error);

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
-import contactImg from '../../assets/img/desktop/Zombie-contact.webp';
+import contactImg from '/img/desktop/Zombie-contact.webp';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
