@@ -742,25 +742,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-/* slider */
-.custom-slick-slider-review {
-  width: 84%;
-}
-.review-card {
-  height: 28vh;
-}
-.slick-slide > div {
-  display: flex;
-  flex-wrap: wrap;
-  place-items: center;
-}
 
-.slick-prev {
-  left: -8% !important;
-}
-.slick-next {
-  right: -5% !important;
-}
 /* margin h1  */
 @media screen and (min-device-width: 768px) and (max-device-width: 1536px) {
   main h1 {
@@ -777,3 +759,9 @@ button:focus-visible {
 .ratingFont span {
   font-size: 1.5rem !important;
 }
+
+
+.slick-slide {
+  padding: 0 15px; 
+}
+

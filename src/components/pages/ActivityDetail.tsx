@@ -7,7 +7,6 @@ import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { useUser } from '../../context/UserContext';
-
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -17,19 +16,22 @@ const sliderSettings = {
   dots: false,
   infinite: true,
   speed: 2000,
-  slidesToShow: 3,
+  slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 4000,
   pauseOnHover: true,
+  centerMode: true,
+  centerPadding: '20%',
   responsive: [
     {
       breakpoint: 1350,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 1,
         slidesToScroll: 1,
         infinite: true,
         dots: false,
+        centerPadding: '10%',
       },
     },
     {
@@ -37,20 +39,16 @@ const sliderSettings = {
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 500,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
         arrows: false,
+        centerPadding: '0',
       },
     },
   ],
 };
 
+
 import { ToastContainer, toast } from 'react-toastify';
+
 
 interface Category {
   category_id: number;
@@ -93,7 +91,6 @@ function ActivityDetail() {
   );
   const [similarAttractions, setSimilarAttractions] = useState<Activity[]>([]);
   const { id } = useParams<{ id: string }>();
-  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const loadData = async () => {
@@ -125,47 +122,27 @@ function ActivityDetail() {
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      // Utilisation de toast.error pour l'utilisateur non connecté
-      toast.error('Vous devez être connecté pour soumettre un avis', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        className: 'bg-red-600 text-white text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
-      });
+      alert('Vous devez être connecté pour soumettre un avis');
       return;
     }
-
     try {
+      const newReviewData = {
+        rating,
+        content: newContent,
+        client_id: user?.user_id,
+        activity_id: attractionDetail?.activity_id,
+      };
       await axios.post(
         `${import.meta.env.VITE_API_URL}/reviews`,
-        {
-          rating,
-          content: newContent,
-          client_id: user?.user_id,
-          activity_id: attractionDetail?.activity_id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        newReviewData
       );
       setIsModalOpen(false);
       setNewContent('');
       setRating(0);
-
-      // Affichage du message de succès (en vert)
-      toast.success('Merci pour votre avis', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        className: 'bg-green-500 text-white text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
-      });
     } catch (error) {
+
+      console.error("Erreur lors de l'envoi de l'avis:", error);
+
       if (axios.isAxiosError(error)) {
         // Vérifie si l'erreur est une erreur Axios et a une réponse spécifique
         if (
@@ -202,6 +179,7 @@ function ActivityDetail() {
           style: { fontFamily: 'League Gothic', top: '104px' },
         });
       }
+
     }
   };
 
@@ -229,103 +207,52 @@ function ActivityDetail() {
           content={`${attractionDetail.name} : ${attractionDetail.description_short}`}
         />
       </Helmet>
-      <main className="h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-        <ToastContainer />
-        <h1 className="self-center md:self-start text-6xl">
+      <main className="w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-left">
           {attractionDetail.name}{' '}
           <span className="text-redZombie">ATTRACTIONS</span>
         </h1>
 
-        <button className="text-white text-2xl bg-red-700 font-bold rounded-xl px-3 py-1 md:self-start mt-4">
+        <button className="mt-4 text-lg md:text-2xl text-white bg-red-700 font-bold rounded-xl px-4 py-2">
           {categoryName}
         </button>
+        <section className="mt-6 w-full flex flex-col md:flex-row justify-center items-center gap-6">
+          <picture className="w-full md:w-1/2">
+            <source media="(min-width: 465px)" srcSet={desktopImage} />
+            <img
+              src={mobileImage}
+              alt={attractionDetail.name}
+              className="w-full h-auto rounded-lg"
+            />
+          </picture>
+          <div className="w-full md:w-1/2 p-4">
+            <p className="text-white text-xl md:text-2xl mb-6">
+              {attractionDetail.description}
+            </p>
 
-        <section className="flex flex-wrap mt-4 justify-center">
-          <div className="flex w-full justify-around items-center">
-            <picture className="md:w-1/2">
-              <source media="(min-width:465px)" srcSet={desktopImage} />
-              <img src={mobileImage} alt={attractionDetail.name} />
-            </picture>
-            <div className="md:w-1/2 self-center h-full p-8 flex flex-col justify-around ">
-              <p className="text-white text-2xl pl-2">
-                {attractionDetail.description}
-              </p>
-
-              {/* Section review */}
-              <div className="bg-redZombie rounded pt-6 pb-6 flex-col justify-between w-full pl-2 h-90 ">
-                <h2 className="text-2xl">Avis des survivants</h2>
-                <div className="sliderCss flex justify-center my-8">
-                  {/* Slider to show reviews */}
-                  <Slider
-                    className="custom-slick-slider w-full"
-                    {...sliderSettings}
-                  >
-                    {attractionDetail.reviews.map((review: Review) => (
-                      <ReviewCard
-                        key={review.review_id}
-                        content={review.content}
-                        rating={review.rating}
-                        clientName={`${review.client.first_name} ${review.client.last_name}`}
-                      />
-                    ))}
-                  </Slider>
-                </div>
+            {/* Section des avis */}
+            <div className="bg-redZombie rounded-lg p-6">
+              <h2 className="text-2xl font-bold text-white mb-6">
+                Avis des survivants
+              </h2>
+              <div className="sliderCss my-6">
+                <Slider {...sliderSettings} className="w-full">
+                  {attractionDetail.reviews.map((review: Review) => (
+                    <ReviewCard
+                      key={review.review_id}
+                      content={review.content}
+                      rating={review.rating}
+                      clientName={`${review.client.first_name} ${review.client.last_name}`}
+                    />
+                  ))}
+                </Slider>
               </div>
 
-              {/* Modal for adding a review */}
-              {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
-                  <div className="bg-black p-8 rounded-lg w-[400px] shadow-md shadow-greenZombie">
-                    <h2 className="text-2xl font-bold mb-4">Laisser un avis</h2>
-                    <form onSubmit={handleReviewSubmit}>
-                      <div className="mb-4">
-                        <label
-                          htmlFor="rating"
-                          className="block text-sm font-medium text-gray-500"
-                        >
-                          Note
-                        </label>
-                        <StarRating rating={rating} setRating={setRating} />
-                      </div>
-                      <div className="mb-4">
-                        <label
-                          htmlFor="content"
-                          className="block text-sm font-medium text-gray-500"
-                        >
-                          Avis
-                        </label>
-                        <textarea
-                          id="content"
-                          value={newContent}
-                          onChange={(e) => setNewContent(e.target.value)}
-                          className="text-black dark:text-white mt-1 p-2 border border-gray-300 rounded-md w-full"
-                          rows={4}
-                        />
-                      </div>
-                      <div className="flex justify-end">
-                        <button
-                          type="button"
-                          onClick={closeModal}
-                          className="mr-2 text-gray-500 hover:text-gray-400 hover:border-greenZombie"
-                        >
-                          Annuler
-                        </button>
-                        <button
-                          type="submit"
-                          className="text-white bg-redZombie hover:bg-red-800 hover:border-greenZombie font-medium rounded-md px-4 py-2"
-                        >
-                          Soumettre
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              )}
-
               {/* Button to open modal */}
+
               <button
                 onClick={openModal}
-                className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
+                className="text-lg md:text-2xl text-white bg-darkGreenZombie font-bold rounded-xl px-4 py-2 mt-4"
               >
                 Laisser un avis
               </button>
@@ -335,13 +262,12 @@ function ActivityDetail() {
 
         <Link
           to="/reserver"
-          className="text-white text-2xl text-center font-bold rounded-xl w-5/6 py-1 self-center mt-4 bg-transparent border-2 border-white"
+          className="text-lg md:text-2xl text-white font-bold bg-transparent border-2 border-white rounded-xl px-6 py-2 mt-6"
         >
           Acheter un billet
         </Link>
 
         {/* Section for similar attractions */}
-
         <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
           <h2 className="text-white text-2xl mt-4">
             D’autres attractions qui pourraient vous plaire
@@ -378,14 +304,15 @@ function ActivityDetail() {
         </section>
       </main>
 
+
       {/* Modal for adding a review */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
           <div className="bg-black p-6 rounded-lg w-96">
-            <h2 className="text-2xl mb-4">Laisser un avis</h2>
+            <h2 className="text-2xl mb-4 text-white">Laisser un avis</h2>
             <form onSubmit={handleReviewSubmit}>
               <textarea
-                className="w-full p-2 border border-gray-400 rounded mb-4"
+                className="w-full p-2 border border-gray-400 rounded mb-4 bg-gray-700 text-white"
                 rows={5}
                 value={newContent}
                 onChange={(e) => setNewContent(e.target.value)}
@@ -411,11 +338,7 @@ function ActivityDetail() {
           </div>
         </div>
       )}
-      <style>
-        {
-          '.custom-slick-slider { width: 84%; } .slick-slide > div {display: flex; place-items: center; .slick-prev { left: 40px} .slick-next {right: 20px} }'
-        }
-      </style>
+
     </div>
   );
 }
