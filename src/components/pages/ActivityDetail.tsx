@@ -1,61 +1,20 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { useUser } from '../../context/UserContext';
 
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
-// Slider configuration
-const sliderSettings = {
-  dots: false,
-  infinite: true,
-  speed: 2000,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 4000,
-  pauseOnHover: true,
-  responsive: [
-    {
-      breakpoint: 1350,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: false,
-      },
-    },
-    {
-      breakpoint: 900,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 500,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-      },
-    },
-  ],
-};
-
 import { ToastContainer, toast } from 'react-toastify';
+import { Swiper, SwiperSlide } from 'swiper/react'; // Importer Swiper React components
 
-interface APIErrorResponse {
-  message: string;
-}
-
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 interface Category {
   category_id: number;
@@ -171,21 +130,34 @@ function ActivityDetail() {
         style: { fontFamily: 'League Gothic', top: '104px' },
       });
     } catch (error) {
-      const axiosError = error as AxiosError;
-
-      if (axiosError.response?.data?.message) {
-        // Affichage du message d'erreur spécifique (en rouge)
-        toast.error(axiosError.response.data.message, {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          className: 'bg-red-600 text-white text-2xl',
-          style: { fontFamily: 'League Gothic', top: '104px' },
-        });
+      if (axios.isAxiosError(error)) {
+        // Vérifie si l'erreur est une erreur Axios et a une réponse spécifique
+        if (
+          error.response &&
+          error.response.data &&
+          (error.response.data as { message: string }).message
+        ) {
+          toast.error((error.response.data as { message: string }).message, {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-red-600 text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          });
+        } else {
+          toast.error("Une erreur est survenue lors de l'envoi de votre avis", {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-red-600 text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          });
+        }
       } else {
-        // Affichage d'un message d'erreur générique (en rouge)
-        toast.error("Une erreur est survenue lors de l'envoi de votre avis", {
+        // Si ce n'est pas une erreur Axios
+        toast.error('Une erreur inconnue est survenue', {
           position: 'top-center',
           autoClose: 3000,
           hideProgressBar: true,
@@ -246,44 +218,32 @@ function ActivityDetail() {
               {/* Section review */}
               <div className="bg-redZombie rounded pt-6 pb-6 flex-col justify-between w-full pl-2 h-90 ">
                 <h2 className="text-2xl">Avis des survivants</h2>
-                <div className="sliderCss flex justify-center my-8">
-                  {/* Slider to show reviews */}
-                  <Slider
-                    className="custom-slick-slider w-full"
-                    {...sliderSettings}
+                <div className="">
+                  <Swiper
+                    spaceBetween={30}
+                    slidesPerView={1}
+                    navigation
+                    pagination={{ clickable: true }}
+                    autoplay={{ delay: 5000, disableOnInteraction: false }}
+                    loop={true}
+                    breakpoints={{
+                      640: { slidesPerView: 1 },
+                      768: { slidesPerView: 2 },
+                      1024: { slidesPerView: 3 },
+                    }}
                   >
-                    {attractionDetail.reviews.map((review: Review) => (
-                      <ReviewCard
-                        key={review.review_id}
-                        content={review.content}
-                        rating={review.rating}
-                        clientName={`${review.client.first_name} ${review.client.last_name}`}
-                      />
+                    {attractionDetail.reviews.map((review) => (
+                      <SwiperSlide key={review.review_id}>
+                        <ReviewCard
+                          content={review.content}
+                          rating={review.rating}
+                          clientName={`${review.client.first_name} ${review.client.last_name}`}
+                        />
+                      </SwiperSlide>
                     ))}
-                  </Slider>
+                  </Swiper>
                 </div>
-                {/* Button to leave review */}
-                <button
-                  onClick={openModal}
-                  className="text-white text-2xl bg-darkGreenZombie font-bold rounded-xl px-3 py-1 mt-4"
-                >
-                  Laisser un avis
-                </button>
               </div>
-
-              {attractionDetail.reviews.length > 0 ? (
-                attractionDetail.reviews.map((review: Review) => (
-                  <div key={review.review_id} className="w-full">
-                    <p className="text-white text-2xl">{review.content}</p>
-                    <p>
-                      {review.client.first_name} {review.client.last_name}
-                    </p>
-                    <StarRating rating={review.rating} />
-                  </div>
-                ))
-              ) : (
-                <p className="text-white text-2xl">Aucun avis pour le moment</p>
-              )}
 
               {/* Modal for adding a review */}
               {isModalOpen && (
@@ -342,7 +302,6 @@ function ActivityDetail() {
               >
                 Laisser un avis
               </button>
-
             </div>
           </div>
         </section>
@@ -392,7 +351,6 @@ function ActivityDetail() {
         </section>
       </main>
 
-
       {/* Modal for adding a review */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
@@ -426,12 +384,6 @@ function ActivityDetail() {
           </div>
         </div>
       )}
-      <style>
-        {
-          '.custom-slick-slider { width: 84%; } .slick-slide > div {display: flex; place-items: center; .slick-prev { left: 40px} .slick-next {right: 20px} }'
-        }
-      </style>
-
     </div>
   );
 }
