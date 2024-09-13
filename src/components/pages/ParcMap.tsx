@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import map from '../../assets/img/desktop/plan-du-parc-zombieland-v2.webp';
+import map from '/img/desktop/plan-du-parc-zombieland-v2.webp';
 import { Helmet } from 'react-helmet-async';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';

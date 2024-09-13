@@ -170,7 +170,7 @@ function Activities() {
               <div
                 key={currentActivity.activity_id}
                 style={{
-                  backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(
+                  backgroundImage: `url(/img/desktop/attractions/${getImageName(
                     currentActivity.name
                   )})`,
                 }}

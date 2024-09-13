@@ -1,4 +1,3 @@
-import React from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -30,13 +29,14 @@ describe('Login component', () => {
           </UserProvider>
         </BrowserRouter>
       </HelmetProvider>
-      
     );
 
     // Check if the email input, password input, and submit button are rendered
     expect(screen.getByLabelText(/e-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/mot de passe/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /me connecter/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /me connecter/i })
+    ).toBeInTheDocument();
   });
 
   it('displays error toast if email and password are missing', async () => {
@@ -56,7 +56,9 @@ describe('Login component', () => {
     fireEvent.click(submitButton);
 
     // Check for error toast
-    const errorToast = await screen.findByText(/veuillez remplir tous les champs/i);
+    const errorToast = await screen.findByText(
+      /veuillez remplir tous les champs/i
+    );
     expect(errorToast).toBeInTheDocument();
   });
 

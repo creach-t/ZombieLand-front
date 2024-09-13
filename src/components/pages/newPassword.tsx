@@ -40,6 +40,7 @@ function NewPassword() {
         setError('Erreur lors de la réinitialisation du mot de passe.');
       }
     } catch (error) {
+      console.error(error);
       setError('Erreur lors de la réinitialisation du mot de passe.');
     }
   };
