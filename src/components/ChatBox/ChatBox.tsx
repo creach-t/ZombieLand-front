@@ -20,9 +20,9 @@ function ChatBox() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [adminId, setAdminId] = useState<number>(0);
   const ref = useChatScroll(messages);
   const token = localStorage.getItem('token');
-  const adminId = 11;
 
   useEffect(() => {
     const newSocket = io(`${import.meta.env.VITE_API_URL}`);
@@ -66,6 +66,7 @@ function ChatBox() {
           }
         );
 
+        setAdminId(response.data.adminId);
         setMessages(response.data.messages);
       } catch (error) {
         console.error('Failed to fetch messages', error);
@@ -185,7 +186,7 @@ function ChatBox() {
                 </span>
               </p>
               <p className="text-xl">{msg.message}</p>
-              <p className="text-xl text-sky-600">{msg.isRead ? 'lu' : ''}</p>
+              <p className="text-xl text-sky-400">{msg.isRead ? 'lu' : ''}</p>
             </div>
           </div>
         ))}
