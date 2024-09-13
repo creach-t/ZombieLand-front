@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable react/react-in-jsx-scope */
 import { HelmetProvider } from 'react-helmet-async';
 import { expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -53,7 +53,9 @@ describe('Login component security tests', () => {
     const submitButton = screen.getByRole('button', { name: /me connecter/i });
     fireEvent.click(submitButton);
 
-    const errorToast = await screen.findByText(/veuillez remplir tous les champs/i);
+    const errorToast = await screen.findByText(
+      /veuillez remplir tous les champs/i
+    );
     expect(errorToast).toBeInTheDocument();
   });
 
