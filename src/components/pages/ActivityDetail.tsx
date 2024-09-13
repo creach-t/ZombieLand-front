@@ -88,6 +88,7 @@ function ActivityDetail() {
   );
   const [similarAttractions, setSimilarAttractions] = useState<Activity[]>([]);
   const { id } = useParams<{ id: string }>();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const loadData = async () => {
@@ -123,15 +124,19 @@ function ActivityDetail() {
       return;
     }
     try {
-      const newReviewData = {
-        rating,
-        content: newContent,
-        client_id: user?.user_id,
-        activity_id: attractionDetail?.activity_id,
-      };
       await axios.post(
         `${import.meta.env.VITE_API_URL}/reviews`,
-        newReviewData
+        {
+          rating,
+          content: newContent,
+          client_id: user?.user_id,
+          activity_id: attractionDetail?.activity_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setIsModalOpen(false);
       setNewContent('');
@@ -140,7 +145,6 @@ function ActivityDetail() {
       console.error("Erreur lors de l'envoi de l'avis:", error);
 
       if (axios.isAxiosError(error)) {
-        // Vérifie si l'erreur est une erreur Axios et a une réponse spécifique
         if (
           error.response &&
           error.response.data &&
