@@ -16,19 +16,22 @@ const sliderSettings = {
   dots: false,
   infinite: true,
   speed: 2000,
-  slidesToShow: 3,
+  slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 4000,
   pauseOnHover: true,
+  centerMode: true, // Centre le slide actif
+  centerPadding: '20%', // Ajoute du padding autour du slide pour le centrer
   responsive: [
     {
       breakpoint: 1350,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 1,
         slidesToScroll: 1,
         infinite: true,
         dots: false,
+        centerPadding: '10%', // Moins de padding sur les écrans plus petits
       },
     },
     {
@@ -37,6 +40,7 @@ const sliderSettings = {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
+        centerPadding: '0', // Aucun padding sur les très petits écrans
       },
     },
   ],
@@ -192,14 +196,12 @@ function ActivityDetail() {
               <div className="sliderCss my-6">
                 <Slider {...sliderSettings} className="w-full">
                   {attractionDetail.reviews.map((review: Review) => (
-                    <div className="px-4">
-                      <ReviewCard
-                        key={review.review_id}
-                        content={review.content}
-                        rating={review.rating}
-                        clientName={`${review.client.first_name} ${review.client.last_name}`}
-                      />
-                    </div>
+                    <ReviewCard
+                      key={review.review_id}
+                      content={review.content}
+                      rating={review.rating}
+                      clientName={`${review.client.first_name} ${review.client.last_name}`}
+                    />
                   ))}
                 </Slider>
               </div>
