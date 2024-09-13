@@ -66,7 +66,7 @@ html,
 */
 
 body {
-  background-image: url('../assets/bg_global.webp');
+  background-image: url('/bg_global.webp');
   background-color: #000000f5;
   background-blend-mode: darken;
   background-attachment: fixed;
@@ -660,7 +660,7 @@ button:focus-visible {
   width: 0.3em;
   height: 0.3em;
   border-radius: 0 100% 100% 100%;
-  background-color: #C90000;
+  background-color: #c90000;
   position: absolute;
   top: 72%;
   animation: drop 3s infinite both;
@@ -716,21 +716,17 @@ button:focus-visible {
   bottom: 20px;
   right: 0px;
   background: #f9f9f900;
-  z-index: 10
+  z-index: 10;
 }
-
 
 .backToTop:hover {
   border: 0;
-
 }
 
 button:focus,
 button:focus-visible {
   outline: 0;
 }
-
-
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -751,21 +747,21 @@ button:focus-visible {
 @media screen and (min-device-width: 768px) and (max-device-width: 1536px) {
   main h1 {
     margin-left: 7%;
-
   }
- 
-  
 }
 @media screen and (max-device-width: 916px) {
   .custom-slick-slider-review {
     box-sizing: border-box;
-  } }
+  }
+}
 /* rating */
 
-.ratingFont span{
-  font-size: 1.5rem!important;
+.ratingFont span {
+  font-size: 1.5rem !important;
 }
 
+
 .slick-slide {
-  padding: 0 15px; /* Ajoute un padding de 15px à gauche et à droite de chaque slide */
+  padding: 0 15px; 
 }
+

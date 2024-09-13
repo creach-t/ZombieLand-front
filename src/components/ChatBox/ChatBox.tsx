@@ -20,6 +20,7 @@ function ChatBox() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [adminId, setAdminId] = useState<number>(0);
   const ref = useChatScroll(messages);
   const token = localStorage.getItem('token');
 
@@ -32,7 +33,11 @@ function ChatBox() {
     newSocket.on('message', (message: Message) => {
       setMessages((prevMessages) => {
         if (
-          !prevMessages.some((msg) => msg.message_id === message.message_id)
+          !prevMessages.some(
+            (msg) =>
+              msg.message_id === message.message_id &&
+              msg.sender_id === message.sender_id
+          )
         ) {
           return [...prevMessages, message];
         }
@@ -61,6 +66,7 @@ function ChatBox() {
           }
         );
 
+        setAdminId(response.data.adminId);
         setMessages(response.data.messages);
       } catch (error) {
         console.error('Failed to fetch messages', error);
@@ -79,7 +85,6 @@ function ChatBox() {
             (msg) => !msg.isRead && msg.sender_id !== Number(user?.user_id)
           );
           if (unreadMessages.length > 0) {
-            const adminId = unreadMessages[0].adminId;
             await axios.patch(
               `${import.meta.env.VITE_API_URL}/messages/markAsRead`,
               {
@@ -113,7 +118,7 @@ function ChatBox() {
       {
         message: newMessage,
         sender_id: user?.user_id,
-        receiver_id: messages[0].adminId,
+        receiver_id: adminId,
       },
       {
         headers: {
@@ -130,13 +135,17 @@ function ChatBox() {
     }
   };
 
-  function useChatScroll<T>(dep: T): React.MutableRefObject<HTMLDivElement> {
-    const ref = React.useRef<HTMLDivElement>();
+  function useChatScroll<T>(
+    dep: T
+  ): React.MutableRefObject<HTMLDivElement | null> {
+    const ref = React.useRef<HTMLDivElement | null>(null);
+
     React.useEffect(() => {
       if (ref.current) {
         ref.current.scrollTop = ref.current.scrollHeight;
       }
     }, [dep]);
+
     return ref;
   }
 
@@ -177,7 +186,7 @@ function ChatBox() {
                 </span>
               </p>
               <p className="text-xl">{msg.message}</p>
-              <p className="text-xl text-sky-600">{msg.isRead ? 'lu' : ''}</p>
+              <p className="text-xl text-sky-400">{msg.isRead ? 'lu' : ''}</p>
             </div>
           </div>
         ))}

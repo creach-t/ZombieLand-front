@@ -46,6 +46,10 @@ const sliderSettings = {
   ],
 };
 
+
+import { ToastContainer, toast } from 'react-toastify';
+
+
 interface Category {
   category_id: number;
   name: string;
@@ -136,7 +140,46 @@ function ActivityDetail() {
       setNewContent('');
       setRating(0);
     } catch (error) {
+
       console.error("Erreur lors de l'envoi de l'avis:", error);
+
+      if (axios.isAxiosError(error)) {
+        // Vérifie si l'erreur est une erreur Axios et a une réponse spécifique
+        if (
+          error.response &&
+          error.response.data &&
+          (error.response.data as { message: string }).message
+        ) {
+          toast.error((error.response.data as { message: string }).message, {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-red-600 text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          });
+        } else {
+          toast.error("Une erreur est survenue lors de l'envoi de votre avis", {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-red-600 text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          });
+        }
+      } else {
+        // Si ce n'est pas une erreur Axios
+        toast.error('Une erreur inconnue est survenue', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-red-600 text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        });
+      }
+
     }
   };
 
@@ -152,8 +195,8 @@ function ActivityDetail() {
       ? attractionDetail.categories[0].name
       : 'Non spécifié';
 
-  const desktopImage = `/src/assets/img/desktop/attractions/${getImageName(attractionDetail.name)}`;
-  const mobileImage = `/src/assets/img/mobile/attractions/${getImageName(attractionDetail.name)}`;
+  const desktopImage = `/img/desktop/attractions/${getImageName(attractionDetail.name)}`;
+  const mobileImage = `/img/mobile/attractions/${getImageName(attractionDetail.name)}`;
 
   return (
     <div>
@@ -173,7 +216,6 @@ function ActivityDetail() {
         <button className="mt-4 text-lg md:text-2xl text-white bg-red-700 font-bold rounded-xl px-4 py-2">
           {categoryName}
         </button>
-
         <section className="mt-6 w-full flex flex-col md:flex-row justify-center items-center gap-6">
           <picture className="w-full md:w-1/2">
             <source media="(min-width: 465px)" srcSet={desktopImage} />
@@ -205,6 +247,9 @@ function ActivityDetail() {
                   ))}
                 </Slider>
               </div>
+
+              {/* Button to open modal */}
+
               <button
                 onClick={openModal}
                 className="text-lg md:text-2xl text-white bg-darkGreenZombie font-bold rounded-xl px-4 py-2 mt-4"
@@ -233,7 +278,7 @@ function ActivityDetail() {
                 <div
                   key={currentActivity.activity_id}
                   style={{
-                    backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(
+                    backgroundImage: `url(/img/desktop/attractions/${getImageName(
                       currentActivity.name
                     )})`,
                   }}
@@ -259,7 +304,8 @@ function ActivityDetail() {
         </section>
       </main>
 
-      {/* Modal pour ajouter un avis */}
+
+      {/* Modal for adding a review */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
           <div className="bg-black p-6 rounded-lg w-96">
@@ -292,6 +338,7 @@ function ActivityDetail() {
           </div>
         </div>
       )}
+
     </div>
   );
 }

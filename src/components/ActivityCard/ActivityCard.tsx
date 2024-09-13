@@ -14,7 +14,7 @@ function ActivityCard({ activity }: ActivityCardProps) {
     <div
       className="w-[400px] h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center"
       style={{
-        backgroundImage: `url(/src/assets/img/desktop/attractions/${getImageName(activity.name)})`,
+        backgroundImage: `url(/img/desktop/attractions/${getImageName(activity.name)})`,
       }}
     >
       <h2 className="badgrunge text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">

@@ -2,8 +2,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useUser } from '../../context/UserContext';
-import user_icon_red from '../../assets/icons/user_red.svg';
-import user_icon_green from '../../assets/icons/user_green.svg';
+import user_icon_red from '/icons/user_red.svg';
+import user_icon_green from '/icons/user_green.svg';
 import useWindowDimensions from './utils/dimensions';
 
 function NavBar() {
@@ -22,8 +22,10 @@ function NavBar() {
   // Handle click outside the navbar to close it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(event.target as Node)) {
-        setIsNavOpen(false);
+      if (navRef.current && 'contains' in (navRef.current as HTMLElement)) {
+        if ((navRef.current as HTMLElement).contains(event.target as Node)) {
+          setIsNavOpen(false);
+        }
       }
     };
 
@@ -75,7 +77,7 @@ function NavBar() {
                 </Link>
               </>
             ) : (
-              <Link to="/se-connecter" aria-label="login" className='px-3'>
+              <Link to="/se-connecter" aria-label="login" className="px-3">
                 <img src={user_icon_red} width="42px" alt="profile" />
               </Link>
             )}

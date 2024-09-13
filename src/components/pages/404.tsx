@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import pageNotFoundImg from '../../assets/img/desktop/404page 1.webp';
+import pageNotFoundImg from '/img/desktop/404page 1.webp';
 
 function NotFoundPage() {
   return (

@@ -1,10 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/react-in-jsx-scope */
 import { usePrice } from '../../context/PriceContext';
-import euroImg from '../../assets/img/desktop/infos/Euro.svg';
-import clockImg from '../../assets/img/desktop/infos/Clock.svg';
-import skullImg from '../../assets/img/desktop/infos/Skull.svg';
-import gpsImg from '../../assets/img/desktop/infos/Gps.svg';
+import euroImg from '/img/desktop/infos/Euro.svg';
+import clockImg from '/img/desktop/infos/Clock.svg';
+import skullImg from '/img/desktop/infos/Skull.svg';
+import gpsImg from '/img/desktop/infos/Gps.svg';
 import { Helmet } from 'react-helmet-async';
 
 function Infos() {
