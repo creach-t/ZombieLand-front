@@ -1,16 +1,12 @@
-import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
 import ChatBox from '../ChatBox/ChatBox';
 
 function MyMessages() {
-  const { user } = useUser();
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    console.log('TODO: handle form submission');
-  }
+  // function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  //   event.preventDefault();
+  //   console.log('TODO: handle form submission');
+  // }
 
   return (
     <div>

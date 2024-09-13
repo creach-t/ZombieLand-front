@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
@@ -166,21 +166,34 @@ function ActivityDetail() {
         style: { fontFamily: 'League Gothic', top: '104px' },
       });
     } catch (error) {
-      const axiosError = error as AxiosError;
-
-      if (axiosError.response?.data?.message) {
-        // Affichage du message d'erreur spécifique (en rouge)
-        toast.error(axiosError.response.data.message, {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          className: 'bg-red-600 text-white text-2xl',
-          style: { fontFamily: 'League Gothic', top: '104px' },
-        });
+      if (axios.isAxiosError(error)) {
+        // Vérifie si l'erreur est une erreur Axios et a une réponse spécifique
+        if (
+          error.response &&
+          error.response.data &&
+          (error.response.data as { message: string }).message
+        ) {
+          toast.error((error.response.data as { message: string }).message, {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-red-600 text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          });
+        } else {
+          toast.error("Une erreur est survenue lors de l'envoi de votre avis", {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            className: 'bg-red-600 text-white text-2xl',
+            style: { fontFamily: 'League Gothic', top: '104px' },
+          });
+        }
       } else {
-        // Affichage d'un message d'erreur générique (en rouge)
-        toast.error("Une erreur est survenue lors de l'envoi de votre avis", {
+        // Si ce n'est pas une erreur Axios
+        toast.error('Une erreur inconnue est survenue', {
           position: 'top-center',
           autoClose: 3000,
           hideProgressBar: true,

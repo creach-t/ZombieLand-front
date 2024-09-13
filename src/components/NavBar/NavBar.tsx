@@ -22,8 +22,10 @@ function NavBar() {
   // Handle click outside the navbar to close it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(event.target as Node)) {
-        setIsNavOpen(false);
+      if (navRef.current && 'contains' in (navRef.current as HTMLElement)) {
+        if ((navRef.current as HTMLElement).contains(event.target as Node)) {
+          setIsNavOpen(false);
+        }
       }
     };
 
@@ -75,7 +77,7 @@ function NavBar() {
                 </Link>
               </>
             ) : (
-              <Link to="/se-connecter" aria-label="login" className='px-3'>
+              <Link to="/se-connecter" aria-label="login" className="px-3">
                 <img src={user_icon_red} width="42px" alt="profile" />
               </Link>
             )}

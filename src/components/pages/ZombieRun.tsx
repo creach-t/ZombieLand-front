@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // Layers du background
 import layer1 from '../../assets/img/zombie-run/Background layers/Layer-1.webp';
