@@ -21,8 +21,8 @@ const sliderSettings = {
   autoplay: true,
   autoplaySpeed: 4000,
   pauseOnHover: true,
-  centerMode: true, // Centre le slide actif
-  centerPadding: '20%', // Ajoute du padding autour du slide pour le centrer
+  centerMode: true,
+  centerPadding: '20%',
   responsive: [
     {
       breakpoint: 1350,
@@ -31,7 +31,7 @@ const sliderSettings = {
         slidesToScroll: 1,
         infinite: true,
         dots: false,
-        centerPadding: '10%', // Moins de padding sur les écrans plus petits
+        centerPadding: '10%',
       },
     },
     {
@@ -40,7 +40,7 @@ const sliderSettings = {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
-        centerPadding: '0', // Aucun padding sur les très petits écrans
+        centerPadding: '0',
       },
     },
   ],
