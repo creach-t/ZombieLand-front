@@ -6,6 +6,7 @@ interface ActivityCardProps {
   activity: {
     activity_id: number;
     name: string;
+    slug: string;
   };
 }
 
@@ -23,7 +24,7 @@ function ActivityCard({ activity }: ActivityCardProps) {
         {activity.name.toUpperCase()}
       </h2>
       <Link
-        to={`/attractions/${activity.activity_id}`}
+        to={`/attractions/${activity.slug}`}
         type="button"
         className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 shadow-md"
         aria-label={`Learn more about ${activity.name}`}

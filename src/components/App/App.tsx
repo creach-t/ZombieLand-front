@@ -50,7 +50,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/password-reset" element={<PasswordReset />} />
               <Route path="/new-password" element={<NewPassword />} />
-              <Route path="/attractions/:id" element={<ActivityDetail />} />
+              <Route path="/attractions/:slug" element={<ActivityDetail />} />
               <Route
                 path="/politique-de-confidentialite"
                 element={<PrivacyPolicy />}
