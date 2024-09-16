@@ -67,10 +67,10 @@ function ParcMap() {
         {loadingMap ? (
           <Skeleton width={600} height={600} className="rounded-xl" />
         ) : (
-          <div className="relative">
+          <div className="relative w-full sm:w-[500px] md:w-[600px]">
             {/* Image de la carte */}
             <img
-              className="w-[600px] h-[600px]"
+              className="w-full sm:w-[500px] md:w-[600px] h-auto"
               src={map}
               alt="Plan des attractions de ZombieLand"
             />
@@ -104,7 +104,7 @@ function ParcMap() {
                 onMouseLeave={handleAttractionMouseLeave}
               >
                 {/* Nom de l'attraction */}
-                <div className="text-white whitespace-nowrap">
+                <div className="text-s sm:text-sm md:text-base">
                   {attraction.name}
                 </div>
 
