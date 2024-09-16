@@ -241,8 +241,7 @@ function Signin() {
               <span
                 className={`${errorMessages.email ? flashClass : 'text-sm text-gray-500'}`}
               >
-                * champs requis, doit correspondre au format
-                adresse@provider.com
+                * champs requis, au format adresse@provider.com
               </span>
             </label>
             <input
@@ -261,8 +260,7 @@ function Signin() {
               <span
                 className={`${errorMessages.password ? flashClass : 'text-sm text-gray-500'}`}
               >
-                * doit contenir au minimum 6 caractères, dont 1 chiffre, 1
-                majuscule et 1 minuscule
+                * minimum 6, chiffre, majuscule, minuscule
               </span>
             </label>
             <input
