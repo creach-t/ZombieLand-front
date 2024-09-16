@@ -10,7 +10,8 @@ function NavBar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { user } = useUser();
   const { width } = useWindowDimensions();
-  const navRef = useRef(null);
+  const navRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   // Close the menu if the window width is larger than 1024px
   useEffect(() => {
@@ -22,21 +23,25 @@ function NavBar() {
   // Handle click outside the navbar to close it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (navRef.current && 'contains' in (navRef.current as HTMLElement)) {
-        if ((navRef.current as HTMLElement).contains(event.target as Node)) {
-          setIsNavOpen(false);
-        }
+      const target = event.target as Node;
+
+      // Vérifie si le clic est à l'extérieur du menu et du bouton
+      if (
+        navRef.current &&
+        buttonRef.current &&
+        !navRef.current.contains(target) &&
+        !buttonRef.current.contains(target)
+      ) {
+        setIsNavOpen(false);
       }
     };
 
-    if (isNavOpen) {
-      document.addEventListener('click', handleClickOutside);
-    } else {
-      document.removeEventListener('click', handleClickOutside);
-    }
+    // Ajoute l'écouteur d'événements pour `mousedown` (avant `click`)
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      // Nettoie l'écouteur d'événements
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isNavOpen]);
 
@@ -48,7 +53,9 @@ function NavBar() {
   return (
     <header>
       <nav
-        className="px-10 bg-black fixed w-full z-20 top-0 start-0 border-b border-red-700"
+        className={`fixed w-full z-20 top-0 start-0 border-b border-red-700 bg-black ${
+          width > 474 ? 'px-10' : 'px-6'
+        }`}
         ref={navRef}
       >
         <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto py-4">
@@ -56,31 +63,38 @@ function NavBar() {
             to="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <span className="badgrunge self-center text-5xl sm:text-7xl font-semibold whitespace-nowrap dark:text-white">
-              ZOMBIELAND
+            <span
+              className={`badgrunge self-center font-semibold whitespace-nowrap dark:text-white ${
+                width > 474 ? 'text-5xl sm:text-7xl' : 'text-4xl'
+              }`}
+            >
+              Zombieland
             </span>
           </Link>
+
           <div className="flex items-center lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
-            {user ? (
-              <>
-                {width > 1024 && (
-                  <p className="text-white text-xl">
-                    Bonjour {user.first_name} !
-                  </p>
-                )}
-                <Link
-                  to={`/mon-compte`}
-                  aria-label="account"
-                  className="text-white text-2xl hover:text-red-500 px-3"
-                >
-                  <img src={user_icon_green} width="42px" alt="profile" />
+            {/* Show the account icon only if width > 474px */}
+            {width > 474 &&
+              (user ? (
+                <>
+                  {width > 1024 && (
+                    <p className="text-white text-xl">
+                      Bonjour {user.first_name} !
+                    </p>
+                  )}
+                  <Link
+                    to={`/mon-compte`}
+                    aria-label="account"
+                    className="text-white text-2xl hover:text-red-500 px-3"
+                  >
+                    <img src={user_icon_green} width="42px" alt="profile" />
+                  </Link>
+                </>
+              ) : (
+                <Link to="/se-connecter" aria-label="login" className="px-3">
+                  <img src={user_icon_red} width="42px" alt="profile" />
                 </Link>
-              </>
-            ) : (
-              <Link to="/se-connecter" aria-label="login" className="px-3">
-                <img src={user_icon_red} width="42px" alt="profile" />
-              </Link>
-            )}
+              ))}
 
             <Link
               to="/reserver"
@@ -95,10 +109,11 @@ function NavBar() {
               <span className="drop"></span>
             </Link>
             <button
+              ref={buttonRef}
               onClick={() => setIsNavOpen((prev) => !prev)}
               data-collapse-toggle="navbar-sticky"
               type="button"
-              className="inline-flex bg-black items-center p-2 w-10 h-10 justify-center text-sm text-redZombie rounded-lg lg:hidden hover:bg-black focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-redZombie rounded-lg lg:hidden "
               aria-controls="navbar-sticky"
               aria-expanded={isNavOpen}
             >
@@ -106,14 +121,13 @@ function NavBar() {
                 {isNavOpen ? 'Close main menu' : 'Open main menu'}
               </span>
               {isNavOpen ? (
-                // Close (X) icon when the menu is open
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={2}
                   stroke="currentColor"
-                  className="w-8 h-8"
+                  className="w-full h-full"
                 >
                   <path
                     strokeLinecap="round"
@@ -122,17 +136,12 @@ function NavBar() {
                   />
                 </svg>
               ) : (
-                // Burger icon when the menu is closed
                 <svg
                   fill="#C90000"
-                  width="70"
-                  height="70"
-                  version="1.1"
-                  id="lni_lni-menu"
-                  xmlns="http://www.w3.org/2000/svg"
-                  x="0px"
-                  y="0px"
+                  width="100%"
+                  height="100%"
                   viewBox="0 0 64 64"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <g>
                     <path d="M60,29.8H4c-1.2,0-2.3,1-2.3,2.3c0,1.2,1,2.3,2.3,2.3h56c1.2,0,2.3-1,2.3-2.3C62.3,30.8,61.2,29.8,60,29.8z" />
@@ -143,10 +152,12 @@ function NavBar() {
               )}
             </button>
           </div>
+
+          {/* Burger Menu Content */}
           <div
             className={
               isNavOpen
-                ? 'absolute right-5 top-20 bg-black w-auto border border-red-700' // Added border when menu is open
+                ? 'absolute right-5 top-20 bg-black w-auto border border-red-700'
                 : 'items-center justify-between w-full lg:flex lg:w-auto lg:order-1 hidden'
             }
             id="navbar-sticky"
@@ -156,7 +167,7 @@ function NavBar() {
                 <Link
                   to="/attractions"
                   className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded lg:bg-transparent lg:p-0"
-                  onClick={handleLinkClick} // Close menu when clicked
+                  onClick={handleLinkClick}
                 >
                   Les attractions
                 </Link>
@@ -165,7 +176,7 @@ function NavBar() {
                 <Link
                   to="/infos-pratiques"
                   className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded lg:bg-transparent lg:p-0"
-                  onClick={handleLinkClick} // Close menu when clicked
+                  onClick={handleLinkClick}
                 >
                   Infos Pratiques
                 </Link>
@@ -174,7 +185,7 @@ function NavBar() {
                 <Link
                   to="/plan-du-parc"
                   className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded lg:bg-transparent lg:p-0"
-                  onClick={handleLinkClick} // Close menu when clicked
+                  onClick={handleLinkClick}
                 >
                   Plan du Parc
                 </Link>
@@ -183,11 +194,36 @@ function NavBar() {
                 <Link
                   to="/contact"
                   className="block py-2 px-3 text-white text-2xl hover:text-red-500 rounded lg:bg-transparent lg:p-0"
-                  onClick={handleLinkClick} // Close menu when clicked
+                  onClick={handleLinkClick}
                 >
                   Contact
                 </Link>
               </li>
+              {/* Show the account icon inside the burger menu when width < 471px */}
+              {width <= 474 &&
+                (user ? (
+                  <li className="self-center">
+                    <Link
+                      to={`/mon-compte`}
+                      aria-label="account"
+                      className="text-white text-2xl px-3"
+                      onClick={handleLinkClick}
+                    >
+                      <img src={user_icon_green} width="42px" alt="profile" />
+                    </Link>
+                  </li>
+                ) : (
+                  <li className="self-center">
+                    <Link
+                      to="/se-connecter"
+                      aria-label="login"
+                      className="px-3"
+                      onClick={handleLinkClick}
+                    >
+                      <img src={user_icon_red} width="42px" alt="profile" />
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
