@@ -85,7 +85,7 @@ function Home() {
 
   useEffect(() => {
     if (location.state?.showToast) {
-      toast.success('Vous êtes connecté', {
+      toast.success('Vous êtes connecté(e)', {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,

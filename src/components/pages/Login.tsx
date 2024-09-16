@@ -171,9 +171,7 @@ function Login() {
             </Link>
           </div>
           <button
-            onClick={() => {
-              setIsLoading(true);
-            }}
+            disabled={isLoading}
             type="submit"
             className="mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl w-full"
           >

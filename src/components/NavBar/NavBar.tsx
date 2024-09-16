@@ -54,18 +54,18 @@ function NavBar() {
     <header>
       <nav
         className={`fixed w-full z-20 top-0 start-0 border-b border-red-700 bg-black ${
-          width > 474 ? 'px-10' : 'px-6'
-        }`}
+          width > 490 ? 'px-10' : 'px-6'
+        } h-[103px]`}
         ref={navRef}
       >
-        <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto py-4">
+        <div className="max-w-screen-2xl h-full flex flex-wrap items-center justify-between mx-auto py-4">
           <Link
             to="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
+            className="flex flex-wrap items-center space-x-3 rtl:space-x-reverse"
           >
             <span
-              className={`badgrunge self-center font-semibold whitespace-nowrap dark:text-white ${
-                width > 474 ? 'text-5xl sm:text-7xl' : 'text-4xl'
+              className={`badgrunge font-semibold whitespace-nowrap dark:text-white ${
+                width > 490 ? 'text-5xl sm:text-7xl' : 'text-4xl'
               }`}
             >
               Zombieland
@@ -73,8 +73,8 @@ function NavBar() {
           </Link>
 
           <div className="flex items-center lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
-            {/* Show the account icon only if width > 474px */}
-            {width > 474 &&
+            {/* Show the account icon only if width > 490px */}
+            {width > 490 &&
               (user ? (
                 <>
                   {width > 1024 && (
@@ -200,7 +200,7 @@ function NavBar() {
                 </Link>
               </li>
               {/* Show the account icon inside the burger menu when width < 471px */}
-              {width <= 474 &&
+              {width <= 490 &&
                 (user ? (
                   <li className="self-center">
                     <Link
