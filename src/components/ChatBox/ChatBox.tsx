@@ -197,7 +197,7 @@ function ChatBox() {
       >
         <div className="input-container relative w-full h-full">
           <textarea
-            placeholder="Envoyer votre message, un admin vous répondra dans les plus brefs délais"
+            placeholder="Envoyer votre message, on vous répond au plus vite !"
             className="w-full h-20 bg-zinc-900 border-2 border-white rounded-xl m-auto text-2xl p-2 pr-20 duration-300 focus:h-40 resize-none"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
