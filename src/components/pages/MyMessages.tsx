@@ -21,13 +21,13 @@ function MyMessages() {
         <div className="flex gap-4">
           <Link
             to={`/mon-compte`}
-            className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
+            className="text-3xl text-white border-white border-2 rounded-xl px-5 py-2 text-center mb-10"
           >
             Mes <em className="text-redZombie ">Informations</em>
           </Link>
           <Link
             to="/mes-reservations"
-            className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center mb-10"
+            className="text-3xl text-white border-white border-2 rounded-xl px-5 py-2 text-center mb-10"
           >
             Mes <em className="text-redZombie ">Réservations</em>
           </Link>

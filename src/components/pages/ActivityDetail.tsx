@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { useUser } from '../../context/UserContext';
+import { ToastContainer, toast } from 'react-toastify';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -46,7 +47,9 @@ const sliderSettings = {
   ],
 };
 
+
 import { ToastContainer, toast } from 'react-toastify';
+
 
 interface Category {
   category_id: number;
@@ -89,6 +92,7 @@ function ActivityDetail() {
   );
   const [similarAttractions, setSimilarAttractions] = useState<Activity[]>([]);
   const { id } = useParams<{ id: string }>();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const loadData = async () => {
@@ -124,15 +128,19 @@ function ActivityDetail() {
       return;
     }
     try {
-      const newReviewData = {
-        rating,
-        content: newContent,
-        client_id: user?.user_id,
-        activity_id: attractionDetail?.activity_id,
-      };
       await axios.post(
         `${import.meta.env.VITE_API_URL}/reviews`,
-        newReviewData
+        {
+          rating,
+          content: newContent,
+          client_id: user?.user_id,
+          activity_id: attractionDetail?.activity_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setIsModalOpen(false);
       setNewContent('');
@@ -141,7 +149,6 @@ function ActivityDetail() {
       console.error("Erreur lors de l'envoi de l'avis:", error);
 
       if (axios.isAxiosError(error)) {
-        // Vérifie si l'erreur est une erreur Axios et a une réponse spécifique
         if (
           error.response &&
           error.response.data &&
@@ -208,7 +215,7 @@ function ActivityDetail() {
           {attractionDetail.name}{' '}
           <span className="text-redZombie">ATTRACTIONS</span>
         </h1>
-
+        <ToastContainer />
         <button className="mt-4 text-lg md:text-2xl text-white bg-red-700 font-bold rounded-xl px-4 py-2">
           {categoryName}
         </button>
