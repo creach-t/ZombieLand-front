@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import getImageName from '../../utils/imageAttractionsFormat';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -117,7 +118,7 @@ function Home() {
           content="Plongez dans l’univers palpitant de Zombieland, le parc d’attractions unique en son genre. Vivez des sensations fortes et des aventures inoubliables au cœur d’un monde post-apocalyptique."
         />
       </Helmet>
-      <section className=" mt-[104px] h-[850px] w-full bg-[url('/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
+      <section className=" mt-[104px] h-[850px] w-full bg-[url('/img/mobile/bg-parc-zombieland-home-mob.webp')] md:bg-[url('/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
         <ToastContainer />
         <div className="h-full w-full max-[600px]:px-8 px-16 flex items-center">
           <div className="md:px-14 md:py-5 bg-black bg-opacity-40 max-w-[550px] min-h-[400px] flex flex-col justify-around [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
