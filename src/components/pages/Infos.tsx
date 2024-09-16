@@ -20,35 +20,33 @@ function Infos() {
       </Helmet>
 
       <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-        <h1 className="self-center md:self-start text-6xl">
+      <h1 className="self-center md:self-start text-6xl">
           Infos <em className="text-redZombie">Pratiques</em>
         </h1>
-        <section className="price-schedules-section flex flex-col px-10 md:px-24 max-w-7xl m-auto  py-14">
+        <section className="price-schedules-section flex flex-col px-6 sm:px-10 md:px-24 max-w-7xl m-auto py-10 md:py-14">
           <div className="flex mb-10">
-            <img src={euroImg} className="mr-8 w-16 md:w-20" alt="icone euro" />
+            <img src={euroImg} className="mr-4 sm:mr-6 md:mr-8 w-12 sm:w-14 md:w-20" alt="icone euro" />
             <div className="flex flex-col justify-center">
-              <h2 className="text-4xl text-redZombie">Tarifs</h2>
-              <p className="text-3xl">
-                Prêt à braver les ténèbres et affronter vos peurs ? Découvrez
-                notre tarif unique... à vos risques et périls !
+              <h2 className="text-2xl sm:text-3xl md:text-4xl text-redZombie">Tarifs</h2>
+              <p className="text-xl sm:text-2xl md:text-3xl">
+                Prêt à braver les ténèbres et affronter vos peurs ? Découvrez notre tarif unique... à vos risques et périls !
               </p>
             </div>
           </div>
           <div className="text-center mb-10">
-            <em className="text-7xl text-redZombie">
+            <em className="text-4xl sm:text-5xl md:text-7xl text-redZombie">
               {price ? price.price : 0.0} €
             </em>
           </div>
           <div>
             <div className="flex">
-              <img src={clockImg} className="mr-8 w-20" alt="icone horloge" />
+              <img src={clockImg} className="mr-4 sm:mr-6 md:mr-8 w-14 md:w-20" alt="icone horloge" />
               <div className="flex flex-col">
-                <h2 id="horaires" className="text-4xl text-redZombie">
+                <h2 id="horaires" className="text-2xl sm:text-3xl md:text-4xl text-redZombie">
                   Horaires d'ouverture
                 </h2>
-                <p className="text-3xl">
-                  Préparez-vous à plonger dans l'horreur... mais assurez-vous de
-                  ne pas arriver trop tard, les zombies n'attendent personne !
+                <p className="text-xl sm:text-2xl md:text-3xl">
+                  Préparez-vous à plonger dans l'horreur... mais assurez-vous de ne pas arriver trop tard, les zombies n'attendent personne !
                 </p>
               </div>
             </div>
@@ -56,46 +54,39 @@ function Infos() {
               <ul className="mt-8">
                 <li className="flex items-center mb-6">
                   <img src={skullImg} alt="icone crane" />
-                  <p className="text-3xl ml-8">
-                    <em className="text-redZombie">Lundi au Jeudi</em> : 12h00 -
-                    22h00
+                  <p className="text-xl sm:text-2xl md:text-3xl ml-4 sm:ml-6 md:ml-8">
+                    <em className="text-redZombie">Lundi au Jeudi</em> : 12h00 - 22h00
                   </p>
                 </li>
                 <li className="flex items-center mb-6">
                   <img src={skullImg} alt="icone crane" />
-                  <p className="text-3xl ml-8">
-                    <em className="text-redZombie">Vendredi</em> : 12h00 -
-                    minuit (parfait pour les chasseurs de frissons nocturnes !)
+                  <p className="text-xl sm:text-2xl md:text-3xl ml-4 sm:ml-6 md:ml-8">
+                    <em className="text-redZombie">Vendredi</em> : 12h00 - minuit (parfait pour les chasseurs de frissons nocturnes !)
                   </p>
                 </li>
                 <li className="flex items-center mb-6">
                   <img src={skullImg} alt="icone crane" />
-                  <p className="text-3xl ml-8">
-                    <em className="text-redZombie">Samedi</em> : 10h00 - minuit
-                    (les zombies sont plus affamés le week-end...)
+                  <p className="text-xl sm:text-2xl md:text-3xl ml-4 sm:ml-6 md:ml-8">
+                    <em className="text-redZombie">Samedi</em> : 10h00 - minuit (les zombies sont plus affamés le week-end...)
                   </p>
                 </li>
                 <li className="flex items-center mb-6">
                   <img src={skullImg} alt="icone crane" />
-                  <p className="text-3xl ml-8">
-                    <em className="text-redZombie">Dimanche</em> : 10h00 - 20h00
-                    (on ferme tôt, même les morts-vivants ont besoin de repos !)
+                  <p className="text-xl sm:text-2xl md:text-3xl ml-4 sm:ml-6 md:ml-8">
+                    <em className="text-redZombie">Dimanche</em> : 10h00 - 20h00 (on ferme tôt, même les morts-vivants ont besoin de repos !)
                   </p>
                 </li>
                 <li className="flex items-center mb-6">
                   <img src={skullImg} alt="icone crane" />
-                  <p className="text-3xl ml-8">
-                    <em className="text-redZombie">Nocturnes Apocalyptiques</em>{' '}
-                    : Tous les derniers vendredis du mois, le parc reste ouvert
-                    jusqu'à 02h00 du matin pour une expérience terrifiante à la
-                    lumière de la lune.
+                  <p className="text-xl sm:text-2xl md:text-3xl ml-4 sm:ml-6 md:ml-8">
+                    <em className="text-redZombie">Nocturnes Apocalyptiques</em> : Tous les derniers vendredis du mois, le parc reste ouvert
+                    jusqu'à 02h00 du matin pour une expérience terrifiante à la lumière de la lune.
                   </p>
                 </li>
                 <li className="flex items-center mb-6">
                   <img src={skullImg} alt="icone crane" />
-                  <p className="text-3xl ml-8">
-                    <em className="text-redZombie">Vacances de la Toussaint</em>{' '}
-                    : Ouverture prolongée de 10h00 à minuit chaque jour.
+                  <p className="text-xl sm:text-2xl md:text-3xl ml-4 sm:ml-6 md:ml-8">
+                    <em className="text-redZombie">Vacances de la Toussaint</em> : Ouverture prolongée de 10h00 à minuit chaque jour.
                   </p>
                 </li>
               </ul>
@@ -104,28 +95,26 @@ function Infos() {
         </section>
         <section className="how-to-come bg-redZombie pb-10 w-screen">
           <div className="section-container max-w-7xl m-auto">
-            <div className="section-title flex mx-10 md:mx-24 pt-16 items-center">
-              <img src={gpsImg} className="mr-8 w-20" alt="GPS Icon" />
+            <div className="section-title flex mx-6 sm:mx-10 md:mx-24 pt-16 items-center">
+              <img src={gpsImg} className="mr-4 sm:mr-6 md:mr-8 w-14 md:w-20" alt="GPS Icon" />
               <div className="">
-                <h2 className="text-4xl text-black">Venir au parc</h2>
-                <p className="text-3xl">
-                  Vous êtes prêts à affronter les horreurs qui vous attendent ?
-                  Voici comment rejoindre notre parc... si vous en avez le
-                  courage !
+                <h2 className="text-2xl sm:text-3xl md:text-4xl text-black">Venir au parc</h2>
+                <p className="text-xl sm:text-2xl md:text-3xl">
+                  Vous êtes prêts à affronter les horreurs qui vous attendent ? Voici comment rejoindre notre parc... si vous en avez le courage !
                 </p>
               </div>
             </div>
             <div
               id="venirAuParc"
-              className="md:grid md:grid-cols-2 mt-16 gap-6 text-3xl leading-loose items-center"
+              className="md:grid md:grid-cols-2 mt-16 gap-6 text-xl sm:text-2xl md:text-3xl leading-loose items-center"
             >
               <iframe
                 title="map"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2626.0482887118997!2d2.323566812376017!3d48.83821760200589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671c96b3d5b29%3A0x791b7d9ef14e006f!2sCimeti%C3%A8re%20du%20Montparnasse!5e0!3m2!1sfr!2sfr!4v1725263621045!5m2!1sfr!2sfr"
                 loading="lazy"
-                className="w-full h-96 md:h-full"
+                className="w-full h-72 sm:h-96 md:h-full"
               />
-              <div className="means-of-transportation flex flex-col mx-10 md:mx-0">
+              <div className="means-of-transportation flex flex-col mx-6 sm:mx-10 md:mx-0">
                 <div className="adress flex">
                   <h3 className="text-black">Adresse :</h3>
                   <p className="ml-2">66 rue de l'Enfer, 75000 Paris, France</p>
