@@ -87,8 +87,8 @@ function Activities() {
           content="Découvrez nos attractions effrayantes et palpitantes à Zombieland. Frissons garantis avec des parcours immersifs et des expériences inoubliables !"
         />
       </Helmet>
-      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
-        <h1 className="self-center md:self-start text-6xl">
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto px-4">
+        <h1 className="self-center md:self-start text-4xl md:text-6xl">
           LES <span className="text-redZombie">ATTRACTIONS</span>
         </h1>
 
@@ -101,18 +101,18 @@ function Activities() {
           {loadingActivities ? (
             <Skeleton
               height={56}
-              className="rounded-xl xl:w-[600px] lg:w-[500px] md:w-[400px] sm:w-[300px]"
+              className="rounded-xl w-full max-w-[600px]"
             />
           ) : (
             <label
               htmlFor="activity"
-              className="cursor-pointer input input-bordered flex items-center gap-2 relative xl:w-[600px] lg:w-[500px] md:w-[400px] sm:w-[300px]"
+              className="cursor-pointer input input-bordered flex items-center gap-2 relative w-full max-w-[600px]"
             >
               <input
                 type="text"
                 name="activity"
                 id="activity"
-                className="grow bg-white text-black p-3 pr-14 text-2xl rounded-xl"
+                className="grow bg-white text-black p-2 md:p-3 pr-10 md:pr-14 text-xl md:text-2xl rounded-xl"
                 placeholder="Votre recherche..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -137,7 +137,7 @@ function Activities() {
             <Skeleton width={250} className="rounded-xl h-14" />
           ) : (
             <select
-              className="rounded-xl text-white max-sm:mt-5 text-3xl pl-5 pr-10 h-14 bg-redZombie focus:outline-none cursor-pointer"
+              className="rounded-xl text-white mt-5 md:mt-0 text-xl md:text-3xl pl-5 pr-10 h-12 md:h-14 bg-redZombie focus:outline-none cursor-pointer"
               onChange={(e) => {
                 const categoryId =
                   e.currentTarget.value === ''
@@ -161,12 +161,12 @@ function Activities() {
         </form>
 
         {/* Activities Section */}
-        <section className="py-10 flex justify-center items-center gap-10 flex-wrap">
+        <section className="py-10 flex justify-center items-center gap-5 md:gap-10 flex-wrap">
           {loadingActivities ? (
             [...Array(12)].map((_, i) => (
               <div
                 key={i}
-                className="w-[400px] md:w-[200px] lg:w-[400px] h-[400px] md:h-[350px] lg:h-[400px]"
+                className="w-[100%] sm:w-[400px] h-[100vw] sm:h-[400px] max-w-[400px] max-h-[400px]"
               >
                 <Skeleton width="100%" height="100%" />
               </div>
@@ -180,22 +180,22 @@ function Activities() {
                     currentActivity.name
                   )})`,
                 }}
-                className="w-[400px] md:w-[200px] lg:w-[400px] h-[400px] md:h-[350px] lg:h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center activity_card"
+                className="w-[100%] sm:w-[400px] h-[100vw] sm:h-[400px] max-w-[400px] max-h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center activity_card"
               >
-                <h2 className="badgrunge text-white text-6xl text-center [text-shadow:_4px_3px_1px_rgb(0_0_0_/_80%)]">
+                <h2 className="badgrunge text-white text-3xl md:text-6xl text-center [text-shadow:_2px_2px_1px_rgb(0_0_0_/_80%)]">
                   {currentActivity.name}
                 </h2>
                 <Link
                   to={`/attractions/${currentActivity.slug}`}
                   type="button"
-                  className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 shadow-["
+                  className="text-white text-xl md:text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-2 py-1 md:px-3 md:py-1 text-center absolute bottom-1/4 shadow-md"
                 >
                   En savoir plus
                 </Link>
               </div>
             ))
           ) : (
-            <p>Aucune attraction ne correspond à vos critères.</p>
+            <p className="text-center text-xl">Aucune attraction ne correspond à vos critères.</p>
           )}
         </section>
       </main>
