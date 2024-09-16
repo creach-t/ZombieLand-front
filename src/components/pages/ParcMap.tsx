@@ -60,17 +60,17 @@ function ParcMap() {
           content="Naviguez facilement dans Zombieland grâce à notre plan interactif. Repérez rapidement vos attractions préférées et optimisez votre visite du parc."
         />
       </Helmet>
-      <div className="relative mt-[104px] max-w-[1200px] mx-auto flex gap-4 flex-wrap justify-center mb-12">
-        <h2 className="ml-4 w-full uppercase text-6xl text-white mb-8">
-          Plan<span className="text-redZombie"> du parc</span>
-        </h2>
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+        <h1 className="self-center md:self-start text-6xl">
+          PLAN <span className="text-redZombie">DU PARC</span>
+        </h1>
         {loadingMap ? (
           <Skeleton width={600} height={600} className="rounded-xl" />
         ) : (
-          <div className="relative">
+          <div className="relative w-full sm:w-[500px] md:w-[600px]">
             {/* Image de la carte */}
             <img
-              className="w-[600px] h-[600px]"
+              className="w-full sm:w-[500px] md:w-[600px] h-auto"
               src={map}
               alt="Plan des attractions de ZombieLand"
             />
@@ -88,7 +88,7 @@ function ParcMap() {
                 style={{
                   left: `${attraction.x}%`,
                   top: `${attraction.y}%`,
-                  transform: 'translate(-50%, 0)', // Centrer horizontalement mais ne pas déplacer verticalement
+                  transform: 'translate(-50%, 0)', // Centrer horizontalement, ne pas déplacer verticalement
                   minWidth: '50px', // Taille minimale pour les points interactifs par défaut
                   minHeight: '27px', // Taille minimale pour les points interactifs par défaut
                   display: 'flex',
@@ -104,7 +104,7 @@ function ParcMap() {
                 onMouseLeave={handleAttractionMouseLeave}
               >
                 {/* Nom de l'attraction */}
-                <div className="text-white whitespace-nowrap">
+                <div className="text-s sm:text-sm md:text-base">
                   {attraction.name}
                 </div>
 
@@ -143,7 +143,7 @@ function ParcMap() {
             ))}
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }
