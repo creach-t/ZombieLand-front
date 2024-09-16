@@ -1,6 +1,8 @@
-// App.tsx
-import { Routes, Route } from 'react-router-dom';
+/* eslint-disable react/react-in-jsx-scope */
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { UserProvider } from '../../context/UserContext';
+import { PriceProvider } from '../../context/PriceContext';
 import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
 import Home from '../pages/Home';
@@ -13,37 +15,53 @@ import Booking from '../pages/Booking';
 import Activities from '../pages/Activities';
 import Login from '../pages/Login';
 import Chat from '../Chat/Chat';
+import Contact from '../pages/Contact';
+import ActivityDetail from '../pages/ActivityDetail';
+import MyBookings from '../pages/MyBookings';
+import MyMessages from '../pages/MyMessages';
+import PasswordReset from '../pages/passwordReset';
+import NewPassword from '../pages/newPassword';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
+import ZombieRun from '../pages/ZombieRun';
+import ScrollToTop from '../ScrollTopTop/ScrollToTop';
+import { HelmetProvider } from 'react-helmet-async';
 
 function App() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
-
-  const toggleChat = () => {
-    setIsChatOpen(!isChatOpen);
-  };
+  const helmetContext = {};
 
   return (
     <div>
-      <NavBar />
-      <button
-        type="button"
-        onClick={toggleChat}
-        className="fixed bottom-5 right-5 bg-redZombie text-white p-4 rounded-full"
-      >
-        Chat
-      </button>
-      {isChatOpen && <Chat />}{' '}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/mon-compte" element={<MyAccount />} />
-        <Route path="/inscription" element={<Signin />} />
-        <Route path="/se-connecter" element={<Login />} />
-        <Route path="/plan-du-parc" element={<ParcMap />} />
-        <Route path="/infos-pratiques" element={<Infos />} />
-        <Route path="/reserver" element={<Booking />} />
-        <Route path="/attractions" element={<Activities />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <Footer />
+      <HelmetProvider context={helmetContext}>
+        <UserProvider>
+          <PriceProvider>
+            <NavBar />
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/mes-reservations" element={<MyBookings />} />
+              <Route path="/mes-messages" element={<MyMessages />} />
+              <Route path="/mon-compte" element={<MyAccount />} />
+              <Route path="/inscription" element={<Signin />} />
+              <Route path="/se-connecter" element={<Login />} />
+              <Route path="/plan-du-parc" element={<ParcMap />} />
+              <Route path="/infos-pratiques" element={<Infos />} />
+              <Route path="/reserver" element={<Booking />} />
+              <Route path="/attractions" element={<Activities />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/password-reset" element={<PasswordReset />} />
+              <Route path="/new-password" element={<NewPassword />} />
+              <Route path="/attractions/:id" element={<ActivityDetail />} />
+              <Route
+                path="/politique-de-confidentialite"
+                element={<PrivacyPolicy />}
+              />
+              <Route path="/zombie-run" element={<ZombieRun />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+            <Footer />
+          </PriceProvider>
+        </UserProvider>
+      </HelmetProvider>
     </div>
   );
 }
