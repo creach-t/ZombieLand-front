@@ -17,6 +17,7 @@ interface Activity {
   capacity: number;
   x: number;
   y: number;
+  slug: string;
   categories: Category[];
 }
 
@@ -74,7 +75,9 @@ function Activities() {
 
     return matchesCategory && matchesSearchTerm;
   });
-
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   return (
     <div>
       <Helmet>
@@ -90,7 +93,10 @@ function Activities() {
         </h1>
 
         {/* Form with Search and Category Filters */}
-        <form className="inline-flex justify-center items-center py-14 gap-5 md:gap-10 w-full max-sm:flex-col relative">
+        <form
+          className="inline-flex justify-center items-center py-14 gap-10 w-full max-sm:block relative"
+          onSubmit={handleFormSubmit}
+        >
           {/* Search Input */}
           {loadingActivities ? (
             <Skeleton
@@ -180,7 +186,7 @@ function Activities() {
                   {currentActivity.name}
                 </h2>
                 <Link
-                  to={`/attractions/${currentActivity.activity_id}`}
+                  to={`/attractions/${currentActivity.slug}`}
                   type="button"
                   className="text-white text-xl md:text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-2 py-1 md:px-3 md:py-1 text-center absolute bottom-1/4 shadow-md"
                 >
