@@ -74,7 +74,9 @@ function Activities() {
 
     return matchesCategory && matchesSearchTerm;
   });
-
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   return (
     <div>
       <Helmet>
@@ -90,7 +92,10 @@ function Activities() {
         </h1>
 
         {/* Form with Search and Category Filters */}
-        <form className="inline-flex justify-center items-center py-14 gap-10 w-full max-sm:block relative">
+        <form
+          className="inline-flex justify-center items-center py-14 gap-10 w-full max-sm:block relative"
+          onSubmit={handleFormSubmit}
+        >
           {/* Search Input */}
           {loadingActivities ? (
             <Skeleton
