@@ -17,6 +17,7 @@ interface Activity {
   capacity: number;
   x: number;
   y: number;
+  slug: string;
   categories: Category[];
 }
 
@@ -180,7 +181,7 @@ function Activities() {
                   {currentActivity.name}
                 </h2>
                 <Link
-                  to={`/attractions/${currentActivity.activity_id}`}
+                  to={`/attractions/${currentActivity.slug}`}
                   type="button"
                   className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 shadow-["
                 >

@@ -74,6 +74,7 @@ interface Activity {
   capacity: number;
   x: number;
   y: number;
+  slug: string;
   categories: Category[];
   reviews: Review[];
 }
@@ -87,14 +88,14 @@ function ActivityDetail() {
     null
   );
   const [similarAttractions, setSimilarAttractions] = useState<Activity[]>([]);
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     const loadData = async () => {
       try {
         const { data: attraction } = await axios.get(
-          `${import.meta.env.VITE_API_URL}/activities/${id}`
+          `${import.meta.env.VITE_API_URL}/activities/${slug}`
         );
         setAttractionDetail(attraction);
 
@@ -115,7 +116,7 @@ function ActivityDetail() {
     };
 
     loadData();
-  }, [id]);
+  }, [slug]);
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -267,7 +268,7 @@ function ActivityDetail() {
         </Link>
 
         {/* Section for similar attractions */}
-        <section className="py-10 flex flex-col justify-center items-center gap-10 flex-wrap">
+        <section className="py-10 flex flex-col w-full justify-center items-center gap-10 flex-wrap">
           <h2 className="text-white text-2xl mt-4">
             D’autres attractions qui pourraient vous plaire
           </h2>
@@ -287,7 +288,7 @@ function ActivityDetail() {
                     {currentActivity.name}
                   </h2>
                   <Link
-                    to={`/attractions/${currentActivity.activity_id}`}
+                    to={`/attractions/${currentActivity.slug}`}
                     className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
                   >
                     En savoir plus

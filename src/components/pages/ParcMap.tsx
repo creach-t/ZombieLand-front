@@ -12,6 +12,7 @@ interface Attraction {
   description_short: string;
   x: number;
   y: number;
+  slug: string;
 }
 
 function ParcMap() {
@@ -132,7 +133,7 @@ function ParcMap() {
                         </p>
                         <Link
                           className="mt-4 p-1 rounded bg-white visited:text-redZombie text-redZombie hover:text-redZombie hover:bg-red-100"
-                          to={`../attractions/${attraction.activity_id}`}
+                          to={`../attractions/${attraction.slug}`}
                         >
                           En savoir plus
                         </Link>
