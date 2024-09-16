@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { at } from 'vitest/dist/chunks/reporters.WnPwkmgA.js';
 
 // Slider configuration
 const sliderSettings = {
@@ -116,12 +117,20 @@ function ActivityDetail() {
     };
 
     loadData();
+    console.log(attractionDetail);
   }, [slug]);
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      alert('Vous devez être connecté(e) pour soumettre un avis');
+      toast.error('Vous devez être connecté pour laisser un avis', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        className: 'bg-redZombie text-white text-2xl',
+        style: { fontFamily: 'League Gothic', top: '104px' },
+      });
       return;
     }
     try {
@@ -142,6 +151,17 @@ function ActivityDetail() {
       setIsModalOpen(false);
       setNewContent('');
       setRating(0);
+      toast.success(
+        'Merci pour votre avis il sera affiché après modération par notre équipe',
+        {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          className: 'bg-greenZombie text-white text-2xl',
+          style: { fontFamily: 'League Gothic', top: '104px' },
+        }
+      );
     } catch (error) {
       console.error("Erreur lors de l'envoi de l'avis:", error);
 
@@ -156,7 +176,7 @@ function ActivityDetail() {
             autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
-            className: 'bg-red-600 text-white text-2xl',
+            className: 'bg-redZombie text-white text-2xl drop-shadow-md',
             style: { fontFamily: 'League Gothic', top: '104px' },
           });
         } else {
@@ -165,7 +185,7 @@ function ActivityDetail() {
             autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
-            className: 'bg-red-600 text-white text-2xl',
+            className: 'bg-redZombie text-white text-2xl',
             style: { fontFamily: 'League Gothic', top: '104px' },
           });
         }
@@ -176,7 +196,7 @@ function ActivityDetail() {
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
-          className: 'bg-red-600 text-white text-2xl',
+          className: 'bg-redZombie text-white text-2xl',
           style: { fontFamily: 'League Gothic', top: '104px' },
         });
       }
@@ -236,16 +256,25 @@ function ActivityDetail() {
                 Avis des survivants
               </h2>
               <div className="sliderCss my-6">
-                <Slider {...sliderSettings} className="w-full">
-                  {attractionDetail.reviews.map((review: Review) => (
-                    <ReviewCard
-                      key={review.review_id}
-                      content={review.content}
-                      rating={review.rating}
-                      clientName={`${review.client.first_name} ${review.client.last_name}`}
-                    />
-                  ))}
-                </Slider>
+                {attractionDetail.reviews.length > 1 ? (
+                  <Slider {...sliderSettings} className="w-full">
+                    {attractionDetail.reviews.map((review: Review) => (
+                      <ReviewCard
+                        key={review.review_id}
+                        content={review.content}
+                        rating={review.rating}
+                        clientName={`${review.client.first_name} ${review.client.last_name}`}
+                      />
+                    ))}
+                  </Slider>
+                ) : (
+                  // Si il n'y a qu'un seul avis, on l'affiche sans slider
+                  <ReviewCard
+                    content={attractionDetail.reviews[0].content}
+                    rating={attractionDetail.reviews[0].rating}
+                    clientName={`${attractionDetail.reviews[0].client.first_name} ${attractionDetail.reviews[0].client.last_name}`}
+                  />
+                )}
               </div>
 
               {/* Button to open modal */}
