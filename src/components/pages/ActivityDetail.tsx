@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import { Helmet } from 'react-helmet-async';
@@ -90,6 +90,7 @@ function ActivityDetail() {
   const [similarAttractions, setSimilarAttractions] = useState<Activity[]>([]);
   const { slug } = useParams<{ slug: string }>();
   const token = localStorage.getItem('token');
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -98,23 +99,23 @@ function ActivityDetail() {
           `${import.meta.env.VITE_API_URL}/activities/${slug}`
         );
         setAttractionDetail(attraction);
-
+  
         if (attraction.categories.length > 0) {
           const categoryId = attraction.categories[0].category_id;
           const { data: similarActivities } = await axios.get(
             `${import.meta.env.VITE_API_URL}/activities/category/${categoryId}`
           );
           const filteredAttractions = similarActivities.filter(
-            (activity: Activity) =>
-              activity.activity_id !== attraction.activity_id
+            (activity: Activity) => activity.activity_id !== attraction.activity_id
           );
           setSimilarAttractions(filteredAttractions);
         }
       } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
+        setNotFound(true);
       }
     };
-
+  
     loadData();
     console.log(attractionDetail);
   }, [slug]);
@@ -205,6 +206,10 @@ function ActivityDetail() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  if (notFound) {
+    return <Navigate to="/404" />;
+  }
+  
   if (!attractionDetail) {
     return <div>Chargement...</div>;
   }
