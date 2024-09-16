@@ -26,6 +26,13 @@ function MyBookings() {
   const [loadingBookings, setLoadingBookings] = useState<boolean>(true);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/se-connecter';
+    }
+  }, []);
+
+  useEffect(() => {
     if (location.state?.showToast) {
       toast.success('Merci, pour votre réservation.', {
         position: 'top-center',
