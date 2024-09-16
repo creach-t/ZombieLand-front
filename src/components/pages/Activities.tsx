@@ -106,7 +106,7 @@ function Activities() {
                 type="text"
                 name="activity"
                 id="activity"
-                className="grow bg-white text-black p-3 pr-14 max-sm:mb-5 text-2xl rounded-xl"
+                className="grow bg-white text-black p-3 pr-14 text-2xl rounded-xl"
                 placeholder="Votre recherche..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -131,7 +131,7 @@ function Activities() {
             <Skeleton width={250} className="rounded-xl h-14" />
           ) : (
             <select
-              className="rounded-xl text-white text-3xl pl-5 pr-10 h-14 bg-redZombie focus:outline-none cursor-pointer"
+              className="rounded-xl text-white max-sm:mt-5 text-3xl pl-5 pr-10 h-14 bg-redZombie focus:outline-none cursor-pointer"
               onChange={(e) => {
                 const categoryId =
                   e.currentTarget.value === ''
