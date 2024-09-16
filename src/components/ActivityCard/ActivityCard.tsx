@@ -12,18 +12,20 @@ interface ActivityCardProps {
 function ActivityCard({ activity }: ActivityCardProps) {
   return (
     <div
-      className="w-[400px] h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center"
+      className="relative flex justify-center items-center w-full max-w-[400px] max-h-[400px] aspect-square"
       style={{
         backgroundImage: `url(/img/desktop/attractions/${getImageName(activity.name)})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
     >
-      <h2 className="badgrunge text-6xl text-center [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
+      <h2 className="text-6xl text-center text-shadow-md text-white">
         {activity.name.toUpperCase()}
       </h2>
       <Link
         to={`/attractions/${activity.activity_id}`}
         type="button"
-        className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
+        className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 hover:outline-none hover:text-white focus:outline-none focus:ring-black font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 shadow-md"
         aria-label={`Learn more about ${activity.name}`}
       >
         En savoir plus
