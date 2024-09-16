@@ -108,6 +108,7 @@ function Contact() {
                 <input
                   required
                   onChange={(e) => setFirstname(e.target.value)}
+                  value={firstname}
                   type="text"
                   id="firstname"
                   name="firstname"
@@ -122,6 +123,7 @@ function Contact() {
                 <input
                   required
                   onChange={(e) => setLastname(e.target.value)}
+                  value={lastname}
                   type="text"
                   id="lastname"
                   name="lastname"
@@ -137,6 +139,7 @@ function Contact() {
               <input
                 required
                 onChange={(e) => setEmail(e.target.value)}
+                value={email}
                 type="email"
                 id="email"
                 name="email"
@@ -151,6 +154,7 @@ function Contact() {
               <textarea
                 required
                 onChange={(e) => setMessage(e.target.value)}
+                value={message}
                 placeholder="Votre message ici..."
                 name="message"
                 id="message"
@@ -160,6 +164,7 @@ function Contact() {
             <div className="mb-6 flex items-center">
               <input
                 onChange={(e) => setPrivacyChecked(e.target.checked)}
+                checked={privacyChecked}
                 type="checkbox"
                 name="privacyPolicy-checkbox"
                 id="privacyPolicy-checkbox"
