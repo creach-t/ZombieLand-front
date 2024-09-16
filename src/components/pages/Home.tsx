@@ -119,7 +119,7 @@ function Home() {
       <section className=" mt-[104px] h-[850px] w-full bg-[url('/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
         <ToastContainer />
         <div className="h-full w-full max-[600px]:px-8 px-16 flex items-center">
-          <div className="px-14 py-5 bg-black bg-opacity-40 max-w-[550px] min-h-[400px] flex flex-col justify-around [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
+          <div className="md:px-14 md:py-5 bg-black bg-opacity-40 max-w-[550px] min-h-[400px] flex flex-col justify-around [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
             <h1 className="text-6xl text-white [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)] uppercase">
               Bienvenue à Zombieland
             </h1>
@@ -161,7 +161,7 @@ function Home() {
           </Slider>
         )}
       </section>
-      <section className=" p-10 flex flex-wrap justify-center items-center gap-20">
+      <section className=" p-4 md:p-10 flex flex-wrap justify-center items-center gap-20">
         <div>
           <img className="max-h-[350px]" src={zombieFace} alt="heads zombie" />
         </div>

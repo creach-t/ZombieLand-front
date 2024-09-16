@@ -46,9 +46,7 @@ const sliderSettings = {
   ],
 };
 
-
 import { ToastContainer, toast } from 'react-toastify';
-
 
 interface Category {
   category_id: number;
@@ -140,7 +138,6 @@ function ActivityDetail() {
       setNewContent('');
       setRating(0);
     } catch (error) {
-
       console.error("Erreur lors de l'envoi de l'avis:", error);
 
       if (axios.isAxiosError(error)) {
@@ -179,7 +176,6 @@ function ActivityDetail() {
           style: { fontFamily: 'League Gothic', top: '104px' },
         });
       }
-
     }
   };
 
@@ -207,7 +203,7 @@ function ActivityDetail() {
           content={`${attractionDetail.name} : ${attractionDetail.description_short}`}
         />
       </Helmet>
-      <main className="w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <main className="w-full mt-[104px] flex flex-col items-center md:items-start pt-10 max-w-screen-2xl mx-auto">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-left">
           {attractionDetail.name}{' '}
           <span className="text-redZombie">ATTRACTIONS</span>
@@ -304,7 +300,6 @@ function ActivityDetail() {
         </section>
       </main>
 
-
       {/* Modal for adding a review */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
@@ -338,7 +333,6 @@ function ActivityDetail() {
           </div>
         </div>
       )}
-
     </div>
   );
 }

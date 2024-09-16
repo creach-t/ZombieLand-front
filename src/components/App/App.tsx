@@ -21,6 +21,7 @@ import PasswordReset from '../pages/passwordReset';
 import NewPassword from '../pages/newPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import ZombieRun from '../pages/ZombieRun';
+import ScrollToTop from '../ScrollTopTop/ScrollToTop';
 import { HelmetProvider } from 'react-helmet-async';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <UserProvider>
           <PriceProvider>
             <NavBar />
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/mes-reservations" element={<MyBookings />} />
