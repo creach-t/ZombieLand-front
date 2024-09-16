@@ -293,12 +293,14 @@ function ActivityDetail() {
           </div>
         </section>
 
-        <Link
-          to="/reserver"
-          className="text-lg md:text-2xl text-white font-bold bg-transparent border-2 border-white rounded-xl px-6 py-2 mt-6"
-        >
-          Acheter un billet
-        </Link>
+        <div className="flex flex-col w-full justify-center items-center">
+          <Link
+            to="/reserver"
+            className="text-lg md:text-2xl text-white font-bold bg-transparent border-2 border-white rounded-xl px-6 py-2 mt-6"
+          >
+            Acheter un billet
+          </Link>
+        </div>
 
         {/* Section for similar attractions */}
         <section className="py-10 flex flex-col w-full justify-center items-center gap-10 flex-wrap">
