@@ -11,7 +11,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { at } from 'vitest/dist/chunks/reporters.WnPwkmgA.js';
 
 // Slider configuration
 const sliderSettings = {
