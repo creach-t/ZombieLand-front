@@ -60,10 +60,10 @@ function ParcMap() {
           content="Naviguez facilement dans Zombieland grâce à notre plan interactif. Repérez rapidement vos attractions préférées et optimisez votre visite du parc."
         />
       </Helmet>
-      <div className="relative mt-[104px] max-w-[1200px] mx-auto flex gap-4 flex-wrap justify-center mb-12">
-        <h2 className="ml-4 w-full uppercase text-6xl text-white mb-8">
-          Plan<span className="text-redZombie"> du parc</span>
-        </h2>
+      <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+        <h1 className="self-center md:self-start text-6xl">
+          PLAN <span className="text-redZombie">DU PARC</span>
+        </h1>
         {loadingMap ? (
           <Skeleton width={600} height={600} className="rounded-xl" />
         ) : (
@@ -143,7 +143,7 @@ function ParcMap() {
             ))}
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }
