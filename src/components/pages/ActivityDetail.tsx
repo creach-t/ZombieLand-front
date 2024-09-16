@@ -47,6 +47,10 @@ const sliderSettings = {
   ],
 };
 
+
+import { ToastContainer, toast } from 'react-toastify';
+
+
 interface Category {
   category_id: number;
   name: string;
@@ -206,7 +210,7 @@ function ActivityDetail() {
           content={`${attractionDetail.name} : ${attractionDetail.description_short}`}
         />
       </Helmet>
-      <main className="w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
+      <main className="w-full mt-[104px] flex flex-col items-center md:items-start pt-10 max-w-screen-2xl mx-auto">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-left">
           {attractionDetail.name}{' '}
           <span className="text-redZombie">ATTRACTIONS</span>
