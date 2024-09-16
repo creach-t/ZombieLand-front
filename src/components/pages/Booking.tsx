@@ -224,15 +224,6 @@ function Booking() {
 
       const bookingId = response.data.booking_id;
 
-      toast.success('Merci pour votre réservation', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        className: 'bg-greenZombie text-black text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
-      });
-
       handleCheckout(bookingId);
     } catch (error: unknown) {
       if (error instanceof Error) {
