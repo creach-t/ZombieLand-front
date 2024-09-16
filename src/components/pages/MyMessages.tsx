@@ -2,12 +2,20 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import ChatBox from '../ChatBox/ChatBox';
+import { useEffect } from 'react';
 
 function MyMessages() {
   // function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
   //   event.preventDefault();
   //   console.log('TODO: handle form submission');
   // }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/se-connecter';
+    }
+  }, []);
 
   return (
     <div>
