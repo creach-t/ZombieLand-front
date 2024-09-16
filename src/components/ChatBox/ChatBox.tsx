@@ -150,7 +150,7 @@ function ChatBox() {
   }
 
   return (
-    <div className="chat-window m-auto p-4 border-white border-2 rounded-xl h-[550px] w-11/12 z-50 right-20 bottom-24 flex flex-col justify-between">
+    <div className="chat-window m-auto p-4 border-white border-2 rounded-xl h-[550px] w-11/12 right-20 bottom-24 flex flex-col justify-between">
       <div
         ref={ref}
         className="chat-messages h-3/4 w-full rounded-xl overflow-y-auto p-2"
