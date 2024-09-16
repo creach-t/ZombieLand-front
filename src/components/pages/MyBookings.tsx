@@ -103,7 +103,7 @@ function MyBookings() {
           </Link>
         </div>
 
-        <div className="w-3/4 mx-auto py-1">
+        <div className="w-3/4 mx-auto py-1 max-sm:w-full max-sm:px-2">
           <div className="relative flex flex-col w-full h-full text-white bg-clip-border">
             <div className="overflow-y-auto max-h-[400px]">
               {' '}
