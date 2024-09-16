@@ -1,5 +1,4 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
 import { PriceProvider } from '../../context/PriceContext';
@@ -14,7 +13,6 @@ import Infos from '../pages/Infos';
 import Booking from '../pages/Booking';
 import Activities from '../pages/Activities';
 import Login from '../pages/Login';
-import Chat from '../Chat/Chat';
 import Contact from '../pages/Contact';
 import ActivityDetail from '../pages/ActivityDetail';
 import MyBookings from '../pages/MyBookings';

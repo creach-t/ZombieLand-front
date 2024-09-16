@@ -20,6 +20,7 @@ import { Helmet } from 'react-helmet-async';
 
 interface Activity {
   activity_id: number;
+  slug: string;
   name: string;
 }
 
