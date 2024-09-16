@@ -120,7 +120,7 @@ function ActivityDetail() {
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      alert('Vous devez être connecté pour soumettre un avis');
+      alert('Vous devez être connecté(e) pour soumettre un avis');
       return;
     }
     try {

@@ -93,7 +93,7 @@ function Booking() {
 
   useEffect(() => {
     if (location.state?.showToast) {
-      toast.warning('Vous êtes connecté', {
+      toast.warning('Vous êtes connecté(e)', {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -323,9 +323,7 @@ function Booking() {
                 </em>
               </p>
               <button
-                onClick={() => {
-                  setIsLoading(true);
-                }}
+                disabled={isLoading}
                 type="submit"
                 className="w-full bg-greenZombie text-black text-3xl border-white border-2 rounded-xl md:max-w-xs self-center mb-8"
               >

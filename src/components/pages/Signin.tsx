@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // This will style the toast
+import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet-async';
 
 function Signin() {
@@ -142,9 +142,12 @@ function Signin() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
       setErrorMessages(formErrors);
+      setIsLoading(false);
       return;
     }
 
@@ -161,9 +164,12 @@ function Signin() {
       setEmail('');
       setPassword('');
       setErrorMessages({});
+      setIsLoading(false);
 
       navigate('/se-connecter', { state: { showToast: true } });
     } catch (error: unknown) {
+      setIsLoading(false);
+
       if (error instanceof Error) {
         setErrorMessages({ general: true });
         toast.warning('Il y a eu un souci pendant la création du compte.', {
@@ -176,7 +182,6 @@ function Signin() {
         });
       }
     }
-    setIsLoading(false);
   };
 
   return (
@@ -201,7 +206,9 @@ function Signin() {
             <label htmlFor="first_name" className="text-3xl leading-loose">
               Prénom{' '}
               <span
-                className={`${errorMessages.firstName ? flashClass : 'text-sm text-gray-500'}`}
+                className={`${
+                  errorMessages.firstName ? flashClass : 'text-sm text-gray-500'
+                }`}
               >
                 * champs requis
               </span>
@@ -220,7 +227,9 @@ function Signin() {
             <label htmlFor="last_name" className="text-3xl leading-loose">
               Nom{' '}
               <span
-                className={`${errorMessages.lastName ? flashClass : 'text-sm text-gray-500'}`}
+                className={`${
+                  errorMessages.lastName ? flashClass : 'text-sm text-gray-500'
+                }`}
               >
                 * champs requis
               </span>
@@ -239,7 +248,9 @@ function Signin() {
             <label htmlFor="mail" className="text-3xl leading-loose">
               E-mail{' '}
               <span
-                className={`${errorMessages.email ? flashClass : 'text-sm text-gray-500'}`}
+                className={`${
+                  errorMessages.email ? flashClass : 'text-sm text-gray-500'
+                }`}
               >
                 * champs requis, doit correspondre au format
                 adresse@provider.com
@@ -259,7 +270,9 @@ function Signin() {
             <label htmlFor="password" className="text-3xl leading-loose">
               Mot de passe{' '}
               <span
-                className={`${errorMessages.password ? flashClass : 'text-sm text-gray-500'}`}
+                className={`${
+                  errorMessages.password ? flashClass : 'text-sm text-gray-500'
+                }`}
               >
                 * doit contenir au minimum 6 caractères, dont 1 chiffre, 1
                 majuscule et 1 minuscule
@@ -281,8 +294,8 @@ function Signin() {
             </p>
           )}
           <button
-            onClick={() => setIsLoading(true)}
             type="submit"
+            disabled={isLoading}
             className="w-full mb-6 bg-greenZombie text-black text-3xl border-white border-2 rounded-xl self-center"
           >
             {isLoading ? (
