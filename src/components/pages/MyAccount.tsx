@@ -294,9 +294,9 @@ function MyAccount() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="w-3/4 md:flex md:flex-col mt-10"
+          className="w-3/4 md:flex md:flex-col mt-10 max-sm:w-full max-sm:px-1 max-md:w-full"
         >
-          <div className="w-3/4 flex justify-between items-center m-auto gap-8">
+          <div className="w-3/4 flex justify-between items-center m-auto gap-8 max-sm:w-full">
             <div className="w-1/2 mt-8">
               <div className="mb-6 flex flex-col">
                 <label htmlFor="lastName" className="text-3xl leading-loose">
