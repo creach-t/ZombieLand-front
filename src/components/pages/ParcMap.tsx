@@ -88,7 +88,7 @@ function ParcMap() {
                 style={{
                   left: `${attraction.x}%`,
                   top: `${attraction.y}%`,
-                  transform: 'translate(-50%, 0)', // Centrer horizontalement mais ne pas déplacer verticalement
+                  transform: 'translate(-50%, 0)', // Centrer horizontalement, ne pas déplacer verticalement
                   minWidth: '50px', // Taille minimale pour les points interactifs par défaut
                   minHeight: '27px', // Taille minimale pour les points interactifs par défaut
                   display: 'flex',
