@@ -47,10 +47,6 @@ const sliderSettings = {
   ],
 };
 
-
-import { ToastContainer, toast } from 'react-toastify';
-
-
 interface Category {
   category_id: number;
   name: string;
