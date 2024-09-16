@@ -1,7 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { io, Socket } from 'socket.io-client';
 import { useUser } from '../../context/UserContext';
 
 interface Message {
@@ -19,43 +18,15 @@ function ChatBox() {
   const { user } = useUser();
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [adminId, setAdminId] = useState<number>(0);
   const ref = useChatScroll(messages);
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    const newSocket = io(`${import.meta.env.VITE_API_URL}`);
-    newSocket.emit('joinClient', user?.user_id);
-
-    setSocket(newSocket);
-
-    newSocket.on('message', (message: Message) => {
-      setMessages((prevMessages) => {
-        if (
-          !prevMessages.some(
-            (msg) =>
-              msg.message_id === message.message_id &&
-              msg.sender_id === message.sender_id
-          )
-        ) {
-          return [...prevMessages, message];
-        }
-        return prevMessages;
-      });
-    });
-
-    return () => {
-      if (newSocket) {
-        newSocket.off('message');
-        newSocket.disconnect();
-      }
-    };
-  }, [user?.user_id]);
-
-  //charger les messages de la base de données
+  // Charger les messages de la base de données et faire un polling toutes les 5 secondes
   useEffect(() => {
     const fetchMessages = async () => {
+      if (!token || !user?.user_id) return;
+
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/messages`,
@@ -73,68 +44,81 @@ function ChatBox() {
       }
     };
 
-    fetchMessages();
-  }, []);
+    fetchMessages(); // Fetch au montage du composant
 
-  // Nouveau useEffect pour marquer les messages comme lus après la mise à jour des messages
+    // Polling toutes les 5 secondes
+    const intervalId = setInterval(() => {
+      fetchMessages();
+    }, 2000);
+
+    return () => clearInterval(intervalId); // Nettoyage de l'intervalle à la destruction du composant
+  }, [token, user?.user_id]);
+
+  // Marquer les messages comme lus
   useEffect(() => {
     const markMessagesAsRead = async () => {
+      if (!token || !messages.length) return;
+
       try {
-        if (messages.length > 0) {
-          const unreadMessages = messages.filter(
-            (msg) => !msg.isRead && msg.sender_id !== Number(user?.user_id)
-          );
-          if (unreadMessages.length > 0) {
-            await axios.patch(
-              `${import.meta.env.VITE_API_URL}/messages/markAsRead`,
-              {
-                userId: user?.user_id,
-                adminId: adminId,
+        const unreadMessages = messages.filter(
+          (msg) => !msg.isRead && msg.sender_id !== Number(user?.user_id)
+        );
+
+        if (unreadMessages.length > 0) {
+          await axios.patch(
+            `${import.meta.env.VITE_API_URL}/messages/markAsRead`,
+            {
+              userId: user?.user_id,
+              adminId: adminId,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
               },
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
-            console.log('Messages marked as read');
-          }
+            }
+          );
+          console.log('Messages marked as read');
         }
       } catch (error) {
         console.error('Failed to mark messages as read', error);
       }
     };
 
-    // Condition pour éviter de lancer une boucle infinie
-    if (messages.length > 0 && messages.some((msg) => !msg.isRead)) {
+    if (messages.some((msg) => !msg.isRead)) {
       markMessagesAsRead();
     }
-  }, [messages, user?.user_id, token]); // Ce useEffect dépend des messages et de l'utilisateur
+  }, [messages, user?.user_id, token, adminId]);
 
+  // Envoyer un message
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/messages`,
-      {
-        message: newMessage,
-        sender_id: user?.user_id,
-        receiver_id: adminId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
 
-    if (socket && newMessage.trim()) {
+    if (!newMessage.trim()) return;
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/messages`,
+        {
+          message: newMessage,
+          sender_id: user?.user_id,
+          receiver_id: adminId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       const message: Message = response.data;
-      socket.emit('message', message);
       setMessages((prevMessages) => [...prevMessages, message]);
       setNewMessage('');
+    } catch (error) {
+      console.error('Failed to send message', error);
     }
   };
 
+  // Gérer le scroll automatique du chat
   function useChatScroll<T>(
     dep: T
   ): React.MutableRefObject<HTMLDivElement | null> {
@@ -157,7 +141,7 @@ function ChatBox() {
       >
         {messages.map((msg) => (
           <div
-            key={msg.message_id}
+            key={`${msg.message_id}-${msg.sender_id}-${msg.created_at}`} // Clé unique
             className={
               msg.sender_id === Number(user?.user_id)
                 ? 'flex justify-end p-2'
@@ -204,7 +188,7 @@ function ChatBox() {
           ></textarea>
           <button
             type="submit"
-            className="absolute h-4/5 bg-zinc-900 m top-1/2 right-6 text-white text-2xl font-bold px-3 py-1 border-none border-white rounded-xl hover:bg-zinc-700 z-10"
+            className="absolute h-4/5 bg-zinc-900 top-1/2 right-6 text-white text-2xl font-bold px-3 py-1 border-none border-white rounded-xl hover:bg-zinc-700 z-10"
             style={{
               transform: 'translateY(-55%)',
             }}
