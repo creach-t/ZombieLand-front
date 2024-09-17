@@ -328,6 +328,22 @@ function ZombieRun() {
     setObstacles([]);
   };
 
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (!isDying) {
+        if (e.key === 'ArrowRight') handleRunClick();
+        if (e.key === 'ArrowUp') handleJumpClick();
+      }
+      if (e.key === 'r') resetGame();
+    };
+  
+    window.addEventListener('keydown', handleKeyPress);
+  
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [isDying]);
+
   return (
     <main className="bg-black h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-xl mx-auto">
       <div
@@ -398,24 +414,27 @@ function ZombieRun() {
       <div className="flex gap-2">
         {!isDying && (
           <>
-            <button
-              className="mt-10 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              onClick={handleRunClick}
-            >
-              {currentAnimation === 'run' ? 'Arrêter' : 'Courir'}
-            </button>
-            <button
-              className="mt-10 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              onClick={handleJumpClick}
-              disabled={isJumping}
-            >
-              Sauter
-            </button>
-          </>
+          <button
+            className="mt-10 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleRunClick}
+            onKeyDown={handleRunClick}
+          >
+            {currentAnimation === 'run' ? 'Arrêter' : 'Courir'}
+          </button>
+          <button
+            className="mt-10 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleJumpClick}
+            onKeyDown={handleJumpClick}
+            disabled={isJumping}
+          >
+            Sauter
+          </button>
+        </>
         )}
         <button
           className="mt-10 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           onClick={resetGame}
+          onKeyDown={resetGame}
         >
           Rejouer
         </button>
