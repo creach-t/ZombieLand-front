@@ -75,7 +75,6 @@ function MyBookings() {
     loadUserBookings();
   }, [user?.user_id]);
 
-  // Function to translate the booking status to French
   const translateStatus = (status: string): string => {
     switch (status.toLowerCase()) {
       case 'confirmed':
@@ -87,7 +86,7 @@ function MyBookings() {
       case 'completed':
         return 'Terminée';
       default:
-        return status; // Return the original if no match
+        return status;
     }
   };
 
@@ -129,7 +128,7 @@ function MyBookings() {
         style: {
           fontFamily: 'League Gothic',
           top: '104px',
-          backgroundColor: '#FFA500',
+          backgroundColor: '#C90000',
           fontSize: '1.5rem',
           color: '#000',
         },
@@ -205,52 +204,43 @@ function MyBookings() {
                     </tr>
                   </thead>
                   <tbody>
-                    {bookings.map((booking) => {
-                      const isDeletable =
-                        differenceInDays(new Date(booking.date), new Date()) >= 10; // Check if booking is 10 days or more in the future
+  {bookings.map((booking) => {
+    const isDeletable =
+      differenceInDays(new Date(booking.date), new Date()) >= 10 &&
+      translateStatus(booking.status) === 'En attente';
 
-                      return (
-                        <tr key={booking.booking_id} className="hover:bg-redZombie border-b border-slate-200">
-                          <td className="p-3">
-                            <p className="block font-semibold text-sm text-white">
-                              {booking.booking_id}
-                            </p>
-                          </td>
-                          <td className="p-3">
-                            <p className="text-md text-white">
-                              {booking.nb_tickets}
-                            </p>
-                          </td>
-                          <td className="p-3">
-                            <p className="text-md text-white">
-                              {translateStatus(booking.status)}
-                            </p>
-                          </td>
-                          <td className="p-3 ">
-                            <p className="text-md text-white">
-                              {formatter.format(new Date(booking.date))}
-                            </p>
-                          </td>
-                          <td className="p-3 ">
-                            <p className="text-md text-white">
-                              {formatter.format(new Date(booking.created_at))}
-                            </p>
-                          </td>
-                          <td className="p-3">
-                            <button
-                              onClick={() => handleDelete(booking.booking_id)}
-                              disabled={!isDeletable}
-                              className={`text-white px-4 py-2 rounded-xl ${
-                                isDeletable ? 'bg-red-500 hover:bg-red-700' : 'bg-gray-400 cursor-not-allowed'
-                              }`}
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
+    return (
+      <tr key={booking.booking_id} className="hover:bg-redZombie border-b border-slate-200">
+        <td className="p-3">
+          <p className="block font-semibold text-sm text-white">{booking.booking_id}</p>
+        </td>
+        <td className="p-3">
+          <p className="text-md text-white">{booking.nb_tickets}</p>
+        </td>
+        <td className="p-3">
+          <p className="text-md text-white">{translateStatus(booking.status)}</p>
+        </td>
+        <td className="p-3 ">
+          <p className="text-md text-white">{formatter.format(new Date(booking.date))}</p>
+        </td>
+        <td className="p-3 ">
+          <p className="text-md text-white">{formatter.format(new Date(booking.created_at))}</p>
+        </td>
+        <td className="p-3">
+          <button
+            onClick={() => handleDelete(booking.booking_id)}
+            disabled={!isDeletable}
+            className={`text-white px-4 py-2 rounded-xl ${
+              isDeletable ? 'bg-red-500 hover:bg-red-700' : 'bg-gray-400 cursor-not-allowed'
+            }`}
+          >
+            Supprimer la réservation
+          </button>
+        </td>
+      </tr>
+    );
+  })}
+</tbody>
                 </table>
               )}
             </div>
