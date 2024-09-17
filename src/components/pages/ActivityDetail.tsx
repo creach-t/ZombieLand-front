@@ -263,9 +263,9 @@ function ActivityDetail() {
           <span className="text-redZombie">ATTRACTIONS</span>
         </h1>
         <ToastContainer />
-        <button className="mt-4 text-lg md:text-2xl text-white bg-red-700 font-bold rounded-xl px-4 py-2">
+        <p className="mt-4 text-lg md:text-2xl text-white bg-red-700 font-bold rounded-xl px-4 py-2">
           {categoryName}
-        </button>
+        </p>
         <section className="mt-6 w-full flex flex-col md:flex-row justify-center items-center gap-6">
           <picture className="w-full md:w-1/2">
             <source media="(min-width: 465px)" srcSet={desktopImage} />
