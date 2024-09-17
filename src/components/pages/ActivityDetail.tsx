@@ -99,14 +99,15 @@ function ActivityDetail() {
           `${import.meta.env.VITE_API_URL}/activities/${slug}`
         );
         setAttractionDetail(attraction);
-  
+
         if (attraction.categories.length > 0) {
           const categoryId = attraction.categories[0].category_id;
           const { data: similarActivities } = await axios.get(
             `${import.meta.env.VITE_API_URL}/activities/category/${categoryId}`
           );
           const filteredAttractions = similarActivities.filter(
-            (activity: Activity) => activity.activity_id !== attraction.activity_id
+            (activity: Activity) =>
+              activity.activity_id !== attraction.activity_id
           );
           setSimilarAttractions(filteredAttractions);
         }
@@ -115,7 +116,7 @@ function ActivityDetail() {
         setNotFound(true);
       }
     };
-  
+
     loadData();
     console.log(attractionDetail);
   }, [slug]);
@@ -209,7 +210,7 @@ function ActivityDetail() {
   if (notFound) {
     return <Navigate to="/404" />;
   }
-  
+
   if (!attractionDetail) {
     return <div>Chargement...</div>;
   }
@@ -260,28 +261,31 @@ function ActivityDetail() {
                 Avis des survivants
               </h2>
               <div className="sliderCss my-6">
-                {attractionDetail.reviews.length > 1 ? (
-                  <Slider {...sliderSettings} className="w-full">
-                    {attractionDetail.reviews.map((review: Review) => (
-                      <ReviewCard
-                        key={review.review_id}
-                        content={review.content}
-                        rating={review.rating}
-                        clientName={`${review.client.first_name} ${review.client.last_name}`}
-                      />
-                    ))}
-                  </Slider>
+                {attractionDetail.reviews.length > 0 ? (
+                  attractionDetail.reviews.length > 1 ? (
+                    <Slider {...sliderSettings} className="w-full">
+                      {attractionDetail.reviews.map((review: Review) => (
+                        <ReviewCard
+                          key={review.review_id}
+                          content={review.content}
+                          rating={review.rating}
+                          clientName={`${review.client.first_name} ${review.client.last_name}`}
+                        />
+                      ))}
+                    </Slider>
+                  ) : (
+                    <ReviewCard
+                      content={attractionDetail.reviews[0].content}
+                      rating={attractionDetail.reviews[0].rating}
+                      clientName={`${attractionDetail.reviews[0].client.first_name} ${attractionDetail.reviews[0].client.last_name}`}
+                    />
+                  )
                 ) : (
-                  // Si il n'y a qu'un seul avis, on l'affiche sans slider
-                  <ReviewCard
-                    content={attractionDetail.reviews[0].content}
-                    rating={attractionDetail.reviews[0].rating}
-                    clientName={`${attractionDetail.reviews[0].client.first_name} ${attractionDetail.reviews[0].client.last_name}`}
-                  />
+                  <p className="text-white text-xl">
+                    Aucun avis pour l'instant. Laissez le premier avis !
+                  </p>
                 )}
               </div>
-
-              {/* Button to open modal */}
 
               <button
                 onClick={openModal}
