@@ -326,6 +326,12 @@ function ActivityDetail() {
             {currentActivity.name}
           </h2>
           <Link
+            onClick={() => {
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+            }}
             to={`/attractions/${currentActivity.slug}`}
             className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
           >

@@ -14,7 +14,6 @@ function Stars({ maxRating = 5, onRatingChange, size = 40 }: StarsProps) {
 
   const handleClick = (ratingValue: number) => {
     setRating(ratingValue);
-    console.log('Rating:', ratingValue);
 
     if (onRatingChange) {
       onRatingChange(ratingValue);
