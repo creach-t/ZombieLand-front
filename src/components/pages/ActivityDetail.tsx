@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { Link, useParams, Navigate } from 'react-router-dom';
@@ -128,8 +129,13 @@ function ActivityDetail() {
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
-        className: 'bg-redZombie text-white text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
+        style: {
+          fontFamily: 'League Gothic',
+          top: '104px',
+          backgroundColor: '#C90000',
+          fontSize: '1.5rem',
+          color: '#fff',
+        },
       });
       return;
     }
@@ -158,8 +164,13 @@ function ActivityDetail() {
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
-          className: 'bg-greenZombie text-white text-2xl',
-          style: { fontFamily: 'League Gothic', top: '104px' },
+          style: {
+            fontFamily: 'League Gothic',
+            top: '104px',
+            backgroundColor: '#62F974',
+            fontSize: '1.5rem',
+            color: '#000',
+          },
         }
       );
     } catch (error) {
@@ -176,8 +187,13 @@ function ActivityDetail() {
             autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
-            className: 'bg-redZombie text-white text-2xl drop-shadow-md',
-            style: { fontFamily: 'League Gothic', top: '104px' },
+            style: {
+              fontFamily: 'League Gothic',
+              top: '104px',
+              backgroundColor: '#C90000',
+              fontSize: '1.5rem',
+              color: '#fff',
+            },
           });
         } else {
           toast.error("Une erreur est survenue lors de l'envoi de votre avis", {
@@ -185,8 +201,13 @@ function ActivityDetail() {
             autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
-            className: 'bg-redZombie text-white text-2xl',
-            style: { fontFamily: 'League Gothic', top: '104px' },
+            style: {
+              fontFamily: 'League Gothic',
+              top: '104px',
+              backgroundColor: '#C90000',
+              fontSize: '1.5rem',
+              color: '#fff',
+            },
           });
         }
       } else {
@@ -196,8 +217,13 @@ function ActivityDetail() {
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
-          className: 'bg-redZombie text-white text-2xl',
-          style: { fontFamily: 'League Gothic', top: '104px' },
+          style: {
+            fontFamily: 'League Gothic',
+            top: '104px',
+            backgroundColor: '#C90000',
+            fontSize: '1.5rem',
+            color: '#fff',
+          },
         });
       }
     }

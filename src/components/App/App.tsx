@@ -53,7 +53,7 @@ function App() {
                 path="/politique-de-confidentialite"
                 element={<PrivacyPolicy />}
               />
-              <Route path="/zombie-run" element={<ZombieRun />} />
+              <Route path="/pancakes" element={<ZombieRun />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />
