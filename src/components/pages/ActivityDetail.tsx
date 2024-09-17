@@ -118,7 +118,6 @@ function ActivityDetail() {
     };
 
     loadData();
-    console.log(attractionDetail);
   }, [slug]);
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
@@ -282,7 +281,7 @@ function ActivityDetail() {
                   )
                 ) : (
                   <p className="text-white text-xl">
-                    Aucun avis pour l'instant. Laissez le premier avis !
+                    Aucun avis pour l&apos;instant. Laissez le premier avis !
                   </p>
                 )}
               </div>
@@ -307,40 +306,38 @@ function ActivityDetail() {
         </div>
 
         {/* Section for similar attractions */}
-        <section className="py-10 flex flex-col w-full justify-center items-center gap-10 flex-wrap">
-          <h2 className="text-white text-2xl mt-4">
-            D’autres attractions qui pourraient vous plaire
+<section className="py-10 flex flex-col w-full justify-center items-center gap-10 flex-wrap">
+  <h2 className="text-white text-2xl mt-4">
+    D’autres attractions qui pourraient vous plaire
+  </h2>
+  <div className="flex gap-10 flex-wrap justify-center">
+    {similarAttractions.length > 0 ? (
+      similarAttractions.map((currentActivity) => (
+        <div
+          key={currentActivity.activity_id}
+          style={{
+            backgroundImage: `url(/img/desktop/attractions/${getImageName(
+              currentActivity.name
+            )})`,
+          }}
+          className="w-full sm:w-[300px] md:w-[200px] lg:w-[400px] h-[400px] md:h-[350px] lg:h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center"
+        >
+          <h2 className="badgrunge text-6xl text-center text-white [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
+            {currentActivity.name}
           </h2>
-          <div className="flex gap-10 flex-wrap justify-center">
-            {similarAttractions.length > 0 ? (
-              similarAttractions.map((currentActivity) => (
-                <div
-                  key={currentActivity.activity_id}
-                  style={{
-                    backgroundImage: `url(/img/desktop/attractions/${getImageName(
-                      currentActivity.name
-                    )})`,
-                  }}
-                  className="w-[400px] md:w-[200px] lg:w-[400px] h-[400px] md:h-[350px] lg:h-[400px] bg-cover bg-center bg-no-repeat rounded-xl relative flex justify-center items-center"
-                >
-                  <h2 className="badgrunge text-6xl text-center text-white [text-shadow:_1px_1px_0_rgb(0_0_0_/_80%)]">
-                    {currentActivity.name}
-                  </h2>
-                  <Link
-                    to={`/attractions/${currentActivity.slug}`}
-                    className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
-                  >
-                    En savoir plus
-                  </Link>
-                </div>
-              ))
-            ) : (
-              <p className="text-white text-xl">
-                Aucune attraction similaire trouvée.
-              </p>
-            )}
-          </div>
-        </section>
+          <Link
+            to={`/attractions/${currentActivity.slug}`}
+            className="text-white text-2xl bg-darkGreenZombie hover:bg-red-700 font-bold rounded-xl px-3 py-1 text-center absolute bottom-1/4 [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]"
+          >
+            En savoir plus
+          </Link>
+        </div>
+      ))
+    ) : (
+      <p className="text-white text-xl">Aucune attraction similaire trouvée.</p>
+    )}
+  </div>
+</section>
       </main>
 
       {/* Modal for adding a review */}
