@@ -186,8 +186,13 @@ function Booking() {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          className: 'bg-redZombie text-white text-2xl',
-          style: { fontFamily: 'League Gothic', top: '104px' },
+          style: {
+            fontFamily: 'League Gothic',
+            top: '104px',
+            backgroundColor: '#C90000',
+            fontSize: '1.5rem',
+            color: '#fff',
+          },
         }
       );
       setTimeout(() => {

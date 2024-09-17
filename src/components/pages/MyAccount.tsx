@@ -123,8 +123,13 @@ function MyAccount() {
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
-          className: 'bg-redZombie text-black text-2xl',
-          style: { fontFamily: 'League Gothic', top: '104px' },
+          style: {
+            fontFamily: 'League Gothic',
+            top: '104px',
+            backgroundColor: '#C90000',
+            fontSize: '1.5rem',
+            color: '#fff',
+          },
         });
       }
     };
@@ -162,8 +167,13 @@ function MyAccount() {
             autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
-            className: 'bg-redZombie text-white text-2xl',
-            style: { fontFamily: 'League Gothic', top: '104px' },
+            style: {
+              fontFamily: 'League Gothic',
+              top: '104px',
+              backgroundColor: '#C90000',
+              fontSize: '1.5rem',
+              color: '#fff',
+            },
           });
           return;
         }
@@ -174,8 +184,13 @@ function MyAccount() {
             autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
-            className: 'bg-redZombie text-white text-2xl',
-            style: { fontFamily: 'League Gothic', top: '104px' },
+            style: {
+              fontFamily: 'League Gothic',
+              top: '104px',
+              backgroundColor: '#C90000',
+              fontSize: '1.5rem',
+              color: '#fff',
+            },
           });
           return;
         }
@@ -209,8 +224,13 @@ function MyAccount() {
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
-        className: 'bg-greenZombie text-black text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
+        style: {
+          fontFamily: 'League Gothic',
+          top: '104px',
+          backgroundColor: '#62F974',
+          fontSize: '1.5rem',
+          color: '#000',
+        },
       });
     } catch (error) {
       console.error('Erreur lors de la mise à jour des informations:', error);
@@ -221,8 +241,13 @@ function MyAccount() {
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
-          className: 'bg-redZombie text-black text-2xl',
-          style: { fontFamily: 'League Gothic', top: '104px' },
+          style: {
+            fontFamily: 'League Gothic',
+            top: '104px',
+            backgroundColor: '#C90000',
+            fontSize: '1.5rem',
+            color: '#fff',
+          },
         }
       );
     }
@@ -252,8 +277,13 @@ function MyAccount() {
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
-          className: 'bg-redZombie text-black text-2xl',
-          style: { fontFamily: 'League Gothic', top: '104px' },
+          style: {
+            fontFamily: 'League Gothic',
+            top: '104px',
+            backgroundColor: '#C90000',
+            fontSize: '1.5rem',
+            color: '#fff',
+          },
         }
       );
     }
@@ -297,99 +327,102 @@ function MyAccount() {
           className="w-3/4 md:flex md:flex-col mt-10 max-sm:w-full max-sm:px-1 max-md:w-full"
         >
           <div className="w-3/4 flex flex-col md:flex-row justify-between items-center m-auto gap-8 max-sm:w-full">
-          {/* Personal Information Section */}
-          <div className="w-full md:w-1/2 mt-8">
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="lastName" className="text-3xl leading-loose">
-                Nom
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                placeholder="votre Nom"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
+            {/* Personal Information Section */}
+            <div className="w-full md:w-1/2 mt-8">
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="lastName" className="text-3xl leading-loose">
+                  Nom
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="votre Nom"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="firstName" className="text-3xl leading-loose">
+                  Prénom
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  placeholder="votre Prénom"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="email" className="text-3xl leading-loose">
+                  E-mail
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="votre E-mail"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
             </div>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="firstName" className="text-3xl leading-loose">
-                Prénom
-              </label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                placeholder="votre Prénom"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </div>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="email" className="text-3xl leading-loose">
-                E-mail
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="votre E-mail"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          </div>
 
-          {/* Password Change Section */}
-          <div className="w-full md:w-1/2">
-            <h4 className="text-center text-2xl">Changer de mot de passe</h4>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="oldPassword" className="text-3xl leading-loose">
-                Ancien mot de passe
-              </label>
-              <input
-                type="password"
-                id="oldPassword"
-                name="oldPassword"
-                placeholder="votre ancien mot de passe"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
-              />
-            </div>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="newPassword" className="text-3xl leading-loose">
-                Nouveau mot de passe
-              </label>
-              <input
-                type="password"
-                id="newPassword"
-                name="newPassword"
-                placeholder="votre nouveau mot de passe"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </div>
-            <div className="mb-6 flex flex-col">
-              <label htmlFor="confirmPassword" className="text-3xl leading-loose">
-                Confirmez mot de passe
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirmez mot de passe"
-                className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
+            {/* Password Change Section */}
+            <div className="w-full md:w-1/2">
+              <h4 className="text-center text-2xl">Changer de mot de passe</h4>
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="oldPassword" className="text-3xl leading-loose">
+                  Ancien mot de passe
+                </label>
+                <input
+                  type="password"
+                  id="oldPassword"
+                  name="oldPassword"
+                  placeholder="votre ancien mot de passe"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                />
+              </div>
+              <div className="mb-6 flex flex-col">
+                <label htmlFor="newPassword" className="text-3xl leading-loose">
+                  Nouveau mot de passe
+                </label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  name="newPassword"
+                  placeholder="votre nouveau mot de passe"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+              <div className="mb-6 flex flex-col">
+                <label
+                  htmlFor="confirmPassword"
+                  className="text-3xl leading-loose"
+                >
+                  Confirmez mot de passe
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Confirmez mot de passe"
+                  className="w-full text-3xl border-white border-2 rounded-xl p-2 text-center text-white bg-zinc-900"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
           <div className="my-6 m-auto flex gap-10 flex-col md:flex-row">
             <button

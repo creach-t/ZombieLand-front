@@ -44,8 +44,13 @@ function Login() {
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
-        className: 'bg-green-500 text-white text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
+        style: {
+          fontFamily: 'League Gothic',
+          top: '104px',
+          backgroundColor: '#62F974',
+          fontSize: '1.5rem',
+          color: '#000',
+        },
       });
     }
   }, [location.state]);
@@ -60,8 +65,13 @@ function Login() {
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
-        className: 'bg-red-600 text-white text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
+        style: {
+          fontFamily: 'League Gothic',
+          top: '104px',
+          backgroundColor: '#C90000',
+          fontSize: '1.5rem',
+          color: '#fff',
+        },
       });
       return;
     }
@@ -96,8 +106,13 @@ function Login() {
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
-        className: 'bg-green-500 text-white text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
+        style: {
+          fontFamily: 'League Gothic',
+          top: '104px',
+          backgroundColor: '#62F974',
+          fontSize: '1.5rem',
+          color: '#000',
+        },
       });
     } catch (error) {
       const axiosError = error as AxiosError;
@@ -112,8 +127,13 @@ function Login() {
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
-        className: 'bg-red-600 text-white text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
+        style: {
+          fontFamily: 'League Gothic',
+          top: '104px',
+          backgroundColor: '#C90000',
+          fontSize: '1.5rem',
+          color: '#fff',
+        },
       });
     }
     setIsLoading(false);
