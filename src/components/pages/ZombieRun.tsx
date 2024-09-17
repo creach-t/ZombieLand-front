@@ -289,7 +289,6 @@ function ZombieRun() {
   };
 
   useEffect(() => {
-    console.log(zombieY);
   }, [zombieY]);
 
   // Gestion des classes CSS pour les animations

@@ -5,10 +5,6 @@ import ChatBox from '../ChatBox/ChatBox';
 import { useEffect } from 'react';
 
 function MyMessages() {
-  // function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-  //   event.preventDefault();
-  //   console.log('TODO: handle form submission');
-  // }
 
   useEffect(() => {
     const token = localStorage.getItem('token');
