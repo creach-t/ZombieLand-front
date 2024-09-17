@@ -143,7 +143,7 @@ function ZombieRun() {
         (prevObstacles) =>
           prevObstacles
             .map((obstacle) => {
-              const newPosX = obstacle.positionX - 5; // Déplacement de l'obstacle
+              const newPosX = obstacle.positionX - 2; // Déplacement de l'obstacle
 
               // Vérification de la collision avec la gestion de la largeur et la hauteur
               if (
@@ -226,8 +226,8 @@ function ZombieRun() {
     const updatePositions = () => {
       setLayerPositions((prev) => {
         // Mise à jour des positions des couches de fond
-        const newLayer1 = (prev.layer1 - 5) % BACKGROUND_WIDTH;
-        const newLayer2 = (prev.layer2 - 3.5) % BACKGROUND_WIDTH;
+        const newLayer1 = (prev.layer1 - 2) % BACKGROUND_WIDTH;
+        const newLayer2 = (prev.layer2 - 1) % BACKGROUND_WIDTH;
 
         // Mise à jour du score
         setScore((prevScore) => prevScore + 0.05); // Ajuste la vitesse du score ici
