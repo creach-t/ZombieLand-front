@@ -91,8 +91,13 @@ function Home() {
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
-        className: 'bg-greenZombie text-black text-2xl',
-        style: { fontFamily: 'League Gothic', top: '104px' },
+        style: {
+          fontFamily: 'League Gothic',
+          top: '104px',
+          backgroundColor: '#62F974',
+          fontSize: '1.5rem',
+          color: '#000',
+        },
       });
     }
   }, [location.state]);
