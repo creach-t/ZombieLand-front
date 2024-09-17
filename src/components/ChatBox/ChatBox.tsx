@@ -169,7 +169,6 @@ function ChatBox() {
                 </span>
               </p>
               <p className="text-xl">{msg.message}</p>
-              <p className="text-xl text-sky-400">{msg.isRead ? 'lu' : ''}</p>
             </div>
           </div>
         ))}
