@@ -89,7 +89,8 @@ function ChatBox() {
   }, [messages, user?.user_id, token, adminId]);
 
   // Envoyer un message
-  const handleSendMessage = async (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent | React.KeyboardEvent) => {
+    if (e instanceof KeyboardEvent && e.key !== 'Enter') return; // Only handle Enter key
     e.preventDefault();
 
     if (!newMessage.trim()) return;
@@ -131,6 +132,14 @@ function ChatBox() {
 
     return ref;
   }
+
+  // Handle Enter key press event
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage(e);
+    }
+  };
 
   return (
     <div className="chat-window m-auto p-4 border-white border-2 rounded-xl h-[550px] w-11/12 right-20 bottom-24 flex flex-col justify-between">
@@ -183,6 +192,7 @@ function ChatBox() {
             className="w-full h-20 bg-zinc-900 border-2 border-white rounded-xl m-auto text-2xl p-2 pr-20 duration-300 focus:h-40 resize-none"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
+            onKeyUp={handleKeyUp}
           ></textarea>
           <button
             type="submit"
