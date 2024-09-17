@@ -13,7 +13,7 @@ interface ActivityCardProps {
 function ActivityCard({ activity }: ActivityCardProps) {
   return (
     <div
-      className="relative flex justify-center items-center w-full max-w-[400px] max-h-[400px] aspect-square"
+      className="relative flex justify-center items-center w-full max-w-[400px] max-h-[400px] aspect-square rounded-xl"
       style={{
         backgroundImage: `url(/img/desktop/attractions/${getImageName(activity.name)})`,
         backgroundSize: 'cover',
