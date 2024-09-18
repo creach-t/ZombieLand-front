@@ -207,7 +207,7 @@ function MyBookings() {
   {bookings.map((booking) => {
     const isDeletable =
       differenceInDays(new Date(booking.date), new Date()) >= 10 &&
-      translateStatus(booking.status) === 'En attente';
+      translateStatus(booking.status) === 'En attente' || translateStatus(booking.status) === 'Confirmée';
 
     return (
       <tr key={booking.booking_id} className="hover:bg-redZombie border-b border-slate-200">
