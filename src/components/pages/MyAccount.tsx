@@ -321,6 +321,14 @@ function MyAccount() {
           >
             Mes <em className="text-redZombie ">Messages</em>
           </Link>
+          {thisUser?.role === 'admin' ? (
+            <Link
+              to={`${import.meta.env.VITE_API_URL}/admin`}
+              className="text-3xl text-white border-white border-2 rounded-xl px-8 py-2 text-center"
+            >
+              Gestion <em className="text-redZombie ">Admin</em>
+            </Link>
+          ) : null}
         </div>
         <form
           onSubmit={handleSubmit}
