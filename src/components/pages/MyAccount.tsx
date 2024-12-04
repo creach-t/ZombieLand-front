@@ -1,11 +1,23 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/react-in-jsx-scope */
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Helmet } from 'react-helmet-async';
+
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+
+// Import conditionnel des styles pour SSR
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+  require('react-toastify/dist/ReactToastify.css');
+}
 
 interface User {
   user_id: number;
@@ -300,9 +312,9 @@ function MyAccount() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Mon compte 🧟 | Zombieland | Paris </title>
-      </Helmet>
+      </HelmetPackage.Helmet>
       <main className="h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <ToastContainer />
         <h1 className="self-center md:self-start text-6xl">

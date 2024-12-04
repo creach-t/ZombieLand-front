@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  ReactNode,
-  useContext,
-} from 'react';
-import { jwtDecode } from 'jwt-decode';
+
 
 export interface User {
   user_id: string;
@@ -15,7 +8,9 @@ export interface User {
   iat: number;
   exp: number;
 }
-
+import React, {createContext,useState,useEffect,
+  ReactNode,useContext} from 'react';
+import { jwtDecode } from 'jwt-decode';
 interface UserContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -44,8 +39,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
     </UserContext.Provider>
   );
 }
-
-// Custom hook pour utiliser UserContext plus simplement
 export function useUser() {
   const context = useContext(UserContext);
   if (!context) {

@@ -1,10 +1,21 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import map from '/img/desktop/plan-du-parc-zombieland-v2.webp';
-import { Helmet } from 'react-helmet-async';
 import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+
+let map: Promise<unknown>;
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+  import('react-loading-skeleton/dist/skeleton.css');
+  map = import('../../../public/img/desktop/plan-du-parc-zombieland-v2.webp');
+}
 
 interface Attraction {
   activity_id: number;
@@ -54,13 +65,13 @@ function ParcMap() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Plan du parc | Zombieland | Paris </title>
         <meta
           name="description"
           content="Naviguez facilement dans Zombieland grâce à notre plan interactif. Repérez rapidement vos attractions préférées et optimisez votre visite du parc."
         />
-      </Helmet>
+      </HelmetPackage.Helmet>
       <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           PLAN <span className="text-redZombie">DU PARC</span>

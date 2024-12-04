@@ -1,14 +1,25 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import { usePrice } from '../../context/PriceContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ticketImg from '/img/desktop/Rectangle-8.webp';
 import axios from 'axios';
 import getStripe from '../../utils/getStripe';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Helmet } from 'react-helmet-async';
+let ticketImg: Promise<unknown>;
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+// Import conditionnel des styles pour SSR
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+  import('react-toastify/dist/ReactToastify.css');
+  ticketImg = import('../../../public/img/desktop/Rectangle-8.webp');
+}
 function Booking() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -249,13 +260,13 @@ function Booking() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Réservation Parc Zombieland | Paris | 0666 666 666 </title>
         <meta
           name="description"
           content="Réservez vos billets pour Zombieland en quelques clics ! Sécurisez votre place pour vivre une expérience unique dans notre parc à thème post-apocalyptique."
         />
-      </Helmet>
+      </HelmetPackage.Helmet>
       <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <ToastContainer />
         <h1 className="self-center md:self-start text-6xl">

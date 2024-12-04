@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-console */
 /* eslint-disable react/no-unescaped-entities */
@@ -5,18 +6,39 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-import zombieFace from '/img/desktop/zombie-apocalypse-zombieland.webp';
-import tickets from '/img/desktop/achat-tickets-parc-zombieland.webp';
-import compass from '/img/desktop/horaires-tickets-parc-zombieland.webp';
-import skull from '/img/desktop/plan-parc-zombieland-_1_.webp';
-import plan from '/img/desktop/plan-parc-zombieland.webp';
 import ActivityCard from '../ActivityCard/ActivityCard';
-import { Helmet } from 'react-helmet-async';
+
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+let zombieFace: Promise<unknown>;
+let tickets: Promise<unknown>;
+let compass: Promise<unknown>;
+let skull: Promise<unknown>;
+let plan: Promise<unknown>;
+
+// Import conditionnel des styles pour SSR
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+  import('react-toastify/dist/ReactToastify.css');
+  import('slick-carousel/slick/slick.css');
+  import('slick-carousel/slick/slick-theme.css');
+  zombieFace = import(
+    '../../../public/img/desktop/zombie-apocalypse-zombieland.webp'
+  );
+  tickets = import(
+    '../../../public/img/desktop/achat-tickets-parc-zombieland.webp'
+  );
+  compass = import(
+    '../../../public/img/desktop/horaires-tickets-parc-zombieland.webp'
+  );
+  skull = import('../../../public/img/desktop/plan-parc-zombieland-_1_.webp');
+  plan = import('../../../public/img/desktop/plan-parc-zombieland.webp');
+}
 
 interface Activity {
   activity_id: number;
@@ -115,14 +137,14 @@ function Home() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Parc Zombieland | Paris | 0666 666 666 </title>
         <meta
           name="description"
           content="Plongez dans l’univers palpitant de Zombieland, le parc d’attractions unique en son genre. Vivez des sensations fortes et des aventures inoubliables au cœur d’un monde post-apocalyptique."
         />
-      </Helmet>
-  <section className=" mt-[104px] h-[850px] w-full bg-[url('/img/mobile/bg-parc-zombieland-home-mob.webp')] md:bg-[url('/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
+      </HelmetPackage.Helmet>
+      <section className=" mt-[104px] h-[850px] w-full bg-[url('/img/mobile/bg-parc-zombieland-home-mob.webp')] md:bg-[url('/img/desktop/bg-parc-zombieland-home3.webp')] bg-cover bg-center bg-no-repeat">
         <ToastContainer />
         <div className="h-full w-full max-[600px]:px-8 px-16 flex items-center">
           <div className="md:px-14 md:py-5 bg-black bg-opacity-40 max-w-[550px] min-h-[400px] flex flex-col justify-around [box-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">

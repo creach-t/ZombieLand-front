@@ -1,11 +1,20 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import ChatBox from '../ChatBox/ChatBox';
 import { useEffect } from 'react';
 
-function MyMessages() {
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+// import conditionnel des styles pour SSR
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+}
 
+function MyMessages() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -15,9 +24,9 @@ function MyMessages() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Mon compte 🧟 | Zombieland | Paris </title>
-      </Helmet>
+      </HelmetPackage.Helmet>
       <main className="h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           MON <em className="text-redZombie">COMPTE</em>

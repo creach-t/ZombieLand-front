@@ -1,12 +1,24 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/react-in-jsx-scope */
 import { Link } from 'react-router-dom';
-import contactImg from '/img/desktop/Zombie-contact.webp';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+
+let contactImg: Promise<unknown>;
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+// Import conditionnel des styles pour SSR
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+  import('react-toastify/dist/ReactToastify.css');
+  contactImg = import('../../../public/img/desktop/Zombie-contact.webp');
+}
 
 function Contact() {
   const [firstname, setFirstname] = useState('');
@@ -76,13 +88,13 @@ function Contact() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Contact Parc Zombieland | Paris | 0666 666 666 </title>
         <meta
           name="description"
           content="Vous avez une question ? Contactez-nous ! L’équipe de Zombieland est à votre disposition pour répondre à toutes vos demandes et faciliter votre visite."
         />
-      </Helmet>
+      </HelmetPackage.Helmet>
       <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           Nous <em className="text-redZombie">contacter</em>

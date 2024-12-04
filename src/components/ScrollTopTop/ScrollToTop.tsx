@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/react-in-jsx-scope */
 import { useState, useEffect } from 'react';
 import { animateScroll as scroll } from 'react-scroll';
-import backToTopImg from '/img/desktop/back-to-top-zombieland.webp';
+
+let backToTopImg: string | undefined;
+if (typeof window !== 'undefined') {
+  backToTopImg = require('../../../public/img/desktop/back-to-top-zombieland.webp');
+}
 
 function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);

@@ -1,4 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../../context/UserContext';
 import { PriceProvider } from '../../context/PriceContext';
@@ -22,7 +22,8 @@ import NewPassword from '../pages/newPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import ZombieRun from '../pages/ZombieRun';
 import ScrollToTop from '../ScrollTopTop/ScrollToTop';
-import { HelmetProvider } from 'react-helmet-async';
+import * as HelmetPackage from 'react-helmet-async';
+const { HelmetProvider } = HelmetPackage;
 
 function App() {
   const helmetContext = {};

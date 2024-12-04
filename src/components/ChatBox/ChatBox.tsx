@@ -46,7 +46,7 @@ function ChatBox() {
 
     fetchMessages(); // Fetch au montage du composant
 
-    // Polling toutes les 5 secondes
+    // Polling toutes les 2 secondes
     const intervalId = setInterval(() => {
       fetchMessages();
     }, 2000);

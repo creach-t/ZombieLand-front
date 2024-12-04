@@ -1,17 +1,31 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
-import { Helmet } from 'react-helmet-async';
 import StarRating from '../StarRating/StarRating';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { useUser } from '../../context/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+let Slider: typeof import('react-slick');
+
+// Import conditionnel des styles pour SSR
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+  Slider = await import('react-slick');
+  import('react-toastify/dist/ReactToastify.css');
+  import('slick-carousel/slick/slick.css');
+  import('slick-carousel/slick/slick-theme.css');
+}
 
 // Slider configuration
 const sliderSettings = {
@@ -232,6 +246,33 @@ function ActivityDetail() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) {
+      toast.error('Vous devez être connecté pour laisser un avis', { ... });
+      return;
+    }
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/reviews`,
+        {
+          rating,
+          content: newContent,
+          client_id: user?.user_id,
+          activity_id: attractionDetail?.activity_id,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setIsModalOpen(false);
+      setNewContent('');
+      setRating(0);
+      toast.success('Merci pour votre avis, il sera modéré avant publication.');
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de l'avis :", error);
+      toast.error('Une erreur est survenue. Veuillez réessayer.');
+    }
+  };
+
   if (notFound) {
     return <Navigate to="/404" />;
   }
@@ -250,13 +291,13 @@ function ActivityDetail() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>{attractionDetail.name} | Parc Zombieland | Paris</title>
         <meta
           name="description"
           content={`${attractionDetail.name} : ${attractionDetail.description_short}`}
         />
-      </Helmet>
+      </HelmetPackage.Helmet>
       <main className="w-full mt-[104px] flex flex-col items-center md:items-start pt-10 max-w-screen-2xl mx-auto">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-left">
           {attractionDetail.name}{' '}

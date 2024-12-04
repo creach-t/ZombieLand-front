@@ -30,11 +30,37 @@ Welcome to the ZombieLand frontend project, a post-apocalyptic themed amusement 
 3. **Create a `.env` file** and configure the necessary environment variables:
 
     ```env
-    VITE_API_URL=http://localhost:3000/
+    VITE_API_URL="http://localhost:3000"
+    VITE_NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=################
+    VITE_NEXT_PUBLIC_STRIPE_PRICE_ID=####################
     ```
 
-4. **Start the development server**:
+## **Development**
 
+Start the development server in **watch mode**:
     ```bash
     npm run dev
     ```
+
+## **Production**
+
+To generate the production files :
+    ```bash
+    npm run build
+    ```
+
+Les fichiers seront disponibles dans le dossier `dist`.
+
+## Déploiement
+
+1. Transfer the `dist` folder to your server.
+2. Configure Nginx or an equivalent web serverto serve the static files.
+3. Redirect all routes to `index.html` :
+
+   ```nginx
+   location / {
+       root /chemin/vers/dist;
+       index index.html;
+       try_files $uri /index.html;
+   }
+   ```

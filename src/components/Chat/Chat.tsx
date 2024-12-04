@@ -13,7 +13,7 @@ function Chat() {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3000');
+    const newSocket = io(`${import.meta.env.VITE_API_URL}`);
     setSocket(newSocket);
 
     newSocket.emit('joinClient');
@@ -51,7 +51,7 @@ function Chat() {
 
   useEffect(() => {
     if (socket === null) {
-      const newSocket = io('http://localhost:3000');
+      const newSocket = io(`${import.meta.env.VITE_API_URL}`);
       setSocket(newSocket);
     }
 

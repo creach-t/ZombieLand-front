@@ -1,12 +1,23 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-console */
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
-import { Helmet } from 'react-helmet-async';
 import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+
+if (typeof window !== 'undefined') {
+  require('react-loading-skeleton/dist/skeleton.css');
+  HelmetPackage = await import('react-helmet-async');
+}
 
 interface Activity {
   activity_id: number;
@@ -80,13 +91,13 @@ function Activities() {
   };
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Les attractions | Parc Zombieland | Paris </title>
         <meta
           name="description"
           content="Découvrez nos attractions effrayantes et palpitantes à Zombieland. Frissons garantis avec des parcours immersifs et des expériences inoubliables !"
         />
-      </Helmet>
+      </HelmetPackage.Helmet>
       <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto px-4">
         <h1 className="self-center md:self-start text-4xl md:text-6xl">
           LES <span className="text-redZombie">ATTRACTIONS</span>
@@ -99,10 +110,7 @@ function Activities() {
         >
           {/* Search Input */}
           {loadingActivities ? (
-            <Skeleton
-              height={56}
-              className="rounded-xl w-full max-w-[600px]"
-            />
+            <Skeleton height={56} className="rounded-xl w-full max-w-[600px]" />
           ) : (
             <label
               htmlFor="activity"
@@ -195,7 +203,9 @@ function Activities() {
               </div>
             ))
           ) : (
-            <p className="text-center text-xl">Aucune attraction ne correspond à vos critères.</p>
+            <p className="text-center text-xl">
+              Aucune attraction ne correspond à vos critères.
+            </p>
           )}
         </section>
       </main>

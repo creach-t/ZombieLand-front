@@ -1,48 +1,83 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/react-in-jsx-scope */
 import { useState, useEffect } from 'react';
 
-// Layers du background
-import layer1 from '/img/zombie-run/Background layers/Layer-1.webp';
-import layer2 from '/img/zombie-run/Background layers/Layer-2.webp';
+let layer1: string | undefined;
+let layer2: string | undefined;
+let run1: string | undefined;
+let run2: string | undefined;
+let run3: string | undefined;
+let run4: string | undefined;
+let run5: string | undefined;
+let run6: string | undefined;
+let run7: string | undefined;
+let run8: string | undefined;
+let run9: string | undefined;
+let run10: string | undefined;
+let jump1: string | undefined;
+let jump2: string | undefined;
+let jump3: string | undefined;
+let jump4: string | undefined;
+let jump5: string | undefined;
+let jump6: string | undefined;
+let jump7: string | undefined;
+let death1: string | undefined;
+let death2: string | undefined;
+let death3: string | undefined;
+let death4: string | undefined;
+let death5: string | undefined;
+let death6: string | undefined;
+let death7: string | undefined;
+let death8: string | undefined;
+let idle: string | undefined;
+let obstacle1: string | undefined;
+let obstacle2: string | undefined;
+let obstacle3: string | undefined;
 
-// frames de l'animation courrir
-import run1 from '/img/zombie-run/Zombies/Zombie1/animation/Run1.webp';
-import run2 from '/img/zombie-run/Zombies/Zombie1/animation/Run2.webp';
-import run3 from '/img/zombie-run/Zombies/Zombie1/animation/Run3.webp';
-import run4 from '/img/zombie-run/Zombies/Zombie1/animation/Run4.webp';
-import run5 from '/img/zombie-run/Zombies/Zombie1/animation/Run5.webp';
-import run6 from '/img/zombie-run/Zombies/Zombie1/animation/Run6.webp';
-import run7 from '/img/zombie-run/Zombies/Zombie1/animation/Run7.webp';
-import run8 from '/img/zombie-run/Zombies/Zombie1/animation/Run8.webp';
-import run9 from '/img/zombie-run/Zombies/Zombie1/animation/Run9.webp';
-import run10 from '/img/zombie-run/Zombies/Zombie1/animation/Run10.webp';
+if (typeof window !== 'undefined') {
+  // Layers du background
+  layer1 = require('../../../public/img/zombie-run/Background layers/Layer-1.webp');
+  layer2 = require('../../../public/img/zombie-run/Background layers/Layer-2.webp');
 
-// frames de l'animation sauter
-import jump1 from '/img/zombie-run/Zombies/Zombie1/animation/Jump1.webp';
-import jump2 from '/img/zombie-run/Zombies/Zombie1/animation/Jump2.webp';
-import jump3 from '/img/zombie-run/Zombies/Zombie1/animation/Jump3.webp';
-import jump4 from '/img/zombie-run/Zombies/Zombie1/animation/Jump4.webp';
-import jump5 from '/img/zombie-run/Zombies/Zombie1/animation/Jump5.webp';
-import jump6 from '/img/zombie-run/Zombies/Zombie1/animation/Jump6.webp';
-import jump7 from '/img/zombie-run/Zombies/Zombie1/animation/Jump7.webp';
+  // Frames de l'animation courir
+  run1 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run1.webp');
+  run2 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run2.webp');
+  run3 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run3.webp');
+  run4 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run4.webp');
+  run5 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run5.webp');
+  run6 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run6.webp');
+  run7 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run7.webp');
+  run8 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run8.webp');
+  run9 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run9.webp');
+  run10 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run10.webp');
 
-// frames de l'animation de mort
-import death1 from '/img/zombie-run/Zombies/Zombie1/animation/Dead1.webp';
-import death2 from '/img/zombie-run/Zombies/Zombie1/animation/Dead2.webp';
-import death3 from '/img/zombie-run/Zombies/Zombie1/animation/Dead3.webp';
-import death4 from '/img/zombie-run/Zombies/Zombie1/animation/Dead4.webp';
-import death5 from '/img/zombie-run/Zombies/Zombie1/animation/Dead5.webp';
-import death6 from '/img/zombie-run/Zombies/Zombie1/animation/Dead6.webp';
-import death7 from '/img/zombie-run/Zombies/Zombie1/animation/Dead7.webp';
-import death8 from '/img/zombie-run/Zombies/Zombie1/animation/Dead8.webp';
+  // Frames de l'animation sauter
+  jump1 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump1.webp');
+  jump2 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump2.webp');
+  jump3 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump3.webp');
+  jump4 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump4.webp');
+  jump5 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump5.webp');
+  jump6 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump6.webp');
+  jump7 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump7.webp');
 
-// frame du zombie à l'arrêt
-import idle from '/img/zombie-run/Zombies/Zombie1/animation/Idle1.webp';
+  // Frames de l'animation de mort
+  death1 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead1.webp');
+  death2 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead2.webp');
+  death3 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead3.webp');
+  death4 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead4.webp');
+  death5 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead5.webp');
+  death6 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead6.webp');
+  death7 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead7.webp');
+  death8 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead8.webp');
 
-// Les obstacles
-import obstacle1 from '/img/zombie-run/obstacles/tombe3.webp';
-import obstacle2 from '/img/zombie-run/obstacles/tombe4.webp';
-import obstacle3 from '/img/zombie-run/obstacles/tombe6.webp';
+  // Frame du zombie à l'arrêt
+  idle = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Idle1.webp');
+
+  // Obstacles
+  obstacle1 = require('../../../public/img/zombie-run/obstacles/tombe3.webp');
+  obstacle2 = require('../../../public/img/zombie-run/obstacles/tombe4.webp');
+  obstacle3 = require('../../../public/img/zombie-run/obstacles/tombe6.webp');
+}
 
 const runImgs: string[] = [
   run1,

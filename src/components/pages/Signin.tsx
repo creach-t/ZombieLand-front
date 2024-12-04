@@ -1,9 +1,21 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import React, { useState, useEffect } from 'react';
 import api from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Helmet } from 'react-helmet-async';
+
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+
+// Import conditionnel des styles pour SSR
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+  import('react-toastify/dist/ReactToastify.css');
+}
 
 function Signin() {
   const [firstName, setFirstName] = useState('');
@@ -186,13 +198,13 @@ function Signin() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Inscription | Zombieland | Paris </title>
         <meta
           name="description"
           content="Inscrivez-vous dès maintenant au Parc Zombieland et accédez à nos attractions uniques. Créez votre compte en quelques étapes simples et profitez d'offres exclusives pour planifier votre visite inoubliable."
         />
-      </Helmet>
+      </HelmetPackage.Helmet>
       <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           Sign<em className="text-redZombie">In</em>

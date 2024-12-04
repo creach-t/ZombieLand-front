@@ -1,14 +1,26 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable react/react-in-jsx-scope */
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Helmet } from 'react-helmet-async';
 import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 import { differenceInDays } from 'date-fns';
+
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+
+// Import conditionnel des styles pour SSR
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+  import('react-loading-skeleton/dist/skeleton.css');
+  import('react-toastify/dist/ReactToastify.css');
+}
 
 interface Booking {
   booking_id: number;
@@ -93,16 +105,20 @@ function MyBookings() {
   const handleDelete = async (bookingId: number) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/booking/${bookingId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      if (response.status === 200) {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/booking/${bookingId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-        setBookings((prevBookings) => prevBookings.filter((booking) => booking.booking_id !== bookingId));
-  
+      if (response.status === 200) {
+        setBookings((prevBookings) =>
+          prevBookings.filter((booking) => booking.booking_id !== bookingId)
+        );
+
         toast.success('Réservation supprimée avec succès.', {
           position: 'top-center',
           autoClose: 3000,
@@ -119,7 +135,7 @@ function MyBookings() {
       }
     } catch (error) {
       console.error('Erreur lors de la suppression de la réservation:', error);
-  
+
       toast.warning('Échec de la suppression de la réservation.', {
         position: 'top-center',
         autoClose: 3000,
@@ -138,9 +154,9 @@ function MyBookings() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Mes réservations | Zombieland | Paris </title>
-      </Helmet>
+      </HelmetPackage.Helmet>
       <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-5 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
           MON <em className="text-redZombie">COMPTE</em>
@@ -204,43 +220,60 @@ function MyBookings() {
                     </tr>
                   </thead>
                   <tbody>
-  {bookings.map((booking) => {
-    const isDeletable =
-      differenceInDays(new Date(booking.date), new Date()) >= 10 &&
-      translateStatus(booking.status) === 'En attente' || translateStatus(booking.status) === 'Confirmée';
+                    {bookings.map((booking) => {
+                      const isDeletable =
+                        (differenceInDays(new Date(booking.date), new Date()) >=
+                          10 &&
+                          translateStatus(booking.status) === 'En attente') ||
+                        translateStatus(booking.status) === 'Confirmée';
 
-    return (
-      <tr key={booking.booking_id} className="hover:bg-redZombie border-b border-slate-200">
-        <td className="p-3">
-          <p className="block font-semibold text-sm text-white">{booking.booking_id}</p>
-        </td>
-        <td className="p-3">
-          <p className="text-md text-white">{booking.nb_tickets}</p>
-        </td>
-        <td className="p-3">
-          <p className="text-md text-white">{translateStatus(booking.status)}</p>
-        </td>
-        <td className="p-3 ">
-          <p className="text-md text-white">{formatter.format(new Date(booking.date))}</p>
-        </td>
-        <td className="p-3 ">
-          <p className="text-md text-white">{formatter.format(new Date(booking.created_at))}</p>
-        </td>
-        <td className="p-3">
-          <button
-            onClick={() => handleDelete(booking.booking_id)}
-            disabled={!isDeletable}
-            className={`text-white px-4 py-2 rounded-xl ${
-              isDeletable ? 'bg-red-500 hover:bg-red-700' : 'bg-gray-400 cursor-not-allowed'
-            }`}
-          >
-            Supprimer la réservation
-          </button>
-        </td>
-      </tr>
-    );
-  })}
-</tbody>
+                      return (
+                        <tr
+                          key={booking.booking_id}
+                          className="hover:bg-redZombie border-b border-slate-200"
+                        >
+                          <td className="p-3">
+                            <p className="block font-semibold text-sm text-white">
+                              {booking.booking_id}
+                            </p>
+                          </td>
+                          <td className="p-3">
+                            <p className="text-md text-white">
+                              {booking.nb_tickets}
+                            </p>
+                          </td>
+                          <td className="p-3">
+                            <p className="text-md text-white">
+                              {translateStatus(booking.status)}
+                            </p>
+                          </td>
+                          <td className="p-3 ">
+                            <p className="text-md text-white">
+                              {formatter.format(new Date(booking.date))}
+                            </p>
+                          </td>
+                          <td className="p-3 ">
+                            <p className="text-md text-white">
+                              {formatter.format(new Date(booking.created_at))}
+                            </p>
+                          </td>
+                          <td className="p-3">
+                            <button
+                              onClick={() => handleDelete(booking.booking_id)}
+                              disabled={!isDeletable}
+                              className={`text-white px-4 py-2 rounded-xl ${
+                                isDeletable
+                                  ? 'bg-red-500 hover:bg-red-700'
+                                  : 'bg-gray-400 cursor-not-allowed'
+                              }`}
+                            >
+                              Supprimer la réservation
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
               )}
             </div>

@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { HelmetProvider } from 'react-helmet-async';
+import HelmetPackage from 'react-helmet-async';
 import { expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
@@ -23,13 +23,13 @@ vi.mock('react-router-dom', async () => {
 describe('Login component security tests', () => {
   it('renders login form correctly', () => {
     render(
-      <HelmetProvider>
+      <HelmetPackage.HelmetProvider>
         <BrowserRouter>
           <UserProvider>
             <Login />
           </UserProvider>
         </BrowserRouter>
-      </HelmetProvider>
+      </HelmetPackage.HelmetProvider>
     );
 
     expect(screen.getByLabelText(/e-mail/i)).toBeInTheDocument();
@@ -41,13 +41,13 @@ describe('Login component security tests', () => {
 
   it('displays error toast if email and password are missing', async () => {
     render(
-      <HelmetProvider>
+      <HelmetPackage.HelmetProvider>
         <BrowserRouter>
           <UserProvider>
             <Login />
           </UserProvider>
         </BrowserRouter>
-      </HelmetProvider>
+      </HelmetPackage.HelmetProvider>
     );
 
     const submitButton = screen.getByRole('button', { name: /me connecter/i });
@@ -61,13 +61,13 @@ describe('Login component security tests', () => {
 
   it('handles form submission', async () => {
     render(
-      <HelmetProvider>
+      <HelmetPackage.HelmetProvider>
         <BrowserRouter>
           <UserProvider>
             <Login />
           </UserProvider>
         </BrowserRouter>
-      </HelmetProvider>
+      </HelmetPackage.HelmetProvider>
     );
 
     const emailInput = screen.getByLabelText(/e-mail/i);
@@ -85,13 +85,13 @@ describe('Login component security tests', () => {
   // Test for XSS attack prevention
   it('prevents XSS attack in email input', async () => {
     render(
-      <HelmetProvider>
+      <HelmetPackage.HelmetProvider>
         <BrowserRouter>
           <UserProvider>
             <Login />
           </UserProvider>
         </BrowserRouter>
-      </HelmetProvider>
+      </HelmetPackage.HelmetProvider>
     );
 
     const emailInput = screen.getByLabelText(/e-mail/i);
@@ -112,13 +112,13 @@ describe('Login component security tests', () => {
   // Test for SQL Injection prevention
   it('prevents SQL injection attempt in email input', async () => {
     render(
-      <HelmetProvider>
+      <HelmetPackage.HelmetProvider>
         <BrowserRouter>
           <UserProvider>
             <Login />
           </UserProvider>
         </BrowserRouter>
-      </HelmetProvider>
+      </HelmetPackage.HelmetProvider>
     );
 
     const emailInput = screen.getByLabelText(/e-mail/i);

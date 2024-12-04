@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
@@ -5,8 +6,18 @@ import { jwtDecode } from 'jwt-decode';
 import { useUser } from '../../context/UserContext';
 import { User } from '../../context/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Helmet } from 'react-helmet-async';
+
+let HelmetPackage: {
+  Helmet: unknown;
+  default?: unknown;
+  HelmetData?: unknown;
+  HelmetProvider?: unknown;
+};
+// Import conditionnel des styles pour SSR
+if (typeof window !== 'undefined') {
+  HelmetPackage = await import('react-helmet-async');
+  import('react-toastify/dist/ReactToastify.css');
+}
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -141,13 +152,13 @@ function Login() {
 
   return (
     <div>
-      <Helmet>
+      <HelmetPackage.Helmet>
         <title>Connexion | Parc Zombieland | Paris </title>
         <meta
           name="description"
           content="Connectez-vous à votre compte Zombieland pour gérer vos réservations, consulter vos avantages et préparer votre prochaine visite dans notre univers terrifiant."
         />
-      </Helmet>
+      </HelmetPackage.Helmet>
 
       <main className=" h-full w-full mt-[104px] flex flex-col items-center pt-10 max-w-screen-2xl mx-auto">
         <h1 className="self-center md:self-start text-6xl">
