@@ -2,82 +2,49 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useState, useEffect } from 'react';
 
-let layer1: string | undefined;
-let layer2: string | undefined;
-let run1: string | undefined;
-let run2: string | undefined;
-let run3: string | undefined;
-let run4: string | undefined;
-let run5: string | undefined;
-let run6: string | undefined;
-let run7: string | undefined;
-let run8: string | undefined;
-let run9: string | undefined;
-let run10: string | undefined;
-let jump1: string | undefined;
-let jump2: string | undefined;
-let jump3: string | undefined;
-let jump4: string | undefined;
-let jump5: string | undefined;
-let jump6: string | undefined;
-let jump7: string | undefined;
-let death1: string | undefined;
-let death2: string | undefined;
-let death3: string | undefined;
-let death4: string | undefined;
-let death5: string | undefined;
-let death6: string | undefined;
-let death7: string | undefined;
-let death8: string | undefined;
-let idle: string | undefined;
-let obstacle1: string | undefined;
-let obstacle2: string | undefined;
-let obstacle3: string | undefined;
+// Assets dans public/ : servis à la racine par Vite (pas de require CommonJS côté navigateur).
+// Layers du background
+const layer1 = '/img/zombie-run/Background layers/Layer-1.webp';
+const layer2 = '/img/zombie-run/Background layers/Layer-2.webp';
 
-if (typeof window !== 'undefined') {
-  // Layers du background
-  layer1 = require('../../../public/img/zombie-run/Background layers/Layer-1.webp');
-  layer2 = require('../../../public/img/zombie-run/Background layers/Layer-2.webp');
+// Frames de l'animation courir
+const run1 = '/img/zombie-run/Zombies/Zombie1/animation/Run1.webp';
+const run2 = '/img/zombie-run/Zombies/Zombie1/animation/Run2.webp';
+const run3 = '/img/zombie-run/Zombies/Zombie1/animation/Run3.webp';
+const run4 = '/img/zombie-run/Zombies/Zombie1/animation/Run4.webp';
+const run5 = '/img/zombie-run/Zombies/Zombie1/animation/Run5.webp';
+const run6 = '/img/zombie-run/Zombies/Zombie1/animation/Run6.webp';
+const run7 = '/img/zombie-run/Zombies/Zombie1/animation/Run7.webp';
+const run8 = '/img/zombie-run/Zombies/Zombie1/animation/Run8.webp';
+const run9 = '/img/zombie-run/Zombies/Zombie1/animation/Run9.webp';
+const run10 = '/img/zombie-run/Zombies/Zombie1/animation/Run10.webp';
 
-  // Frames de l'animation courir
-  run1 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run1.webp');
-  run2 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run2.webp');
-  run3 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run3.webp');
-  run4 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run4.webp');
-  run5 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run5.webp');
-  run6 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run6.webp');
-  run7 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run7.webp');
-  run8 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run8.webp');
-  run9 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run9.webp');
-  run10 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Run10.webp');
+// Frames de l'animation sauter
+const jump1 = '/img/zombie-run/Zombies/Zombie1/animation/Jump1.webp';
+const jump2 = '/img/zombie-run/Zombies/Zombie1/animation/Jump2.webp';
+const jump3 = '/img/zombie-run/Zombies/Zombie1/animation/Jump3.webp';
+const jump4 = '/img/zombie-run/Zombies/Zombie1/animation/Jump4.webp';
+const jump5 = '/img/zombie-run/Zombies/Zombie1/animation/Jump5.webp';
+const jump6 = '/img/zombie-run/Zombies/Zombie1/animation/Jump6.webp';
+const jump7 = '/img/zombie-run/Zombies/Zombie1/animation/Jump7.webp';
 
-  // Frames de l'animation sauter
-  jump1 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump1.webp');
-  jump2 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump2.webp');
-  jump3 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump3.webp');
-  jump4 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump4.webp');
-  jump5 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump5.webp');
-  jump6 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump6.webp');
-  jump7 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Jump7.webp');
+// Frames de l'animation de mort
+const death1 = '/img/zombie-run/Zombies/Zombie1/animation/Dead1.webp';
+const death2 = '/img/zombie-run/Zombies/Zombie1/animation/Dead2.webp';
+const death3 = '/img/zombie-run/Zombies/Zombie1/animation/Dead3.webp';
+const death4 = '/img/zombie-run/Zombies/Zombie1/animation/Dead4.webp';
+const death5 = '/img/zombie-run/Zombies/Zombie1/animation/Dead5.webp';
+const death6 = '/img/zombie-run/Zombies/Zombie1/animation/Dead6.webp';
+const death7 = '/img/zombie-run/Zombies/Zombie1/animation/Dead7.webp';
+const death8 = '/img/zombie-run/Zombies/Zombie1/animation/Dead8.webp';
 
-  // Frames de l'animation de mort
-  death1 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead1.webp');
-  death2 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead2.webp');
-  death3 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead3.webp');
-  death4 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead4.webp');
-  death5 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead5.webp');
-  death6 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead6.webp');
-  death7 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead7.webp');
-  death8 = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Dead8.webp');
+// Frame du zombie à l'arrêt
+const idle = '/img/zombie-run/Zombies/Zombie1/animation/Idle1.webp';
 
-  // Frame du zombie à l'arrêt
-  idle = require('../../../public/img/zombie-run/Zombies/Zombie1/animation/Idle1.webp');
-
-  // Obstacles
-  obstacle1 = require('../../../public/img/zombie-run/obstacles/tombe3.webp');
-  obstacle2 = require('../../../public/img/zombie-run/obstacles/tombe4.webp');
-  obstacle3 = require('../../../public/img/zombie-run/obstacles/tombe6.webp');
-}
+// Obstacles
+const obstacle1 = '/img/zombie-run/obstacles/tombe3.webp';
+const obstacle2 = '/img/zombie-run/obstacles/tombe4.webp';
+const obstacle3 = '/img/zombie-run/obstacles/tombe6.webp';
 
 const runImgs: string[] = [
   run1,

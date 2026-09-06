@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 let HelmetPackage: {
   Helmet: unknown;
@@ -13,10 +14,8 @@ let HelmetPackage: {
   HelmetProvider?: unknown;
 };
 
-// Import conditionnel des styles pour SSR
 if (typeof window !== 'undefined') {
   HelmetPackage = await import('react-helmet-async');
-  require('react-toastify/dist/ReactToastify.css');
 }
 
 interface User {

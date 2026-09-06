@@ -246,33 +246,6 @@ function ActivityDetail() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const handleReviewSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user) {
-      toast.error('Vous devez être connecté pour laisser un avis', { ... });
-      return;
-    }
-    try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/reviews`,
-        {
-          rating,
-          content: newContent,
-          client_id: user?.user_id,
-          activity_id: attractionDetail?.activity_id,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setIsModalOpen(false);
-      setNewContent('');
-      setRating(0);
-      toast.success('Merci pour votre avis, il sera modéré avant publication.');
-    } catch (error) {
-      console.error("Erreur lors de l'envoi de l'avis :", error);
-      toast.error('Une erreur est survenue. Veuillez réessayer.');
-    }
-  };
-
   if (notFound) {
     return <Navigate to="/404" />;
   }

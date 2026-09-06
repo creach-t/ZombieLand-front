@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import getImageName from '../../utils/imageAttractionsFormat';
 import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 let HelmetPackage: {
   Helmet: unknown;
@@ -15,7 +16,6 @@ let HelmetPackage: {
 };
 
 if (typeof window !== 'undefined') {
-  require('react-loading-skeleton/dist/skeleton.css');
   HelmetPackage = await import('react-helmet-async');
 }
 
