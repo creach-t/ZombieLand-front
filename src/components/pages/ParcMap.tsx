@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-let map: Promise<unknown>;
+const map = '/img/desktop/plan-du-parc-zombieland-v2.webp'; // asset public servi à la racine
 let HelmetPackage: {
   Helmet: unknown;
   default?: unknown;
@@ -14,7 +14,6 @@ let HelmetPackage: {
 if (typeof window !== 'undefined') {
   HelmetPackage = await import('react-helmet-async');
   import('react-loading-skeleton/dist/skeleton.css');
-  map = import('../../../public/img/desktop/plan-du-parc-zombieland-v2.webp');
 }
 
 interface Attraction {

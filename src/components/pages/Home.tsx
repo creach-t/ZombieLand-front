@@ -15,11 +15,12 @@ let HelmetPackage: {
   HelmetData?: unknown;
   HelmetProvider?: unknown;
 };
-let zombieFace: Promise<unknown>;
-let tickets: Promise<unknown>;
-let compass: Promise<unknown>;
-let skull: Promise<unknown>;
-let plan: Promise<unknown>;
+// Assets dans public/ : servis à la racine par Vite.
+const zombieFace = '/img/desktop/zombie-apocalypse-zombieland.webp';
+const tickets = '/img/desktop/achat-tickets-parc-zombieland.webp';
+const compass = '/img/desktop/horaires-tickets-parc-zombieland.webp';
+const skull = '/img/desktop/plan-parc-zombieland-_1_.webp';
+const plan = '/img/desktop/plan-parc-zombieland.webp';
 
 // Import conditionnel des styles pour SSR
 if (typeof window !== 'undefined') {
@@ -27,17 +28,6 @@ if (typeof window !== 'undefined') {
   import('react-toastify/dist/ReactToastify.css');
   import('slick-carousel/slick/slick.css');
   import('slick-carousel/slick/slick-theme.css');
-  zombieFace = import(
-    '../../../public/img/desktop/zombie-apocalypse-zombieland.webp'
-  );
-  tickets = import(
-    '../../../public/img/desktop/achat-tickets-parc-zombieland.webp'
-  );
-  compass = import(
-    '../../../public/img/desktop/horaires-tickets-parc-zombieland.webp'
-  );
-  skull = import('../../../public/img/desktop/plan-parc-zombieland-_1_.webp');
-  plan = import('../../../public/img/desktop/plan-parc-zombieland.webp');
 }
 
 interface Activity {

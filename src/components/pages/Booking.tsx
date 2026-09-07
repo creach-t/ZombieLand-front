@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import getStripe from '../../utils/getStripe';
 import { ToastContainer, toast } from 'react-toastify';
-let ticketImg: Promise<unknown>;
+const ticketImg = '/img/desktop/Rectangle-8.webp'; // asset public servi à la racine
 let HelmetPackage: {
   Helmet: unknown;
   default?: unknown;
@@ -18,7 +18,6 @@ let HelmetPackage: {
 if (typeof window !== 'undefined') {
   HelmetPackage = await import('react-helmet-async');
   import('react-toastify/dist/ReactToastify.css');
-  ticketImg = import('../../../public/img/desktop/Rectangle-8.webp');
 }
 function Booking() {
   const location = useLocation();
