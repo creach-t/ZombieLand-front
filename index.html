@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
-    <link href="./src/styles/output.css" rel="stylesheet" />
-    <link href="./src/styles/font/font.css" rel="stylesheet" />
+    <!-- Le CSS de src/ est chargé via les imports JS (main.tsx) pour éviter
+         qu'une même URL soit demandée à la fois en text/css et en module JS
+         (collision de cache derrière un proxy -> erreur MIME). -->
     <link
       href="https://fonts.googleapis.com/css2?family=League+Gothic&display=swap"
       rel="stylesheet"

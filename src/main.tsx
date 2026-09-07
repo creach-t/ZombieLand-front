@@ -3,6 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './components/App/App.tsx';
 import './styles/output.css';
+import './styles/font/font.css';
 import { BrowserRouter } from 'react-router-dom';
 
 createRoot(document.getElementById('root')!).render(
