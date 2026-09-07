@@ -16,12 +16,12 @@ let HelmetPackage: {
   HelmetData?: unknown;
   HelmetProvider?: unknown;
 };
-let Slider: typeof import('react-slick');
+let Slider: (typeof import('react-slick'))['default'];
 
 // Import conditionnel des styles pour SSR
 if (typeof window !== 'undefined') {
   HelmetPackage = await import('react-helmet-async');
-  Slider = await import('react-slick');
+  Slider = (await import('react-slick')).default;
   import('react-toastify/dist/ReactToastify.css');
   import('slick-carousel/slick/slick.css');
   import('slick-carousel/slick/slick-theme.css');
